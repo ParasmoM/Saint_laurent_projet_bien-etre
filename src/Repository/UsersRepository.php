@@ -24,6 +24,15 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         parent::__construct($registry, Users::class);
     }
 
+    public function findOneByEmail(string $email): ?Users
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function save(Users $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);

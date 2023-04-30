@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProvidersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProvidersRepository::class)]
@@ -19,13 +21,13 @@ class Providers
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $phoneNumber = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $tvaNumber = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $websiteUrl = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -36,6 +38,14 @@ class Providers
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $twitter = null;
+
+    #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Users::class)]
+    private Collection $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +144,36 @@ class Providers
     public function setTwitter(?string $twitter): self
     {
         $this->twitter = $twitter;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Users>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(Users $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setProviders($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Users $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getProviders() === $this) {
+                $user->setProviders(null);
+            }
+        }
 
         return $this;
     }

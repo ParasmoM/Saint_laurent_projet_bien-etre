@@ -5,10 +5,12 @@ namespace App\Entity;
 use App\Repository\UsersRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -28,10 +30,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $addressStreet = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $adressNumber = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -48,6 +50,21 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $isVerified = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users', cascade: ["persist"])]
+    private ?InternetUsers $internetUsers = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users', cascade: ["persist"])]
+    private ?Providers $providers = null;
+
+    public function __construct()
+    {
+        $this->registration = new \DateTime('now');
+        $this->failedAttempts = 0;
+        $this->banned = false;
+        $this->isVerified = false;
+        $this->roles = ["ROLE_USER"];
+    }
 
     public function getId(): ?int
     {
@@ -199,6 +216,35 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function getInternetUsers(): ?InternetUsers
+    {
+        return $this->internetUsers;
+    }
+
+    public function setInternetUsers(?InternetUsers $internetUsers): self
+    {
+        $this->internetUsers = $internetUsers;
+
+        return $this;
+    }
+
+    public function getProviders(): ?Providers
+    {
+        return $this->providers;
+    }
+
+    public function setProviders(?Providers $providers): self
+    {
+        $this->providers = $providers;
 
         return $this;
     }
