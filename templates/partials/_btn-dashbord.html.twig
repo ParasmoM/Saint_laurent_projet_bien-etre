@@ -1,0 +1,8 @@
+{% if app.user and app.user.providers %}
+    <div class="dashbord-button">
+        <a href="#">
+            {{ include("svg/dashbord.html.twig") }}
+            <span>Tableau de bord</span>
+        </a>
+    </div>
+{% endif %}

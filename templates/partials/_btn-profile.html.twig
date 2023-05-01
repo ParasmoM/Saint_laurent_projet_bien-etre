@@ -1,0 +1,71 @@
+
+{% if app.user %}
+    <div class="profile-button-container">
+        <span>
+            {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
+        </span>
+    </div>
+    <div class="profile-dropdown" id="profile-dropdown">
+        <ul class="profile-dropdown-menu">
+            <li class="profile-dropdown-item">
+                <a href="#">
+                    <div class="profile-dropdown-item-icon">
+                        <div>
+                            <span>
+                                {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="profile-dropdown-item-link">
+                        <p>{{ app.user.internetUsers ? app.user.internetUsers : app.user.providers }}</p>
+                        <p>{{ app.user.email }}</p>
+                    </div>
+                </a>
+            </li>
+            <li class="profile-dropdown-item">
+                <div class="profile-dropdown-item-link-profile">
+                    <a href="#">Gérer votre compte</a>
+                </div>
+            </li>
+            <li class="profile-dropdown-item">
+                <a href="#">
+                    <div class="profile-dropdown-item-icon">
+                        {{ include('svg/newsletter.html.twig') }}
+                    </div>
+                    <div class="profile-dropdown-item-link">
+                        newsletter
+                    </div>
+                </a>
+            </li>
+            <li class="profile-dropdown-item">
+                <a href="#">
+                    <div class="profile-dropdown-item-icon">
+                        {{ include('svg/contacter.html.twig') }}
+                    </div>
+                    <div class="profile-dropdown-item-link">
+                        Nous contacter
+                    </div>
+                </a>
+            </li>
+            <li class="profile-dropdown-item">
+                <a href="#">
+                    <div class="profile-dropdown-item-icon">
+                        {{ include('svg/logout.html.twig') }}
+                    </div>
+                    <div class="profile-dropdown-item-link">
+                        Se déconnecter
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div class="profile-dropdown-footer">
+            <a href="#">Règles de confidentialité</a>
+            <span>&nbsp;•&nbsp;</span>
+            <a href="#">Conditions d'utilisation</a>
+        </div>
+    </div>
+{% else %}
+    <div class="profile-button-container">
+        {{ include('svg/profile.html.twig') }}
+    </div>
+{% endif %}

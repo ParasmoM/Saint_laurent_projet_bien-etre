@@ -1,0 +1,51 @@
+<header class="site-header">
+    <div class="header-container">
+        <div class="hamburger-menu" id="hamburger">
+            <div class="hamburger-button">
+                <div class="hamburger-item">
+                </div>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="logo-container">
+                <a href="#"><span>Bien</span><span>-</span>être</a>
+            </div>
+            <nav>
+                <a href="#">Prestataires</a>
+                <a href="#">Services</a>
+                <a href="#">Newsletter</a>
+                <a href="#">Contact</a>
+            </nav>
+        </div>
+
+        <div class="logo-container">
+            <a href="#"><span>Bien</span><span>-</span>être</a>
+        </div>
+
+        <nav class="main-navigation">
+            {{ include("partials/_btn-dashbord.html.twig") }}
+
+            <div class="services-button">
+                {{ include("partials/_btn-services.html.twig") }}
+            </div>
+
+            <div class="providers-button">
+                <a href="#">
+                    {{ include("svg/providers.html.twig") }}
+                    <span>Providers</span>
+                </a>
+            </div>
+
+            <div class="reg-button">
+                {{ include('partials/_btn-reg-con.html.twig') }}
+            </div>
+
+            <div class="profile-button" id="profile">
+                {{ include('partials/_btn-profile.html.twig') }}
+            </div>
+        </nav>
+    </div>
+</header>
+{# <main>
+    {{ dump(app.user) }}
+</main> #}
