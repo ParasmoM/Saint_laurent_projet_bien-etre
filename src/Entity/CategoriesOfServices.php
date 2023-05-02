@@ -20,10 +20,10 @@ class CategoriesOfServices
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $featured = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $validated = null;
 
     public function getId(): ?int
