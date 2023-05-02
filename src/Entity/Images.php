@@ -16,8 +16,11 @@ class Images
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $orderNumber = null;
+
+    #[ORM\OneToOne(inversedBy: 'images', cascade: ['persist', 'remove'])]
+    private ?CategoriesOfServices $serviceImage = null;
 
     public function getId(): ?int
     {
@@ -44,6 +47,18 @@ class Images
     public function setOrderNumber(int $orderNumber): self
     {
         $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+    public function getServiceImage(): ?CategoriesOfServices
+    {
+        return $this->serviceImage;
+    }
+
+    public function setServiceImage(?CategoriesOfServices $serviceImage): self
+    {
+        $this->serviceImage = $serviceImage;
 
         return $this;
     }

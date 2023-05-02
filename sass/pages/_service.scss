@@ -1,0 +1,101 @@
+.service-page {
+    
+    &-banner {
+        display: flex;
+        align-items: center;
+        place-content: center;
+        height: 40rem;
+        background-repeat: no-repeat;
+        background-size: cover ;
+        background-position: center;
+
+        h1 {
+            font-size: 15rem;
+            font-weight: 700;
+            color: transparent;
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.4), 0 0 2px rgba(255, 255, 255, 0.4), 0 0 3px rgba(255, 255, 255, 0.4), 0 0 4px rgba(255, 255, 255, 0.4);
+            // backdrop-filter: blur(15px);
+
+            @media only screen and (max-width: 1240px) {
+                font-size: 12rem;
+            }
+            @media only screen and (max-width: 992px) {
+                font-size: 10rem;
+            }
+            @media only screen and (max-width: 860px) {
+                font-size: 8rem;
+            }
+            @media only screen and (max-width: 720px) {
+                font-size: 6rem;
+            }
+        }
+        
+        
+    }
+}
+.service-page-content {
+    svg {
+        height: 1.5rem;
+    }
+
+    .service-page-sidebar {
+        background-color: #E4EEF8;
+        padding: 7rem 0;
+    }
+    .service-page-sidebar-container {
+        display: flex;
+        gap: 4rem;
+        font-size: 1.4rem;
+        max-width: 1440px;
+        width: calc(100% - 8rem);
+        margin: 0 auto;
+
+        .service-page-menu {
+            flex: 0 0 36rem;
+            border-radius: 1rem;
+            padding: 4rem 0 4rem 4rem;
+            box-shadow: rgba(23, 71, 118, 0.1) 0px 10px 12px;
+            background-color: white;
+
+            @media only screen and (max-width: 992px) {
+                flex: 0 0 30rem;
+            }
+            @media only screen and (max-width: 860px) {
+                flex: 0 0 25rem;
+            }
+            @media only screen and (max-width: 700px) {
+                display: none;
+            }
+
+            p {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            ul {
+                border-left: solid 1px #DCE2E7;
+                margin: 2rem .5rem 0 2rem;
+                padding-left: 3px;
+            }
+            a {
+                display: block;
+                padding: 1rem;
+                border-radius: 1rem;
+            }
+            a:hover,
+            a.active {
+                background-color: #F5F8FC;
+            }
+        }
+
+        .service-page-description {
+            h2 {
+                font-size: 5rem;
+                margin-bottom: 2rem;
+            }
+            p {
+                text-align: justify;
+            }
+        }
+    }
+}

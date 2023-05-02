@@ -26,6 +26,9 @@ class CategoriesOfServices
     #[ORM\Column(nullable: true)]
     private ?bool $validated = null;
 
+    #[ORM\OneToOne(mappedBy: 'serviceImage', cascade: ['persist', 'remove'])]
+    private ?Images $images = null;
+
     public function __toString()
     {
         return $this->name;
@@ -80,6 +83,28 @@ class CategoriesOfServices
     public function setValidated(bool $validated): self
     {
         $this->validated = $validated;
+
+        return $this;
+    }
+
+    public function getImages(): ?Images
+    {
+        return $this->images;
+    }
+
+    public function setImages(?Images $images): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($images === null && $this->images !== null) {
+            $this->images->setServiceImage(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($images !== null && $images->getServiceImage() !== $this) {
+            $images->setServiceImage($this);
+        }
+
+        $this->images = $images;
 
         return $this;
     }

@@ -3,18 +3,36 @@
 {% block title %}Hello ServicesController!{% endblock %}
 
 {% block body %}
-<h1>ServicePage</h1>
+
 <main class="service-page">
-    <section class="service-page-banner">
-        <!-- Contenu du banner -->
+    <section class="service-page-banner" style="background-image: url({{ asset('assets/uploads/services/' ~ serviceCurrent.images.name) }} );">
+        <h1>{{ serviceCurrent }}</h1>
     </section>
+    
     <section class="service-page-content">
         <div class="service-page-sidebar">
-            <div class="service-page-menu">
-                <!-- Ici il y'aura un menu -->
-            </div>
-            <div class="service-page-description">
-                <!-- Ici il y'aura une description -->
+            <div class="service-page-sidebar-container">
+                <div class="service-page-menu">
+                    <p>
+                        {{ include('svg/handshake.html.twig') }}
+                        <span>Services</span>
+                    </p>
+                    <ul>
+                        {% for service in list_categ %}
+                        {% set active = '' %}
+                        {% if serviceCurrent.name == service.name %}
+                            {% set active = 'active' %}
+                        {% endif %}
+                        <li><a href="{{ path('app_services', {id: service.id}) }}" class="{{ active ? active : '' }}">{{ service }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="service-page-description">
+                    <h2>{{ serviceCurrent }}</h2>
+                    <p>
+                        {{ serviceCurrent.description }}
+                    </p>
+                </div>
             </div>
         </div>
         <div class="service-page-main">
@@ -26,6 +44,7 @@
             </div>
         </div>
     </section>
+    {# {{ dump() }} #}
 </main>
 
 {% endblock %}

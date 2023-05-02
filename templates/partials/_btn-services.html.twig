@@ -4,6 +4,6 @@
 </a>
 <ul>
     {% for service in list_categ %}
-        <li><a href="{{ path('app_services') }}">{{ service }}</a></li>
+        <li><a href="{{ path('app_services', {id: service.id}) }}">{{ service }}</a></li>
     {% endfor %}
 </ul>
