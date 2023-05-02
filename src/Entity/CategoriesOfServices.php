@@ -26,6 +26,11 @@ class CategoriesOfServices
     #[ORM\Column(nullable: true)]
     private ?bool $validated = null;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

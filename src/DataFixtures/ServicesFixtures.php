@@ -7,7 +7,7 @@ use App\Entity\CategoriesOfServices;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
-class AppFixtures extends Fixture
+class ServicesFixtures extends Fixture
 {
     private $tabCategories = [
         'Massage',

@@ -3,7 +3,7 @@
     <span>Services</span>
 </a>
 <ul>
-    <li>choix 1</li>
-    <li>choix 2</li>
-    <li>choix 3</li>
+    {% for service in list_categ %}
+        <li><a href="{{ path('app_services') }}">{{ service }}</a></li>
+    {% endfor %}
 </ul>
