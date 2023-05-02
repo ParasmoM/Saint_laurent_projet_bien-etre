@@ -3,18 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
 use App\Repository\UsersRepository;
-use App\Security\EmailVerifier;
+use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\CategoriesOfServicesRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -31,9 +32,11 @@ class RegistrationController extends AbstractController
         $status, 
         Request $request, 
         UserPasswordHasherInterface $userPasswordHasher, 
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        CategoriesOfServicesRepository $categRepository
     ): Response {
-        // dd('here');
+        $list_categ = $categRepository->findAll();
+
         $user = new Users();
         $registrationForm = $this->createForm(RegistrationFormType::class, $user, [
             'attr' => [
@@ -96,6 +99,7 @@ class RegistrationController extends AbstractController
             'status',
             'registrationForm',
             'utilisateurForm',
+            'list_categ'
         ));
     }
 

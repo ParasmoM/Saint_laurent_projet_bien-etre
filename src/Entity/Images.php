@@ -22,6 +22,12 @@ class Images
     #[ORM\OneToOne(inversedBy: 'images', cascade: ['persist', 'remove'])]
     private ?CategoriesOfServices $serviceImage = null;
 
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    private ?Providers $providerLogo = null;
+
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    private ?Providers $providerPhoto = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +65,30 @@ class Images
     public function setServiceImage(?CategoriesOfServices $serviceImage): self
     {
         $this->serviceImage = $serviceImage;
+
+        return $this;
+    }
+
+    public function getProviderLogo(): ?Providers
+    {
+        return $this->providerLogo;
+    }
+
+    public function setProviderLogo(?Providers $providerLogo): self
+    {
+        $this->providerLogo = $providerLogo;
+
+        return $this;
+    }
+
+    public function getProviderPhoto(): ?Providers
+    {
+        return $this->providerPhoto;
+    }
+
+    public function setProviderPhoto(?Providers $providerPhoto): self
+    {
+        $this->providerPhoto = $providerPhoto;
 
         return $this;
     }

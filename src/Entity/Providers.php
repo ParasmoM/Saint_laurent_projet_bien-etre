@@ -42,9 +42,13 @@ class Providers
     #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Users::class)]
     private Collection $users;
 
+    #[ORM\OneToMany(mappedBy: 'providerLogo', targetEntity: Images::class)]
+    private Collection $images;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function __toString()
@@ -177,6 +181,36 @@ class Providers
             // set the owning side to null (unless already changed)
             if ($user->getProviders() === $this) {
                 $user->setProviders(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setProviderLogo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProviderLogo() === $this) {
+                $image->setProviderLogo(null);
             }
         }
 
