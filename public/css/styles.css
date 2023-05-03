@@ -720,6 +720,40 @@
   text-align: justify;
 }
 
+.service-page-main {
+  background-color: #F5F8FC;
+}
+
+.service-page-profile-cards {
+  padding-top: 7rem;
+  max-width: 1440px;
+  width: calc(100% - 8rem);
+  margin: 0 auto;
+}
+.service-page-profile-cards-container {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  max-width: 1355px;
+  margin: 0 auto;
+}
+@media only screen and (max-width: 1430px) {
+  .service-page-profile-cards-container {
+    max-width: 1010px;
+  }
+}
+@media only screen and (max-width: 1087px) {
+  .service-page-profile-cards-container {
+    max-width: 665px;
+  }
+}
+@media only screen and (max-width: 740px) {
+  .service-page-profile-cards-container {
+    max-width: 320px;
+    border: solid red 1px;
+  }
+}
+
 .hero {
   background-color: #EAF0F8;
 }
@@ -1581,6 +1615,173 @@
   appearance: none;
   width: 100%;
   border: none;
+}
+
+.card-service {
+  flex: 0 1 31.5rem;
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: rgb(223, 233, 245) 0px 10px 10px;
+  padding: 2rem;
+}
+.card-service .card-service__header {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 1px solid #DAE9F4;
+}
+.card-service .card-service__header .card-service__profile-image {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 50%;
+  border: solid 4px white;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
+  background-color: rgb(93, 160, 187);
+  display: flex;
+  align-items: center;
+  place-content: center;
+  font-size: 3rem;
+}
+.card-service .card-service__header .card-service__profile-image span {
+  display: flex;
+  align-items: center;
+  place-content: center;
+  height: 3rem;
+  color: white;
+  padding: 0.8rem 0 0 0.5rem;
+}
+.card-service .card-service__header .card-service__info .card-service__details {
+  border-bottom: solid 1px #DAE9F4;
+  padding-bottom: 1rem;
+}
+.card-service .card-service__header .card-service__info .card-service__details .card-service__name {
+  font-size: 1.8rem;
+  white-space: nowrap;
+}
+.card-service .card-service__header .card-service__info .card-service__details .card-service__service-name,
+.card-service .card-service__header .card-service__info .card-service__details .card-service__extra-info {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #6E6488;
+}
+.card-service .card-service__header .card-service__info .card-service__socials {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  color: white;
+  padding-top: 1rem;
+}
+.card-service .card-service__header .card-service__info .card-service__socials a {
+  display: flex;
+  align-items: center;
+  place-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  background: rgb(207, 196, 255);
+  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+}
+.card-service .card-service__content {
+  text-align: center;
+}
+.card-service .card-service__content .card-service__description {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #9B99A3;
+  padding: 1.5rem 0;
+}
+.card-service .card-service__content .card-service__button {
+  color: #4F4D62;
+  font-size: 1.4rem;
+  padding: 1.35rem 3.5rem 1.15rem;
+  background: rgb(207, 196, 255);
+  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+  border-radius: 10px;
+  border: solid 1px white;
+  cursor: pointer;
+  box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
+}
+.card-service .card-service__content .card-service__button:hover {
+  background: rgb(218, 234, 245);
+  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
+}
+
+.card-provider {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: rgb(223, 233, 245) 0px 10px 10px;
+  flex: 0 1 32rem;
+}
+.card-provider .provider-info {
+  position: relative;
+  height: 15.6rem;
+  background-color: #E7F7F0;
+  padding: 2rem 3rem;
+}
+.card-provider .provider-info .provider-name {
+  font-size: 1.8rem;
+}
+.card-provider .provider-info .provider-service {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #6E6488;
+}
+.card-provider .provider-info .provider-image {
+  position: absolute;
+  bottom: -5rem;
+  border: solid 4px white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
+  height: 10rem;
+  width: 10rem;
+  border-radius: 50%;
+  background-color: #2d7fba;
+}
+.card-provider .provider-details {
+  padding: 3rem;
+  background-color: white;
+  text-align: center;
+}
+.card-provider .provider-details .provider-social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+  border-bottom: 1px solid #DAE9F4;
+  padding-bottom: 1.5rem;
+  color: white;
+}
+.card-provider .provider-details .provider-social-icons a {
+  display: flex;
+  align-items: center;
+  place-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  background: rgb(207, 196, 255);
+  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+}
+.card-provider .provider-details .provider-description {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #9B99A3;
+  padding: 1.5rem 0;
+}
+.card-provider .provider-details .provider-service-button {
+  color: #4F4D62;
+  font-size: 1.4rem;
+  padding: 1.35rem 3.5rem 1.15rem;
+  background: rgb(207, 196, 255);
+  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+  border-radius: 10px;
+  border: solid 1px white;
+  cursor: pointer;
+  box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
+}
+.card-provider .provider-details .provider-service-button:hover {
+  background: rgb(218, 234, 245);
+  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
 }
 
 .pagination {

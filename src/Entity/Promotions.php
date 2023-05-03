@@ -17,10 +17,10 @@ class Promotions
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $documentPdf = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -29,11 +29,17 @@ class Promotions
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $end_date = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $display_from_date = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $display_until_date = null;
+
+    #[ORM\ManyToOne(inversedBy: 'promotion')]
+    private ?Providers $providers = null;
+
+    #[ORM\ManyToOne(inversedBy: 'promotions')]
+    private ?CategoriesOfServices $service = null;
 
     public function getId(): ?int
     {
@@ -120,6 +126,30 @@ class Promotions
     public function setDisplayUntilDate(\DateTimeInterface $display_until_date): self
     {
         $this->display_until_date = $display_until_date;
+
+        return $this;
+    }
+
+    public function getProviders(): ?Providers
+    {
+        return $this->providers;
+    }
+
+    public function setProviders(?Providers $providers): self
+    {
+        $this->providers = $providers;
+
+        return $this;
+    }
+
+    public function getService(): ?CategoriesOfServices
+    {
+        return $this->service;
+    }
+
+    public function setService(?CategoriesOfServices $service): self
+    {
+        $this->service = $service;
 
         return $this;
     }

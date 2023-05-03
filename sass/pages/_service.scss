@@ -99,3 +99,31 @@
         }
     }
 }
+.service-page-main {
+    background-color: #F5F8FC;
+}
+.service-page-profile-cards {
+    padding-top: 7rem;
+    max-width: 1440px;
+    width: calc(100% - 8rem);
+    margin: 0 auto;
+
+    &-container {
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+        max-width: 1355px;
+        margin: 0 auto;
+
+        @media only screen and (max-width: 1430px) {
+            max-width: 1010px;
+        }
+        @media only screen and (max-width: 1087px) {
+            max-width: 665px;
+        }
+        @media only screen and (max-width: 740px) {
+            max-width: 320px;
+            border: solid red 1px;
+        }
+    }
+}

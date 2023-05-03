@@ -15,9 +15,10 @@ class HomeController extends AbstractController
     ): Response {
         $list_categ = $categRepository->findAll();
 
+        
         return $this->render('home/home.html.twig', compact(
             'list_categ',
-            // 'avatar'
+            
         ));
     }
     

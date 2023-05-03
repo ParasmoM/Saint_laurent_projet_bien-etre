@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoriesOfServicesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,14 @@ class CategoriesOfServices
 
     #[ORM\OneToOne(mappedBy: 'serviceImage', cascade: ['persist', 'remove'])]
     private ?Images $images = null;
+
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Promotions::class)]
+    private Collection $promotions;
+
+    public function __construct()
+    {
+        $this->promotions = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -105,6 +115,36 @@ class CategoriesOfServices
         }
 
         $this->images = $images;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promotions>
+     */
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
+    }
+
+    public function addPromotion(Promotions $promotion): self
+    {
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions->add($promotion);
+            $promotion->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotions $promotion): self
+    {
+        if ($this->promotions->removeElement($promotion)) {
+            // set the owning side to null (unless already changed)
+            if ($promotion->getService() === $this) {
+                $promotion->setService(null);
+            }
+        }
 
         return $this;
     }

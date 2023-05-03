@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProvidersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProvidersRepository::class)]
@@ -45,10 +46,17 @@ class Providers
     #[ORM\OneToMany(mappedBy: 'providerLogo', targetEntity: Images::class)]
     private Collection $images;
 
+    #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Promotions::class)]
+    private Collection $promotion;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->promotion = new ArrayCollection();
     }
 
     public function __toString()
@@ -213,6 +221,48 @@ class Providers
                 $image->setProviderLogo(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promotions>
+     */
+    public function getPromotion(): Collection
+    {
+        return $this->promotion;
+    }
+
+    public function addPromotion(Promotions $promotion): self
+    {
+        if (!$this->promotion->contains($promotion)) {
+            $this->promotion->add($promotion);
+            $promotion->setProviders($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotions $promotion): self
+    {
+        if ($this->promotion->removeElement($promotion)) {
+            // set the owning side to null (unless already changed)
+            if ($promotion->getProviders() === $this) {
+                $promotion->setProviders(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

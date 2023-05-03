@@ -2,10 +2,13 @@
 
 namespace App\DataFixtures;
 
+use DateTime;
 use Faker\Factory;
 use App\Entity\Users;
 use App\Entity\Images;
 use App\Entity\Providers;
+use App\Entity\Promotions;
+use App\Entity\CategoriesOfServices;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -21,7 +24,7 @@ class UsersFixtures extends Fixture
     
     public function load(ObjectManager $manager): void
     {
-        $this->createProvider(10, 'femme', $manager);
+        $this->createProvider(20, 'femme', $manager);
     }
 
     public function createProvider($nbr, $sexe, $manager) {
@@ -32,9 +35,14 @@ class UsersFixtures extends Fixture
             $prestataire = new Providers();
             $prestataire->setLastName($faker->lastName);
             $prestataire->setFirstName($faker->firstName($sexe));
+            $prestataire->setDescription($faker->sentences(10, true));
+            $prestataire->setWebsiteUrl('https://github.com/');
+            $prestataire->setFacebook('https://fr-fr.facebook.com/');
+            $prestataire->setInstagram('https://www.instagram.com/');
+            $prestataire->setTwitter('https://twitter.com/');
             
             // On crée 10 services pour le prestataire
-            // $this->createPromotion($prestataire, $manager);
+            $this->createPromo($prestataire, $manager);
 
             // on crée un stage 
             // $this->createStage($prestataire, $manager);
@@ -49,6 +57,42 @@ class UsersFixtures extends Fixture
         }
     }
 
+    public function createPromo($prestataire, $manager) {
+        $faker = Factory::create('fr_BE');
+        $date_actuelle = new DateTime();
+        $date_plus_365 = new DateTime('+365 days');
+
+        $categoriesRepository = $manager->getRepository(CategoriesOfServices::class);
+        $categories = $categoriesRepository->findAll();
+
+        // Obtenez 3 clés aléatoires
+        $randomKeys = array_rand($categories, 3);
+
+        // Récupérez les catégories correspondantes
+        $randomCategories = [];
+        foreach ($randomKeys as $key) {
+            $randomCategories[] = $categories[$key];
+        }
+
+        $promotionsCount = [6, 3, 1]; // Nombre de fois pour chaque catégorie aléatoire
+        $promoCounter = 1;
+
+        foreach ($promotionsCount as $index => $count) {
+            for ($cpt = 1; $cpt <= $count; $cpt++) {
+                $promo = new Promotions();
+                $promo->setName('Service ' . $promoCounter);
+                $promo->setDescription($faker->sentences(10, true));
+                $promo->setStartDate($date_actuelle);
+                $promo->setEndDate($date_plus_365);
+                $promo->setService($randomCategories[$index]);
+                $promo->setProviders($prestataire);
+        
+                $manager->persist($promo);
+                $promoCounter++;
+            }
+        }        
+    }
+    
     public function createImageProfile($prestataire, $sexe, $manager) {
         $tabFemmes = [
             'Femme_Africaine_01.avif',

@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Promotions;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Promotions>
@@ -16,9 +18,23 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PromotionsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        private PaginatorInterface $paginatorInterface,
+    ) {
         parent::__construct($registry, Promotions::class);
+    }
+
+    public function findBycateg(int $id, int $page): PaginationInterface
+    {
+        $data = $this->createQueryBuilder('p')
+            ->where('p.service = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $this->paginatorInterface->paginate($data, $page, 9 );
     }
 
     public function save(Promotions $entity, bool $flush = false): void
