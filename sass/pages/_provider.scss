@@ -1,0 +1,31 @@
+.list-providers {
+    background-color: #EAF0F8;
+    padding: 5rem 0;
+
+    &__container {
+        max-width: 1250px;
+        width: calc(100% - 15rem);
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem;
+        
+        @media only screen and (max-width: 1400px) {
+            max-width: 992px;
+        }
+        @media only screen and (max-width: 1142px) {
+            max-width: 738px;
+        }
+        @media only screen and (max-width: 888px) {
+            max-width: 483px;
+        }
+        @media only screen and (max-width: 633px) {
+            max-width: 230px;
+        }
+    }
+
+    .providers-pagination {
+        text-align: center;
+    }
+}
+

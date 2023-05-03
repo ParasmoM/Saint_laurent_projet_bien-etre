@@ -972,177 +972,40 @@
   font-size: 1.6rem;
 }
 
-.prestataire-page {
+.list-providers {
   background-color: #EAF0F8;
+  padding: 5rem 0;
 }
-.prestataire-page .container {
-  max-width: 1440px;
+.list-providers__container {
+  max-width: 1250px;
   width: calc(100% - 15rem);
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  place-content: center;
-  padding-top: 5rem;
   gap: 3rem;
 }
-.prestataire-page .prestataire-card {
-  flex: 0 1 225px;
-  padding: 2rem;
+@media only screen and (max-width: 1400px) {
+  .list-providers__container {
+    max-width: 992px;
+  }
+}
+@media only screen and (max-width: 1142px) {
+  .list-providers__container {
+    max-width: 738px;
+  }
+}
+@media only screen and (max-width: 888px) {
+  .list-providers__container {
+    max-width: 483px;
+  }
+}
+@media only screen and (max-width: 633px) {
+  .list-providers__container {
+    max-width: 230px;
+  }
+}
+.list-providers .providers-pagination {
   text-align: center;
-  border-radius: 10px;
-  border: solid 2px white;
-}
-.prestataire-page .prestataire-card p:first-of-type {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-top: 2rem;
-}
-.prestataire-page .prestataire-card p:last-of-type {
-  margin-bottom: 2rem;
-}
-.prestataire-page .prestataire-card a {
-  background: rgb(207, 196, 255);
-  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
-  border-radius: 10px;
-  border: solid 1px white;
-  cursor: pointer;
-  box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
-  padding: 1rem 2rem;
-}
-.prestataire-page .prestataire-card:hover {
-  transform: scale(1.025);
-  background-color: #fafaff;
-  box-shadow: rgb(223, 233, 245) 0px 10px 10px;
-}
-.prestataire-page .prestataire-card > div {
-  height: 15rem;
-  width: 15rem;
-  border-radius: 50%;
-  margin: auto;
-  position: relative;
-}
-.prestataire-page .prestataire-card > div img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-.prestataire-page .prestataire-card > div div {
-  border: solid 2px white;
-  height: 14rem;
-  width: 14rem;
-  border-radius: 50%;
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-}
-
-.prestataire-profil {
-  background-color: #EAF0F8;
-}
-.prestataire-profil .container {
-  max-width: 1440px;
-  width: calc(100% - 15rem);
-  margin: 0 auto;
-  display: flex;
-  gap: 4rem;
-  padding-top: 9rem;
-}
-.prestataire-profil .card-profil {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  gap: 1rem;
-  width: 25rem;
-  height: fit-content;
-  padding: 3rem;
-  border-radius: 20px;
-  background-color: #fafaff;
-  box-shadow: rgb(223, 233, 245) 0px 10px 10px;
-}
-.prestataire-profil .card-profil > div {
-  border-radius: 2rem;
-  height: 20rem;
-  width: 19rem;
-  overflow: hidden;
-}
-.prestataire-profil .card-profil img {
-  object-fit: contain;
-}
-.prestataire-profil .contente {
-  display: flex;
-  flex-flow: column;
-  gap: 4rem;
-  flex: 0 1 calc(100% - 29rem);
-}
-.prestataire-profil .banner {
-  display: flex;
-  gap: 1rem;
-  height: 25rem;
-}
-.prestataire-profil .banner .card {
-  border-radius: 2rem;
-  height: 100%;
-  flex: 1;
-  transition: 0.3s all ease;
-  overflow: hidden;
-  background: #ffffff;
-  box-shadow: 1px 1px 5px #b3b3b3, -5px -5px 10px #ffffff;
-}
-.prestataire-profil .banner .card:hover {
-  flex: 4;
-}
-.prestataire-profil .banner .card img {
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
-}
-.prestataire-profil .menu {
-  display: flex;
-  width: 30rem;
-  margin: 4rem auto 0;
-  border-bottom: solid 1px #cccccc;
-}
-.prestataire-profil .menu button {
-  flex: 1;
-  padding: 1rem;
-  background-color: inherit;
-}
-.prestataire-profil .menu .active {
-  border-bottom: solid #cccccc;
-}
-.prestataire-profil .service,
-.prestataire-profil .stage {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3rem;
-}
-.prestataire-profil .service.no-show,
-.prestataire-profil .stage.no-show {
-  display: none;
-}
-.prestataire-profil .service-card,
-.prestataire-profil .stage-card {
-  flex: 0 1 214px;
-  border-radius: 15px;
-  background-color: #FFFFFF;
-  box-shadow: rgb(223, 233, 245) 0px 10px 10px;
-  padding: 2rem;
-  display: flex;
-  flex-flow: column;
-  gap: 3rem;
-  text-align: center;
-}
-.prestataire-profil .stage-card .card-footer {
-  font-size: 1.6rem;
-}
-.prestataire-profil .stage-card .card-footer div {
-  display: inline-block;
-  padding: 1.2rem 2rem 0.8rem;
-  border-radius: 10px;
-  background-color: #468ACD;
-  color: white;
-  font-weight: 600;
 }
 
 .site-header {
@@ -1709,26 +1572,82 @@
 }
 
 .card-provider {
+  flex: 0 1 225px;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 10px;
+  border: solid 2px white;
+}
+.card-provider .provider-profile {
+  height: 14rem;
+  width: 14rem;
+  border-radius: 50%;
+  margin: auto;
+  border: solid 4px white;
+  display: flex;
+  align-items: center;
+  place-content: center;
+  background-color: deepskyblue;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
+}
+.card-provider .provider-profile img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.card-provider .provider-profile span {
+  font-size: 7rem;
+  color: white;
+  padding: 1rem 0 0 0.5rem;
+}
+.card-provider .provider-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 2rem;
+}
+.card-provider .provider-mail {
+  margin-bottom: 2rem;
+}
+.card-provider .provider-button a {
+  background: rgb(207, 196, 255);
+  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+  border-radius: 10px;
+  border: solid 1px white;
+  cursor: pointer;
+  box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
+  padding: 1rem 2rem;
+}
+.card-provider:hover {
+  transform: scale(1.025);
+  background-color: #fafaff;
+  box-shadow: rgb(223, 233, 245) 0px 10px 10px;
+}
+.card-provider:hover .provider-profile {
+  border-color: #cbd2dc;
+}
+
+.card-provider-featured {
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: rgb(223, 233, 245) 0px 10px 10px;
   flex: 0 1 32rem;
 }
-.card-provider .provider-info {
+.card-provider-featured .provider-featured-info {
   position: relative;
   height: 15.6rem;
   background-color: #E7F7F0;
   padding: 2rem 3rem;
 }
-.card-provider .provider-info .provider-name {
+.card-provider-featured .provider-featured-info .provider-featured-name {
   font-size: 1.8rem;
 }
-.card-provider .provider-info .provider-service {
+.card-provider-featured .provider-featured-info .provider-featured-service {
   font-size: 1.4rem;
   font-weight: 300;
   color: #6E6488;
 }
-.card-provider .provider-info .provider-image {
+.card-provider-featured .provider-featured-info .provider-featured-image {
   position: absolute;
   bottom: -5rem;
   border: solid 4px white;
@@ -1738,12 +1657,12 @@
   border-radius: 50%;
   background-color: #2d7fba;
 }
-.card-provider .provider-details {
+.card-provider-featured .provider-featured-details {
   padding: 3rem;
   background-color: white;
   text-align: center;
 }
-.card-provider .provider-details .provider-social-icons {
+.card-provider-featured .provider-featured-details .provider-featured-social-icons {
   display: flex;
   align-items: center;
   justify-content: end;
@@ -1752,7 +1671,7 @@
   padding-bottom: 1.5rem;
   color: white;
 }
-.card-provider .provider-details .provider-social-icons a {
+.card-provider-featured .provider-featured-details .provider-featured-social-icons a {
   display: flex;
   align-items: center;
   place-content: center;
@@ -1762,13 +1681,13 @@
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
 }
-.card-provider .provider-details .provider-description {
+.card-provider-featured .provider-featured-details .provider-featured-description {
   font-size: 1.4rem;
   font-weight: 300;
   color: #9B99A3;
   padding: 1.5rem 0;
 }
-.card-provider .provider-details .provider-service-button {
+.card-provider-featured .provider-featured-details .provider-featured-service-button {
   color: #4F4D62;
   font-size: 1.4rem;
   padding: 1.35rem 3.5rem 1.15rem;
@@ -1779,7 +1698,7 @@
   cursor: pointer;
   box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
 }
-.card-provider .provider-details .provider-service-button:hover {
+.card-provider-featured .provider-featured-details .provider-featured-service-button:hover {
   background: rgb(218, 234, 245);
   background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
 }

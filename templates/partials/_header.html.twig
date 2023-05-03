@@ -11,7 +11,7 @@
                 <a href="{{ path('app_home') }}"><span>Bien</span><span>-</span>être</a>
             </div>
             <nav>
-                <a href="#">Prestataires</a>
+                <a href="{{ path('app_providers') }}">Prestataires</a>
                 <a href="{{ path('app_services_defaut') }}">Services</a>
                 <a href="#">Newsletter</a>
                 <a href="#">Contact</a>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="providers-button">
-                <a href="#">
+                <a href="{{ path('app_providers') }}">
                     {{ include("svg/providers.html.twig") }}
                     <span>Providers</span>
                 </a>

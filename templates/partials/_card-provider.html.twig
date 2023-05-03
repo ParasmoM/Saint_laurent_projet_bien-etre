@@ -1,27 +1,29 @@
-<div class="card-provider">
-    <div class="provider-info">
+{% for provider in providers %}
+
+{% if provider.images is defined %}
+    {% set name_image = provider.images.first ? provider.images.first %}
+{% endif %}
+
+    <div class="card-provider">
+        <div class="provider-profile">
+            {% if name_image is defined %}
+                <img src="{{ asset('assets/uploads/providers/' ~ provider.images.first) }}" alt="">
+            {% else %}
+                <span>{{ provider|slice(0, 1)|upper }}</span>
+            {% endif %}
+        </div>
+
         <p class="provider-name">
-            Parasmo Marco
+            {{ provider }}
         </p>
-        <p class="provider-service">
-            Service
+
+        <p class="provider-mail">
+            {{ provider.users.first }}
         </p>
-        <div class="provider-image">
-            
-        </div>
-    </div>
-    <div class="provider-details">
-        <div class="provider-social-icons">
-            <a href="">{{ include('svg/websiteUrl.html.twig') }}</a>
-            <a href="">{{ include('svg/instagram.html.twig') }}</a>
-            <a href="">{{ include('svg/facebook.html.twig') }}</a>
-            <a href="">{{ include('svg/twitter.html.twig') }}</a>
-        </div>
-        <p class="provider-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque illum perspiciatis totam deserunt, esse ut, repellat fugit corporis tempora repudiandae eligendi? Suscipit autem voluptatum porro non sed, alias inventore earum?
-        </p>
-        <button class="provider-service-button">
-            <a href="">En savoir plus</a>
+
+        <button class="provider-button">
+            <a href="#">Voir le prolfil</a>
         </button>
     </div>
-</div>
+
+{% endfor %}

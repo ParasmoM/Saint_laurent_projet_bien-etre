@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProvidersController!{% endblock %}
+
+{% block body %}
+<main class="list-providers">
+
+    <section class="list-providers__container">
+        {% include "partials/_card-provider.html.twig" %}
+    </section>
+
+    <div class="providers-pagination">
+        {{ knp_pagination_render(providers) }}
+    </div>
+    
+</main>
+{% endblock %}

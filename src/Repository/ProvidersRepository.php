@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Providers;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Providers>
@@ -16,9 +18,40 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProvidersRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        private PaginatorInterface $paginatorInterface,
+    ) {
         parent::__construct($registry, Providers::class);
+    }
+
+    public function findByProviders($data, $page = 1): PaginationInterface
+    {
+        $req = $this->createQueryBuilder('p')
+        ->innerJoin('p.promotion', 'pp')
+        ->innerJoin('pp.service', 'c');
+        
+        $req->groupBy('p.id')
+        ->orderBy('p.id', 'DESC')
+        ;
+        
+        // dd($data);:
+        if (!empty($data)) {
+            // dd('ici');
+            if (!empty($data['search']['nom'])) {
+                $nom = $data['search']['nom'] . '%';
+                $req->andWhere('p.nom LIKE :search')
+                    ->orWhere('p.prenom LIKE :search')
+                    ->setParameter('search', $nom);
+            }
+        
+            if ($data['search']['categorie'] !== null && !empty($data['search']['categorie'])) {
+                $req->andWhere('c.nom = :category')
+                    ->setParameter('category', $data['search']['categorie']);
+            }
+        }
+
+        return $this->paginatorInterface->paginate($req, $page, 8);
     }
 
     public function save(Providers $entity, bool $flush = false): void
