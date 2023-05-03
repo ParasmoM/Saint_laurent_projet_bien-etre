@@ -1277,6 +1277,13 @@
 .main-navigation .profile-button-container {
   display: flex;
 }
+.main-navigation .profile-button-container .avatar-container {
+  border: solid 2px white;
+  border-radius: 50%;
+  height: 6rem;
+  width: 6rem;
+  overflow: hidden;
+}
 .main-navigation .profile-button-container > span {
   font-size: 3rem;
   font-weight: 700;
@@ -1346,6 +1353,7 @@
   display: flex;
   align-items: center;
   place-content: center;
+  overflow: hidden;
 }
 .profile-dropdown .profile-dropdown-item > a:first-of-type .profile-dropdown-item-icon span {
   font-size: 2rem;

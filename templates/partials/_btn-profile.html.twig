@@ -1,9 +1,18 @@
+{% if app.user and app.user.providers.images is defined %}
+    {% set name_image = app.user.providers.images.first.name ? app.user.providers.images.first.name %}
+{% endif %}
 
 {% if app.user %}
     <div class="profile-button-container">
-        <span>
-            {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
-        </span>
+        {% if name_image is defined %}
+            <div class="avatar-container">
+                <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">ici
+            </div>
+            {% else %}
+                <span>
+                    {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
+                </span>
+            {% endif %}
     </div>
     <div class="profile-dropdown" id="profile-dropdown">
         <ul class="profile-dropdown-menu">
@@ -11,9 +20,13 @@
                 <a href="#">
                     <div class="profile-dropdown-item-icon">
                         <div>
+                        {% if name_image is defined %}
+                            <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
+                        {% else %}
                             <span>
                                 {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
                             </span>
+                        {% endif %}
                         </div>
                     </div>
                     <div class="profile-dropdown-item-link">
@@ -48,7 +61,7 @@
                 </a>
             </li>
             <li class="profile-dropdown-item">
-                <a href="#">
+                <a href="{{ path('app_logout') }}">
                     <div class="profile-dropdown-item-icon">
                         {{ include('svg/logout.html.twig') }}
                     </div>

@@ -1,5 +1,7 @@
-{% if app.user and app.user.internetUsers %}
-    <a href="{{ path('app_register', {status: 'providers'}) }}">Devenez prestataire</a>
+{% if app.user %}
+    {% if app.user.internetUsers %}
+        <a href="{{ path('app_register', {status: 'providers'}) }}">Devenez prestataire</a>
+    {% endif %}
 {% else %}
     <a href="{{ path('app_login') }}">Connexion</a>
 {% endif %}

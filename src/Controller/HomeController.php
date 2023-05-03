@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\CategoriesOfServices;
 use App\Repository\CategoriesOfServicesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,12 +11,14 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
     public function index(
-        CategoriesOfServicesRepository $categRepository
+        CategoriesOfServicesRepository $categRepository,
     ): Response {
         $list_categ = $categRepository->findAll();
 
         return $this->render('home/home.html.twig', compact(
-            'list_categ'
+            'list_categ',
+            // 'avatar'
         ));
     }
+    
 }

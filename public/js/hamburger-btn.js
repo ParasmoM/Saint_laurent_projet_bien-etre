@@ -5,3 +5,4 @@ BUTTON_HAMBURGER.addEventListener('click', function() {
     this.classList.toggle('active');
     SIDEBAR.classList.toggle('active');
 });
+console.log('script hambuger active');

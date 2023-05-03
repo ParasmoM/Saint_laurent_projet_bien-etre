@@ -11,3 +11,4 @@ document.addEventListener('click', function() {
         PROFILE_DROPDOWN.classList.remove('active');
     }
 });
+console.log('script btn profile active');

@@ -28,6 +28,10 @@ class Images
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Providers $providerPhoto = null;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
     public function getId(): ?int
     {
         return $this->id;
