@@ -11,6 +11,7 @@
                 <a href="{{ path('app_home') }}"><span>Bien</span><span>-</span>être</a>
             </div>
             <nav>
+                <a href="{{ path('app_home') }}">Accueil</a>
                 <a href="{{ path('app_providers') }}">Prestataires</a>
                 <a href="{{ path('app_services_defaut') }}">Services</a>
                 <a href="#">Newsletter</a>
@@ -23,6 +24,11 @@
         </div>
 
         <nav class="main-navigation">
+            <div class="home-button">
+                {{ include("svg/home.html.twig") }}
+                <a href="{{ path('app_home') }}">Accueil</a>
+            </div>
+
             {{ include("partials/_btn-dashbord.html.twig") }}
 
             <div class="services-button">

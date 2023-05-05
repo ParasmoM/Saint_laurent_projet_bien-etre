@@ -1,0 +1,22 @@
+{% set category = app.request.get('categoryy') %}
+
+<form action="{{ path('app_providers') }}" method="GET" class="search-bar-form" id="search_bar">
+    <div class="search-bar__items">
+        <div class="search-bar__input">
+            {{ include('svg/loupe.html.twig') }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="search-bar__select">
+            {{ form_widget(form.service) }}
+            {{ include('svg/chevron.html.twig') }}
+        </div>
+    </div>
+    <div class="search-bar__items">
+        {{ form_widget(form.code) }}
+        {{ form_widget(form.town) }}
+    </div>
+    <div class="search-bar__items">
+        {{ form_widget(form.locality) }}
+        <input type="submit" value="Recherche">
+    </div>
+</form>

@@ -983,6 +983,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 3rem;
+  min-height: 634px;
 }
 @media only screen and (max-width: 1400px) {
   .list-providers__container {
@@ -1060,6 +1061,25 @@
 @media only screen and (max-width: 768px) {
   .main-navigation {
     gap: 0;
+  }
+}
+.main-navigation .home-button {
+  display: flex;
+  align-items: center;
+}
+.main-navigation .home-button a {
+  padding-top: 0.5rem;
+}
+.main-navigation .home-button svg {
+  display: flex;
+  height: 1.4rem;
+}
+.main-navigation .home-button:hover {
+  color: #5D4E91;
+}
+@media only screen and (max-width: 768px) {
+  .main-navigation .home-button {
+    display: none;
   }
 }
 .main-navigation .services-button {
@@ -1411,70 +1431,102 @@
   color: #5D4E91;
 }
 
-.searchBar {
+.search-bar {
   background-color: #e8eef8;
-  position: sticky;
-  top: 92px;
   z-index: 100;
+  margin-bottom: 3rem;
+  backdrop-filter: blur(30px) drop-shadow(0px 0px 10px #DFE9F5);
 }
-.searchBar__container {
+.search-bar-form {
   max-width: 1440px;
-  width: calc(100% - 15rem);
+  width: calc(100% - 8rem);
   margin: 0 auto;
-  padding: 2rem 5rem;
+  padding: 0 5rem 2rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 2rem;
 }
-.searchBar__container > div {
+.search-bar-form .search-bar__items {
   display: flex;
   gap: 20px;
   flex: 1 1 100%;
 }
-.searchBar__container > input:not(input[type=submit]) {
-  flex: 1;
-  border-radius: 10px;
+.search-bar-form .search-bar__items select {
+  border-radius: 1rem;
   border: solid 1px #DCE2E7;
   background-color: white;
+  height: 4rem;
+}
+.search-bar-form .search-bar__items:nth-of-type(2) {
+  flex: 1;
+  display: flex;
+}
+@media only screen and (max-width: 600px) {
+  .search-bar-form .search-bar__items:nth-of-type(2) {
+    flex: 1 1 100%;
+  }
+}
+.search-bar-form .search-bar__items:nth-of-type(2) select {
+  flex: 1;
+  padding-left: 1rem;
+}
+.search-bar-form .search-bar__items:nth-of-type(2) select:last-of-type {
+  width: 20px;
+}
+.search-bar-form .search-bar__items:nth-of-type(3) {
+  flex: 1;
+}
+.search-bar-form .search-bar__items:nth-of-type(3) select {
+  flex: 1;
+  padding-left: 1rem;
+}
+.search-bar-form > select {
+  flex: 1;
   padding: 0.4rem 2rem 0;
 }
-.searchBar__container input[type=submit] {
+.search-bar-form input[type=submit] {
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
   border-radius: 10px;
   border: solid 1px white;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 0.4rem 6rem 0;
-  height: 40px;
+  padding: 0.4rem 0;
+  height: 4rem;
+  flex: 1;
 }
-.searchBar__input {
+.search-bar-form input[type=submit]:hover {
+  transform: scale(1.025);
+  background-color: #fafaff;
+  box-shadow: rgb(223, 233, 245) 0px 10px 10px;
+}
+.search-bar__input {
   display: flex;
   align-items: center;
   gap: 1rem;
-  flex: 1;
-  border-radius: 10px;
+  flex: 0 1 50%;
+  border-radius: 1rem;
   border: solid 1px #DCE2E7;
   background-color: white;
   padding: 0.4rem 2rem 0;
-  height: 40px;
+  height: 4rem;
 }
-.searchBar__input input {
+.search-bar__input input {
   width: 100%;
   border: none;
 }
-.searchBar__select {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  border-radius: 10px;
+.search-bar__select {
+  flex: 0 1 50%;
+  border-radius: 1rem;
   border: solid 1px #DCE2E7;
   background-color: white;
+  display: flex;
+  align-items: center;
   padding-left: 1rem;
   padding-right: 0.5rem;
-  padding-top: 0.4rem;
 }
-.searchBar__select select {
+.search-bar__select select {
+  border: none !important;
   appearance: none;
   width: 100%;
   border: none;
@@ -1573,6 +1625,7 @@
 
 .card-provider {
   flex: 0 1 225px;
+  height: 302px;
   padding: 2rem;
   text-align: center;
   border-radius: 10px;
@@ -1610,6 +1663,7 @@
   margin-bottom: 2rem;
 }
 .card-provider .provider-button a {
+  display: block;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
   border-radius: 10px;

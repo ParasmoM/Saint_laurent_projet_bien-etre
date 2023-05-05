@@ -6,9 +6,13 @@ use DateTime;
 use Faker\Factory;
 use App\Entity\Users;
 use App\Entity\Images;
+use App\Utils\Adresse;
 use App\Entity\Providers;
 use App\Entity\Promotions;
 use App\Entity\CategoriesOfServices;
+use App\Repository\LocalitiesRepository;
+use App\Repository\PostalCodesRepository;
+use App\Repository\TownsRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -17,14 +21,18 @@ class UsersFixtures extends Fixture
 {
     private $faker;
 
-    public function __construct(private UserPasswordHasherInterface $passwordEncoder)
-    {
+    public function __construct(
+        private UserPasswordHasherInterface $passwordEncoder, 
+        private PostalCodesRepository $postalCodesRepository,
+        private LocalitiesRepository $localitiesRepository,
+        private TownsRepository $townsRepository
+    ) {
         $this->faker = $faker = Factory::create('fr_BE');
     }
     
     public function load(ObjectManager $manager): void
     {
-        $this->createProvider(20, 'femme', $manager);
+        $this->createProvider(10, 'femme', $manager);
     }
 
     public function createProvider($nbr, $sexe, $manager) {
@@ -150,6 +158,10 @@ class UsersFixtures extends Fixture
     }
 
     public function createUsers($prestataire, $manager) {
+        $tabAdresse = Adresse::getAdresse();
+        $randomKeys = array_rand($tabAdresse, 1);
+        $randomAdresse = $tabAdresse[$randomKeys];
+
         $user = new Users();
         $user->setEmail($this->faker->email);
         $user->setPassword(
@@ -159,6 +171,9 @@ class UsersFixtures extends Fixture
         $user->setUserType('Provider');
         $user->setFailedAttempts(0);
         $user->setBanned(false);
+        $user->setPostalCode($this->postalCodesRepository->findOneBy(['name' => $randomAdresse['Code']]));
+        $user->setLocality($this->localitiesRepository->findOneBy(['name' => $randomAdresse['Localite']]));
+        $user->setTown($this->townsRepository->findOneBy(['name' => $randomAdresse['Commune']]));
         $user->setProviders($prestataire);
 
         $manager->persist($user);

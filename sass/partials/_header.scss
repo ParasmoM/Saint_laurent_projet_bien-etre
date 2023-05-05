@@ -49,6 +49,28 @@
         gap: 0;
     }
 
+    .home-button {
+        display: flex;
+        align-items: center;
+
+        a {
+            padding-top: .5rem;
+        }
+
+        svg {
+            display: flex;
+            height: 1.4rem;
+        }
+
+        &:hover {
+            color: #5D4E91;
+        }
+
+        @media only screen and (max-width: 768px) {
+            display: none;
+        }
+    }
+    
     .services-button {
         display: flex;
         height: 100%;

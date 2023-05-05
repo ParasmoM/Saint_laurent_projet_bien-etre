@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Providers;
+use App\Repository\PostalCodesRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -21,6 +22,9 @@ class ProvidersRepository extends ServiceEntityRepository
     public function __construct(
         ManagerRegistry $registry,
         private PaginatorInterface $paginatorInterface,
+        private PostalCodesRepository $postalCodesRepository,
+        private TownsRepository $townsRepository,
+        private LocalitiesRepository $localitiesRepository
     ) {
         parent::__construct($registry, Providers::class);
     }
@@ -29,25 +33,45 @@ class ProvidersRepository extends ServiceEntityRepository
     {
         $req = $this->createQueryBuilder('p')
         ->innerJoin('p.promotion', 'pp')
-        ->innerJoin('pp.service', 'c');
+        ->innerJoin('pp.service', 'c')
+        ->innerJoin('p.users', 'u');
         
         $req->groupBy('p.id')
         ->orderBy('p.id', 'DESC')
         ;
         
-        // dd($data);:
         if (!empty($data)) {
-            // dd('ici');
-            if (!empty($data['search']['nom'])) {
-                $nom = $data['search']['nom'] . '%';
-                $req->andWhere('p.nom LIKE :search')
-                    ->orWhere('p.prenom LIKE :search')
-                    ->setParameter('search', $nom);
+            if (!empty($data['search']['name'])) {
+                $name = $data['search']['name'] . '%';
+                $req->andWhere('p.lastName LIKE :search')
+                    ->orWhere('p.firstName LIKE :search')
+                    ->setParameter('search', $name);
             }
         
-            if ($data['search']['categorie'] !== null && !empty($data['search']['categorie'])) {
-                $req->andWhere('c.nom = :category')
-                    ->setParameter('category', $data['search']['categorie']);
+            if ($data['search']['service'] !== null && !empty($data['search']['service'])) {
+                $req->andWhere('c.name = :category')
+                    ->setParameter('category', $data['search']['service']);
+            }
+            
+            if ($data['search']['code'] !== null && !empty($data['search']['code'])) {
+                $postaCode = $this->postalCodesRepository->findOneBy(['name' => $data['search']['code']]);
+                
+                $req->andWhere('u.postalCode = :postalCode')
+                ->setParameter('postalCode', $postaCode->getId());
+            }
+
+            if ($data['search']['town'] !== null && !empty($data['search']['town'])) {
+                $town = $this->townsRepository->findOneBy(['name' => $data['search']['town']]);
+                
+                $req->andWhere('u.town = :town')
+                ->setParameter('town', $town->getId());
+            }
+
+            if ($data['search']['locality'] !== null && !empty($data['search']['locality'])) {
+                $locality = $this->localitiesRepository->findOneBy(['name' => $data['search']['locality']]);
+                
+                $req->andWhere('u.locality = :locality')
+                ->setParameter('locality', $locality->getId());
             }
         }
 

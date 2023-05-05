@@ -57,6 +57,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users', cascade: ["persist"])]
     private ?Providers $providers = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Towns $town = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Localities $locality = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?PostalCodes $postalCode = null;
+
     public function __construct()
     {
         $this->registration = new \DateTime('now');
@@ -250,6 +259,42 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setProviders(?Providers $providers): self
     {
         $this->providers = $providers;
+
+        return $this;
+    }
+
+    public function getTown(): ?Towns
+    {
+        return $this->town;
+    }
+
+    public function setTown(?Towns $town): self
+    {
+        $this->town = $town;
+
+        return $this;
+    }
+
+    public function getLocality(): ?Localities
+    {
+        return $this->locality;
+    }
+
+    public function setLocality(?Localities $locality): self
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?PostalCodes
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(?PostalCodes $postalCode): self
+    {
+        $this->postalCode = $postalCode;
 
         return $this;
     }
