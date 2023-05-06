@@ -32,7 +32,7 @@ class UsersFixtures extends Fixture
     
     public function load(ObjectManager $manager): void
     {
-        $this->createProvider(10, 'femme', $manager);
+        $this->createProvider(30, 'femme', $manager);
     }
 
     public function createProvider($nbr, $sexe, $manager) {

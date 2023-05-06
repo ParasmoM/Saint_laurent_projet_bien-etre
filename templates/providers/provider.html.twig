@@ -3,6 +3,7 @@
 {% block title %}Hello ProvidersController!{% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script src="{{ asset('js/ajax_adresse.js') }}" defer></script>
     <script src="{{ asset('js/ajax_search-bar.js') }}" defer></script>
 {% endblock %}

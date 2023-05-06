@@ -1,0 +1,12 @@
+<div class="hero__banner swiper mySwiper">
+    <div class="swiper-wrapper">
+        {% for image in gallery|random|slice(0, 10) %}
+        <div class="swiper-slide">
+            <img src="{{ asset('assets/uploads/galleries/' ~ image) }}" alt="">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+</div>

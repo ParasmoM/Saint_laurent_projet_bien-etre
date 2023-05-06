@@ -1,0 +1,14 @@
+<div class="hero-featured__container ">
+    {% for service in service_month %}
+        {% if service.isFeatured %}
+        <img src="{{ asset('assets/uploads/services/' ~ service.images) }}" alt="">
+        <h2>{{ service.name }}</h2>
+        <p>
+            {{ service.description|length > 150 ? service.description|slice(0, 150) ~ '...' : service.description }}
+        </p>
+        <a href="{{ path('app_services', {id: service.id}) }}">
+        En savoir plus
+        </a>
+        {% endif %}
+    {% endfor %}    
+</div>

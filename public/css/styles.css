@@ -756,41 +756,130 @@
 
 .hero {
   background-color: #EAF0F8;
+  padding: 90px 0 60px 0;
+}
+.hero .hero-titre {
+  max-width: 1440px;
+  width: calc(100% - 8rem);
+  margin: 0 auto;
+  display: none;
+}
+@media only screen and (max-width: 950px) {
+  .hero .hero-titre {
+    display: block;
+    font-size: 3rem;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .hero .hero-titre {
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+  }
 }
 .hero__container {
   max-width: 1440px;
-  width: calc(100% - 15rem);
+  width: calc(100% - 8rem);
   margin: 0 auto;
   display: flex;
   flex-direction: row-reverse;
-  gap: 50px;
-  padding: 90px 0 60px 0;
+  gap: 5rem;
+}
+@media only screen and (max-width: 1440px) {
+  .hero__container {
+    gap: 3rem;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .hero__container {
+    gap: 2rem;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .hero__container {
+    flex-direction: column;
+  }
 }
 .hero__banner {
   flex: 1;
-  height: 725px;
-  border-radius: 20px;
+  border-radius: 1rem;
+  height: 72.5rem;
+  overflow: hidden;
+}
+@media only screen and (max-width: 1170px) {
+  .hero__banner {
+    height: 68rem;
+  }
+}
+@media only screen and (max-width: 1050px) {
+  .hero__banner {
+    height: 60rem;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .hero__banner {
+    height: 50rem;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .hero__banner {
+    flex: 50rem;
+  }
 }
 .hero .hero__content {
   flex: 1;
 }
 .hero .hero__content h1 {
-  font-size: 50px;
-  margin-bottom: 100px;
-  width: 73%;
+  font-size: 5rem;
+  margin-bottom: 10rem;
 }
-.hero .hero__featured {
+@media only screen and (max-width: 1290px) {
+  .hero .hero__content h1 {
+    font-size: 4.5rem;
+  }
+}
+@media only screen and (max-width: 1170px) {
+  .hero .hero__content h1 {
+    font-size: 4rem;
+  }
+}
+@media only screen and (max-width: 1050px) {
+  .hero .hero__content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 5rem;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .hero .hero__content h1 {
+    display: none;
+  }
+}
+.hero .hero-featured {
   position: relative;
+  width: fit-content;
+  margin: auto;
 }
-.hero .hero__featured > h2 {
+@media only screen and (max-width: 950px) {
+  .hero .hero-featured {
+    padding-top: 3rem;
+  }
+}
+.hero .hero-featured > h2 {
   position: absolute;
-  top: 165px;
-  right: 350px;
-  font-size: 50px;
+  top: 16.5rem;
+  right: 15rem;
+  font-size: 5rem;
   transform: rotate(-90deg);
   white-space: nowrap;
 }
-.hero .hero__featured--container {
+@media only screen and (max-width: 950px) {
+  .hero .hero-featured > h2 {
+    transform: rotate(0);
+    position: static;
+    font-size: 4rem;
+    margin-bottom: 2rem;
+  }
+}
+.hero .hero-featured__container {
   width: 300px;
   border-radius: 15px;
   overflow: hidden;
@@ -799,20 +888,20 @@
   text-align: center;
   box-shadow: rgb(223, 233, 245) 0px 10px 10px;
 }
-.hero .hero__featured--container img {
+.hero .hero-featured__container img {
   width: 100%;
   height: 156px;
   object-fit: cover;
 }
-.hero .hero__featured--container h2 {
+.hero .hero-featured__container h2 {
   text-transform: uppercase;
   font-size: 30px;
   padding-top: 16px;
 }
-.hero .hero__featured--container p {
+.hero .hero-featured__container p {
   padding: 30px;
 }
-.hero .hero__featured--container a {
+.hero .hero-featured__container a {
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
   border-radius: 10px;
@@ -823,105 +912,74 @@
   display: inline-block;
   margin-bottom: 40px;
 }
-
-.prestataires {
-  max-width: 1440px;
-  width: calc(100% - 15rem);
-  margin: 150px auto;
+.hero .hero-featured__container a:hover {
+  background: rgb(218, 234, 245);
+  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
 }
-.prestataires > h2 {
+
+.providers {
+  max-width: 1440px;
+  width: calc(100% - 8rem);
+  margin: 9rem auto;
+}
+.providers > h2 {
   font-size: 50px;
   margin-bottom: 70px;
 }
-.prestataires > a {
-  display: inline-flex;
+.providers__link {
+  background: inherit;
+  display: block;
+  margin: 5rem 0 0 auto;
+}
+.providers__link a {
+  display: flex;
   align-items: center;
-  gap: 1rem;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
   padding: 0.7rem 5rem 0.3rem;
   border-radius: 1rem;
   border: solid 1px white;
   cursor: pointer;
-  box-shadow: rgb(231, 232, 247) 0px 5px 9px;
-  float: right;
-  margin-top: 30px;
-  font-size: 1.6rem;
-}
-.prestataires-content {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-.prestataires .prestataire {
-  flex: 0 1 330px;
-  height: 467px;
-  border-radius: 15px;
-  overflow: hidden;
-  background-color: white;
-  box-shadow: rgb(223, 233, 245) 0px 10px 10px;
-  position: relative;
-  text-align: center;
-}
-.prestataires .prestataire > div:last-of-type {
-  height: 66.6%;
-}
-.prestataires .prestataire-header {
-  height: 33.4%;
-  background-color: #E7E2FF;
-}
-.prestataires .prestataire-header h3 {
-  font-size: 1.8rem;
-}
-.prestataires .prestataire-header h4 {
-  font-size: 1.4;
-  font-weight: 300;
-  color: #6E6488;
-}
-.prestataires .prestataire-header div {
-  padding: 30px;
-  display: flex;
-  flex-flow: column;
-  text-align: left;
-}
-.prestataires .prestataire-profil {
-  border: solid 7.5px white;
-  width: 10rem;
-  height: 10rem;
-  border-radius: 50%;
-  position: absolute;
-  top: 106px;
-  left: 30px;
-  background-color: rgb(222, 232, 204);
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
-  overflow: hidden;
-}
-.prestataires .prestataire-socials {
-  text-align: right;
-  margin: 0 30px;
-  padding: 20px 0;
-  border-bottom: solid 1px #DAE9F4;
-}
-.prestataires .prestataire-text {
-  padding: 20px 30px;
-}
-.prestataires .prestataire-link {
-  background: rgb(207, 196, 255);
-  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
-  border-radius: 10px;
-  border: solid 1px white;
-  padding: 1.8rem 4rem 1.4rem;
-  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  position: absolute;
-  bottom: 20px;
-  right: 90px;
+  font-size: 1.6rem;
+  gap: 1rem;
+}
+.providers__link a:hover {
+  background: rgb(218, 234, 245);
+  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
+}
+.providers__container {
+  display: flex;
+  max-width: 1295px;
+  flex-wrap: wrap;
+  gap: 3rem;
+  margin: 0 auto;
+}
+@media only screen and (max-width: 1370px) {
+  .providers__container {
+    max-width: 965px;
+  }
+}
+@media only screen and (max-width: 1040px) {
+  .providers__container {
+    max-width: 632px;
+  }
+}
+@media only screen and (max-width: 712px) {
+  .providers__container {
+    max-width: 625px;
+    gap: 2rem;
+  }
+}
+@media only screen and (max-width: 702px) {
+  .providers__container {
+    max-width: 300px;
+  }
 }
 
 .about-us {
   background-color: rgba(227, 226, 245, 0.6);
-  padding: 150px 0;
+  padding: 9rem 0;
 }
 .about-us__container {
   max-width: 1440px;
@@ -957,19 +1015,22 @@
   color: #9B99A3;
 }
 .about-us__link {
-  display: inline-flex;
+  background: inherit;
+  display: block;
+  margin: 30px 0 0 auto;
+}
+.about-us__link a {
+  display: flex;
   align-items: center;
-  gap: 1rem;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
   padding: 0.7rem 5rem 0.3rem;
-  border-radius: 10px;
+  border-radius: 1rem;
   border: solid 1px white;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  float: right;
-  margin-top: 30px;
   font-size: 1.6rem;
+  gap: 1rem;
 }
 
 .list-providers {
@@ -1685,7 +1746,7 @@
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: rgb(223, 233, 245) 0px 10px 10px;
-  flex: 0 1 32rem;
+  flex: 0 1 30rem;
 }
 .card-provider-featured .provider-featured-info {
   position: relative;
@@ -1710,6 +1771,7 @@
   width: 10rem;
   border-radius: 50%;
   background-color: #2d7fba;
+  overflow: hidden;
 }
 .card-provider-featured .provider-featured-details {
   padding: 3rem;
@@ -1734,6 +1796,9 @@
   border-radius: 50%;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+}
+.card-provider-featured .provider-featured-details .provider-featured-social-icons svg {
+  height: 2rem;
 }
 .card-provider-featured .provider-featured-details .provider-featured-description {
   font-size: 1.4rem;

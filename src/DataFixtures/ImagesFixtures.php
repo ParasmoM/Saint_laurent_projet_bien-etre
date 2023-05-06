@@ -20,7 +20,8 @@ class ImagesFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $this->imageCateg($this->imgCateg, $manager);
+        $this->populateImages($manager, $this->imgCateg);
+        $this->populateImages($manager, 150);
     }
 
     public function imageCateg($tab, $manager) {
@@ -37,6 +38,33 @@ class ImagesFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($imageCateg);
             $manager->flush();
 
+        }
+    }
+
+    public function populateImages(ObjectManager $manager, $data): void
+    {        
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $image = new Images();
+                
+                $categoriesRepository = $manager->getRepository(CategoriesOfServices::class);
+                $service = $categoriesRepository->findOneBy(['name' => $key]);
+                
+                $image->setServiceImage($service);
+                $image->setName($value);
+
+                $manager->persist($image);
+            }
+            $manager->flush();
+        }
+        if (is_numeric($data)) {
+            for ($i=1; $i <= $data; $i++) { 
+                $image = new Images();
+                $image->setName($i . '.avif');
+                
+                $manager->persist($image);
+            }
+            $manager->flush();
         }
     }
 

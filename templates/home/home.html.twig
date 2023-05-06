@@ -2,9 +2,85 @@
 
 {% block title %}Hello HomeController!{% endblock %}
 
-{% block body %}
-    <h1>Homepage</h1>
-<main>
+{% block stylesheets %}
+    {{ parent() }}
 
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/ajax_adresse.js') }}" defer></script>
+    <!-- Link Swiper's CSS -->
+    <script src="{{ asset('js/swiper.js') }}" defer></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+{% endblock %}
+
+{% block body %}
+<main class="home-page">
+    <section class="hero">
+        <div class="hero-titre">
+            <h1>Trouvez le prestataire qui répondra à vos besoins</h1>
+        </div>
+        <div class="hero__container">
+            
+            {% include "partials/_swiper.html.twig" with {gallery: image_gallery} only %}
+
+            <div class="hero__content">
+                <h1>Trouvez le prestataire qui répondra à vos besoins</h1>
+                <div class="hero-featured">
+                    <h2>Service du mois</h2>
+                    
+                    {% include "partials/_service-featured.html.twig" with {service_month: list_categ} only %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-bar">
+        {% include "partials/_search-bar.html.twig" with {form: form} only  %}
+    </section>
+
+    <section class="providers">
+        <h2>Découvrez nos nouveaux prestataires</h2>
+        <div class="providers__container">
+            {% include "partials/_card-provider-featured.html.twig" with {providers: new_providers} only %}
+        </div>
+        <button class="providers__link">
+            <a href="{{ path('app_providers') }}">
+                <span>Liste complète</span>
+                {{ include("svg/arrow.html.twig") }}
+            </a>
+        </button>
+    </section>
+
+    <section class="about-us">
+        <div class="about-us__container">
+            <H2 class="about-us__title">Qui sommes-nous ?</H2>
+            <div class="about-us__content">
+                <div class="about-us__image-container">
+                    <img src="{{ asset('assets/uploads/about/icons8-team-yTwXpLO5HAA-unsplash.jpg') }}" alt="">
+                </div>
+                <div class="about-us__text-container">
+                <p class="about-us__text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore cumque voluptatum similique dolorem corporis, mollitia explicabo earum officiis quisquam soluta, quos molestiae maiores ipsa excepturi repudiandae sapiente, veniam temporibus deleniti. Orem ipsum dolor sit amet consectetur, adipisicing elit. Ullam nemo veritatis rem quod non fugit.
+                </p>
+                <p class="about-us__text">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam nemo veritatis rem quod non fugit, maxime ipsa a voluptates tempora itaque, minima corporis temporibus ipsum hic laboriosam sunt animi quidem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, odio. In laborum voluptatibus, repellat ex, nemo, fuga praesentium magni maxime explicabo natus voluptatem necessitatibus sint voluptatum nulla cumque delectus sed. axime ipsa a voluptates tempora itaque, minima corporis temporibus ipsum hic laboriosam sunt animi quidem.
+                </p>
+                </div>
+            </div>
+            <button class="about-us__link">
+                <a href="#">
+                    <span>Tout savoir</span>
+                    {{ include("svg/arrow.html.twig") }}
+                </a>  
+            </button>
+        </div>
+    </section> 
+
+    {% include "partials/_footer.html.twig" %}
 </main>
 {% endblock %}
