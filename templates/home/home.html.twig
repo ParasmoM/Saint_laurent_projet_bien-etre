@@ -61,7 +61,7 @@
             <H2 class="about-us__title">Qui sommes-nous ?</H2>
             <div class="about-us__content">
                 <div class="about-us__image-container">
-                    <img src="{{ asset('assets/uploads/about/icons8-team-yTwXpLO5HAA-unsplash.jpg') }}" alt="">
+                    <img src="{{ asset('assets/uploads/about/about3.jpg') }}" alt="">
                 </div>
                 <div class="about-us__text-container">
                 <p class="about-us__text">
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <button class="about-us__link">
-                <a href="#">
+                <a href="{{ path('app_about_us') }}">
                     <span>Tout savoir</span>
                     {{ include("svg/arrow.html.twig") }}
                 </a>  

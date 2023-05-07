@@ -1,0 +1,127 @@
+.aboutpage {
+    .titre {
+        font-size: 5rem;
+        text-transform: capitalize;
+    }
+    .container {
+        max-width: 1440px;
+        width: calc(100% - 8rem);
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+    }
+    .text {
+        text-align: justify;
+        font-size: 1.4rem;
+
+        p {
+            margin-top: 1rem;
+        }
+    }
+
+    .about_us {
+        background-color: #EAF0F8;
+        padding: 9rem 0;
+        
+        &__nav {
+            flex: 1;
+            display: flex;
+            flex-flow: column;
+            font-size: 2.2rem;
+            font-weight: 700;
+            white-space: nowrap;
+            padding-top: 7rem;
+        }
+        &__content {
+            flex: 3;
+        }
+        &__text {
+            text-align: justify;
+            font-size: 1.4rem;
+
+            p {
+                margin-top: 1rem;
+            }
+        }
+        &__banner {
+            flex: auto;
+            height: 55.8rem;
+            margin-top: 9rem;
+            border-radius: 1rem;
+            overflow: hidden;
+
+            img {
+                object-fit: cover;
+            }
+        }
+    }
+
+    .section {
+        padding: 9rem 0;
+
+        .content {
+            flex: 1;
+            padding-top: 2rem;
+        }
+        .banner {
+            flex: 1;
+            height: 35rem;
+            border-radius: 1rem;
+            overflow: hidden;
+
+            img {
+                object-fit: cover;
+                height: 100%;
+                width: 100%;
+            }
+        }
+        &:nth-of-type(even) .text {
+            padding-right: 10rem;
+        }
+        &:nth-of-type(odd) .text,
+        &:nth-of-type(odd) .titre {
+            padding-left: 10rem;
+        }
+    }
+
+    .team {
+        text-align: center;
+
+        .container {
+            flex-flow: column;
+            align-items: center;
+        }
+        .text {
+            width: 70%;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .gallery {
+            display: flex;
+            gap: 5rem;
+            flex-wrap: wrap;
+            max-width: 1182px;
+            margin: 9rem auto;
+        }
+        .items {
+            width: 36rem;
+            text-align: left;
+            font-size: 1.4rem;
+
+            > div {
+                overflow: hidden;
+                border-radius: 1rem;
+                height: 23.8rem;
+            }
+            img {
+                object-fit: cover;
+                height: 100%;
+                width: 100%;
+            }
+            p:first-of-type {
+                margin-top: 2rem;
+                font-weight: 700;
+            }
+        }
+    }
+}
