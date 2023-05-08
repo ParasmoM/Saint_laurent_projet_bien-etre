@@ -5,7 +5,12 @@
 {% block body %}
 
 <main class="service-page">
-    <section class="service-page-banner" style="background-image: url({{ asset('assets/uploads/services/' ~ serviceCurrent.images.name) }} );">
+    {% if serviceCurrent.images.name is defined %}
+        {% set banner =  asset('assets/uploads/services/' ~ serviceCurrent.images.name) %}
+    {% else %}
+        {% set banner = "" %}
+    {% endif %}
+    <section class="service-page-banner" style="background-image: url({{ banner }} );">
         <h1>{{ serviceCurrent }}</h1>
     </section>
     
@@ -46,7 +51,6 @@
             </div>
         </div>
     </section>
-    {{ dump(services.items) }}
 </main>
 
 {% endblock %}

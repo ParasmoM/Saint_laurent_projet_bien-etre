@@ -18,6 +18,20 @@
         {% if list_categ is defined %}
             {{ include('partials/_header.html.twig') }}
         {% endif %}
+        
+        {% if app.user is not null and app.user.isVerified == false %}
+            <section class="verif">
+                Compte en attente de vérification 
+                <a href="{{ path('app_resend_confirmation') }}" class="btn btn-primary">Renvoyer l'email de confirmation</a>
+            </section>
+        {% endif %}
+    
+
         {% block body %}{% endblock %}
+        {% if app.request.attributes.get('_route') == 'app_login' 
+        or app.request.attributes.get('_route') == 'app_register' %}
+        {% else %}
+            {% include "partials/_footer.html.twig" %}
+        {% endif %}
     </body>
 </html>

@@ -10,7 +10,9 @@
                 {{ provider }}
             </p>
             <p class="provider-featured-service">
-                {{ provider.promotion.first.service }}
+                {% if provider.promotion.first.service is defined %}
+                    {{ provider.promotion.first.service }}
+                {% endif %}
             </p>
             <div class="provider-featured-image">
                 {% if name_image is defined %}

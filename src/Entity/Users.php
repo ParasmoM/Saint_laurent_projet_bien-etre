@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cet e-mail.')]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -53,10 +53,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isVerified = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users', cascade: ["persist"])]
+    #[ORM\ManyToOne(inversedBy: 'users', cascade: ["persist", "remove"])]
     private ?InternetUsers $internetUsers = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users', cascade: ["persist"])]
+    #[ORM\ManyToOne(inversedBy: 'users', cascade: ["persist", "remove"])]
     private ?Providers $providers = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]

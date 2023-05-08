@@ -28,21 +28,45 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $this->userRepository = $userRepository;
     }
 
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response {
+    public function onAuthenticationFailure(
+        Request $request, 
+        AuthenticationException $exception
+    ): Response {
+
         $email = $request->request->get('email', '');
         $user = $this->userRepository->findOneByEmail($email);
-        $nbr = $user->getFailedAttempts();
-        $user->setFailedAttempts(++$nbr);
-        $this->userRepository->save($user, true);
+
+        if ($user->isBanned()) {
+            return new RedirectResponse($this->urlGenerator->generate('app_banned_user'));
+        }
+
+        if (!$user->isBanned()) {
+            $nbr = $user->getFailedAttempts();
+            if ($nbr <= 4) {
+                $user->setFailedAttempts(++$nbr);
+            } else {
+                
+                $user->setBanned(true);
+            }
+            $this->userRepository->save($user, true);
+        }
         return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');
-
+    
+        // Récupérer l'utilisateur
+        $user = $this->userRepository->findOneByEmail($email);
+    
+        // Vérifier si l'utilisateur est banni
+        if ($user && $user->isBanned()) {
+            throw new AuthenticationException("Votre compte a été banni.");
+        }
+    
         $request->getSession()->set(Security::LAST_USERNAME, $email);
-
+    
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($request->request->get('password', '')),
@@ -51,6 +75,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
             ]
         );
     }
+    
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {

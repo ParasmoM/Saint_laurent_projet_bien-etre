@@ -13,6 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CsrfTokenType;
+
 
 class RegistrationFormType extends AbstractType
 {
@@ -54,6 +56,10 @@ class RegistrationFormType extends AbstractType
                     new Regex([
                         'pattern' => "/[A-Z]/",
                         'message' => "Votre mot de passe doit contenir au moins une lettre majuscule",
+                    ]),
+                    new Regex([
+                        'pattern' => "/[@#?!$%&*^-]/",
+                        'message' => "Votre mot de passe doit contenir au moins un caractère spéciales",
                     ]),
                 ],
             ])

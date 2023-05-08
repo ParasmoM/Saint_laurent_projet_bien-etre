@@ -165,7 +165,7 @@ class UsersFixtures extends Fixture
         $user = new Users();
         $user->setEmail($this->faker->email);
         $user->setPassword(
-            $this->passwordEncoder->hashPassword($user, 'azertyui') 
+            $this->passwordEncoder->hashPassword($user, '1Azertyui') 
         );
         $user->setRoles(['ROLE_USER', 'ROLE_PROVIDER']);
         $user->setUserType('Provider');
