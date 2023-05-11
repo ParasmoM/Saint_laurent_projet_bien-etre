@@ -19,22 +19,30 @@
                         {% set name_image = app.user.providers.images.first.name ? app.user.providers.images.first.name %}
                     {% endif %}
                     {% if app.user.internetUsers.images is defined  %}
-                        {% set name_image = app.user.internetUsers.images.first.name ? app.user.internetUsers.images.first.name %}
+                        {% set name_image = app.user.internetUsers.images.name ? app.user.internetUsers.images.name %}
                     {% endif %}
                 {% endif %}
 
                 {% if name_image is defined %}
-                    <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
+                    {% if app.user.internetUsers.images is defined  %}
+                        <img src="{{ asset('assets/uploads/internetUsers/' ~ name_image) }}" alt="">
+                    {% else %}
+                        <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
+                    {% endif %}
                 {% else %}
                     <span>
                         {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
                     </span>
                 {% endif %}
-                {{ form_widget(photoForm._token) }}
+                
                 <label class="btn-file">
                     {{ include('svg/edit.html.twig') }}
                     {{ form_widget(photoForm.name, {'id': 'upload-input'}) }}
                 </label>
+                <button>
+                    ok
+                </button>
+                {{ form_widget(photoForm._token) }}
             </form>
             {% set current_route = app.request.attributes.get('_route') %}
             <ul class="user-settings__menu-list">

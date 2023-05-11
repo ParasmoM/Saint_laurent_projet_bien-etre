@@ -6,5 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     UPLOAD_INPUT.addEventListener('change', function() {
         FORM_PHOTO.submit();
+        console.log('upluod');
     });
+
+    console.log('finished');
 });

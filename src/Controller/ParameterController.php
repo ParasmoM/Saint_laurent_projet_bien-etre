@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Entity\Images;
 use App\Form\UsersFormType;
 use App\Form\ImagesFormType;
+use App\Service\PictureService;
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -14,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CategoriesOfServicesRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ParameterController extends AbstractController
 {
@@ -24,9 +27,11 @@ class ParameterController extends AbstractController
         $id, 
         Users $choosenUser,
         Request $request,
+        PictureService $pictureService,
         CategoriesOfServicesRepository $categRepository,
         EntityManagerInterface $entityManager,
-        ImagesRepository $imagesRepository
+        ImagesRepository $imagesRepository,
+        ParameterBagInterface $parameterBagInterface,
     ): Response {
         $list_categ = $categRepository->findAll();
 
@@ -36,13 +41,13 @@ class ParameterController extends AbstractController
         // dd($choosenUser);
         $userForm = $this->createForm(UsersFormType::class, $choosenUser);
         $userForm->handleRequest($request);
-
+        // dd($choosenUser);
         // On récupère en fonction de s’il est internaute ou prestataire 
-        $methodName = 'get' . $choosenUser->getUserType() . 's';
+        $methodName = 'get' . $choosenUser->getUserType();
         $utilisateur = call_user_func([$choosenUser, $methodName]);
 
         // On crée le formulaire en fonction du type de l'utilisateur 
-        $type = $choosenUser->getUserType() . 'sFormType';
+        $type = $choosenUser->getUserType() . 'FormType';
         $formType = 'App\Form\\' . $type;
 
         $userTypeForm = $this->createForm($formType, $utilisateur);
@@ -60,12 +65,61 @@ class ParameterController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
         if ($photoForm->isSubmitted() && $photoForm->isValid()) {
-            // On récupère l'image du form
-            $photo = $photoForm->get('name')->getData();
+            $image = $photoForm->get('name')->getData();
+            
+            if ($image) {
+                $folder = $choosenUser->getUserType();
+                $id = $utilisateur->getId();
+                
+                if ($choosenUser->getUserType() == "InternetUsers") {
+                    $verif = $imagesRepository->findOneBy(['internetUser' => $id]);
+    
+                    if ($verif) {
+                        $oldPicture = $verif->getName();
 
-            dd($photoForm, $photo);
-            $entityManager->persist($choosenUser);
-            $entityManager->flush();
+                        $path = $parameterBagInterface->get('image_directory') . $folder . '/' . $oldPicture;
+                        if (file_exists($path)) {
+                            unlink($path);
+                        }
+    
+                        $fichier = $pictureService->add($image, $folder);
+    
+                        $verif->setName($fichier);
+                        $utilisateur->setImages($verif);
+                    } else {
+                        $fichier = $pictureService->add($image, $folder);
+                        $img = new Images();
+                        $img->setName($fichier);
+                        $utilisateur->setImages($img);
+                    }
+                }
+                if ($choosenUser->getUserType() == "Providers") {
+                    $verif = $imagesRepository->findOneBy(['providerPhoto' => $id]);
+                    
+                    if ($verif) {
+                        $oldPicture = $verif->getName();
+
+                        $path = $parameterBagInterface->get('image_directory') . $folder . '/' . $oldPicture;
+                        if (file_exists($path)) {
+                            unlink($path);
+                        }
+    
+                        $fichier = $pictureService->add($image, $folder);
+    
+                        $verif->setName($fichier);
+                        $utilisateur->setImages($verif);
+                        dd('if');
+                    } else {
+                        dd('else');
+                    }
+                }
+                $entityManager->persist($choosenUser);
+                $entityManager->flush();
+
+            }
+
+
+
 
             return $this->redirectToRoute('app_home');
         }

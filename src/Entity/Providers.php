@@ -46,6 +46,9 @@ class Providers
     #[ORM\OneToMany(mappedBy: 'providerLogo', targetEntity: Images::class)]
     private Collection $images;
 
+    #[ORM\OneToMany(mappedBy: 'providerPhoto', targetEntity: Images::class)]
+    private Collection $photos;
+
     #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Promotions::class)]
     private Collection $promotion;
 
@@ -59,6 +62,7 @@ class Providers
     {
         $this->users = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->photos = new ArrayCollection();
         $this->promotion = new ArrayCollection();
         $this->internship = new ArrayCollection();
     }
@@ -223,6 +227,36 @@ class Providers
             // set the owning side to null (unless already changed)
             if ($image->getProviderLogo() === $this) {
                 $image->setProviderLogo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Images $photo): self
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+            $photo->setProviderPhoto($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Images $photo): self
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getProviderPhoto() === $this) {
+                $photo->setProviderPhoto(null);
             }
         }
 

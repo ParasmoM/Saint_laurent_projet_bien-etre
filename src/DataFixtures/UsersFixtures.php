@@ -187,7 +187,7 @@ class UsersFixtures extends Fixture
             $this->passwordEncoder->hashPassword($user, '@1Azertyui') 
         );
         $user->setRoles(['ROLE_PROVIDER']);
-        $user->setUserType('Provider');
+        $user->setUserType('Providers');
         $user->setFailedAttempts(0);
         $user->setBanned(false);
         $user->setPostalCode($this->postalCodesRepository->findOneBy(['name' => $randomAdresse['Code']]));

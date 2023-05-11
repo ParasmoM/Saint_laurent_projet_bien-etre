@@ -27,6 +27,9 @@ class InternetUsers
     #[ORM\OneToMany(mappedBy: 'internetUsers', targetEntity: Users::class)]
     private Collection $users;
 
+    #[ORM\OneToOne(mappedBy: 'internetUser', cascade: ['persist', 'remove'])]
+    private ?Images $images = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -104,6 +107,28 @@ class InternetUsers
                 $user->setInternetUsers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImages(): ?Images
+    {
+        return $this->images;
+    }
+
+    public function setImages(?Images $images): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($images === null && $this->images !== null) {
+            $this->images->setInternetUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($images !== null && $images->getInternetUser() !== $this) {
+            $images->setInternetUser($this);
+        }
+
+        $this->images = $images;
 
         return $this;
     }
