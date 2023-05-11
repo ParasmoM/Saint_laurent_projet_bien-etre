@@ -41,6 +41,12 @@ class Promotions
     #[ORM\ManyToOne(inversedBy: 'promotions')]
     private ?CategoriesOfServices $service = null;
 
+    public function __construct()
+    {
+        $this->start_date = new \DateTime();
+        $this->display_until_date = null;
+    }
+
     public function __toString()
     {
         return $this->name;

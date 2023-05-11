@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Providers;
+use Doctrine\ORM\QueryBuilder;
 use App\Repository\PostalCodesRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -29,54 +30,102 @@ class ProvidersRepository extends ServiceEntityRepository
         parent::__construct($registry, Providers::class);
     }
 
-    public function findByProviders($data, $page = 1): PaginationInterface
+    public function findByProviders($data, $page = 1, $alphabeticalOrder = false): PaginationInterface
     {
-        $req = $this->createQueryBuilder('p')
-        ->innerJoin('p.promotion', 'pp')
-        ->innerJoin('pp.service', 'c')
-        ->innerJoin('p.users', 'u');
-        
-        $req->groupBy('p.id')
-        ->orderBy('p.id', 'DESC')
-        ;
-        
-        if (!empty($data)) {
-            if (!empty($data['search']['name'])) {
-                $name = $data['search']['name'] . '%';
-                $req->andWhere('p.lastName LIKE :search')
-                    ->orWhere('p.firstName LIKE :search')
-                    ->setParameter('search', $name);
-            }
-        
-            if ($data['search']['service'] !== null && !empty($data['search']['service'])) {
-                $req->andWhere('c.name = :category')
-                    ->setParameter('category', $data['search']['service']);
-            }
-            
-            if ($data['search']['code'] !== null && !empty($data['search']['code'])) {
-                $postaCode = $this->postalCodesRepository->findOneBy(['name' => $data['search']['code']]);
-                
-                $req->andWhere('u.postalCode = :postalCode')
-                ->setParameter('postalCode', $postaCode->getId());
-            }
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->innerJoin('p.promotion', 'pp')
+            ->innerJoin('pp.service', 'c')
+            ->innerJoin('p.users', 'u')
+            ->groupBy('p.id');
+    
+        if ($alphabeticalOrder) {
+            $queryBuilder->orderBy('p.lastName', 'ASC')
+                ->addOrderBy('p.firstName', 'ASC');
+        } else {
+            $queryBuilder->orderBy('p.id', 'DESC');
+        }
+    
+        if ($this->hasFilters($data)) {
+            $this->applyFilters($queryBuilder, $data);
+        } else {
+            // If no filters are provided, return all providers
+            $queryBuilder->andWhere('1=1');
+        }
+    
+        return $this->paginatorInterface->paginate($queryBuilder, $page, 8);
+    }
+    
 
-            if ($data['search']['town'] !== null && !empty($data['search']['town'])) {
-                $town = $this->townsRepository->findOneBy(['name' => $data['search']['town']]);
-                
-                $req->andWhere('u.town = :town')
-                ->setParameter('town', $town->getId());
-            }
+    private function hasFilters(array $data): bool
+    {
+        if (!isset($data['search'])) {
+            return false;
+        }
 
-            if ($data['search']['locality'] !== null && !empty($data['search']['locality'])) {
-                $locality = $this->localitiesRepository->findOneBy(['name' => $data['search']['locality']]);
-                
-                $req->andWhere('u.locality = :locality')
-                ->setParameter('locality', $locality->getId());
+        foreach ($data['search'] as $value) {
+            if (!empty($value)) {
+                return true;
             }
         }
 
-        return $this->paginatorInterface->paginate($req, $page, 8);
+        return false;
     }
+
+    
+    private function applyFilters(QueryBuilder $queryBuilder, array $data): void
+    {
+        $expr = $queryBuilder->expr();
+
+        if (isset($data['search']['name']) && !empty($data['search']['name'])) {
+            $nameParts = explode(' ', rtrim($data['search']['name']));
+            $nameConditions = [];
+            $nameParameters = [];
+
+            foreach ($nameParts as $index => $namePart) {
+                $namePart = $namePart . '%';
+                $nameConditions[] = $expr->orX(
+                    $expr->like('p.lastName', ':search' . $index),
+                    $expr->like('p.firstName', ':search' . $index)
+                );
+                $nameParameters['search' . $index] = $namePart;
+            }
+
+            $queryBuilder->andWhere(call_user_func_array([$expr, 'andX'], $nameConditions));
+
+            foreach ($nameParameters as $key => $value) {
+                $queryBuilder->setParameter($key, $value);
+            }
+        }
+    
+        if (isset($data['search']['service']) && !empty($data['search']['service'])) {
+            $queryBuilder->andWhere('c.name = :category')
+                ->setParameter('category', $data['search']['service']);
+        }
+    
+        if (isset($data['search']['code']) && !empty($data['search']['code'])) {
+            $postalCode = $this->postalCodesRepository->findOneBy(['name' => $data['search']['code']]);
+            $queryBuilder->andWhere('u.postalCode = :postalCode')
+                ->setParameter('postalCode', $postalCode->getId());
+        }
+    
+        if (isset($data['search']['town']) && !empty($data['search']['town'])) {
+            $town = $this->townsRepository->findOneBy(['name' => $data['search']['town']]);
+            $queryBuilder->andWhere('u.town = :town')
+                ->setParameter('town', $town->getId());
+        }
+    
+        if (isset($data['search']['locality']) && !empty($data['search']['locality'])) {
+            $locality = $this->localitiesRepository->findOneBy(['name' => $data['search']['locality']]);
+            $queryBuilder->andWhere('u.locality = :locality')
+                ->setParameter('locality', $locality->getId());
+        }
+    
+        if (is_string($data)) {
+            $queryBuilder->andWhere('c.name = :category')
+                ->setParameter('category', $data);
+        }
+    }
+    
 
     public function save(Providers $entity, bool $flush = false): void
     {

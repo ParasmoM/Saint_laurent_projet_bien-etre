@@ -1,0 +1,21 @@
+<h4 class="dashboard__content-title">Créer un services</h4>
+<form action="{{ path('app_dashboard_new', {type: 'promotions'}) }}" method="post" class="dashboard__form">
+    <div class="dashboard__form-group">
+        {{ form_widget(form.service, {'attr': {'placeholder': 'Type de service'}}) }}
+        {{ form_widget(form.end_date) }}
+        {# {{ form_widget(form.display_until_date) }} #}
+    </div>
+    <div class="dashboard__form-group">
+        {{ form_widget(form.name, {'attr': {'placeholder': 'Titre'}}) }}
+    </div>
+    <div class="dashboard__form-group">
+        {{ form_widget(form.description, {'attr': {'placeholder' : 'Description du service', 'rows': '10', 'style': 'resize: none;'   }}) }}
+    </div>
+    <div class="dashboard__form-actions">
+        {# <label for="">
+            {{ form_widget(form.documentPdf, {'attr': {'class': 'custom-file-input'}}) }}
+        </label> #}
+        <button>Publier</button>
+    </div>
+    {{ form_widget(form._token) }}
+</form>

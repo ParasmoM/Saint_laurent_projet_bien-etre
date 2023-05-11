@@ -30,6 +30,7 @@ class PromotionsRepository extends ServiceEntityRepository
         $data = $this->createQueryBuilder('p')
             ->where('p.service = :id')
             ->setParameter('id', $id)
+            ->orderBy('p.id', 'DESC') 
             ->getQuery()
             ->getResult()
         ;

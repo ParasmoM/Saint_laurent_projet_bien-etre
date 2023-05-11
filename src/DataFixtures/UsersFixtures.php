@@ -32,7 +32,7 @@ class UsersFixtures extends Fixture
     
     public function load(ObjectManager $manager): void
     {
-        $this->createProvider(30, 'femme', $manager);
+        $this->createProvider(40, 'femme', $manager);
     }
 
     public function createProvider($nbr, $sexe, $manager) {
@@ -74,7 +74,7 @@ class UsersFixtures extends Fixture
         $categories = $categoriesRepository->findAll();
 
         // Obtenez 3 clés aléatoires
-        $randomKeys = array_rand($categories, 3);
+        $randomKeys = array_rand($categories, 2);
 
         // Récupérez les catégories correspondantes
         $randomCategories = [];
@@ -82,7 +82,7 @@ class UsersFixtures extends Fixture
             $randomCategories[] = $categories[$key];
         }
 
-        $promotionsCount = [6, 3, 1]; // Nombre de fois pour chaque catégorie aléatoire
+        $promotionsCount = [7, 3]; // Nombre de fois pour chaque catégorie aléatoire
         $promoCounter = 1;
 
         foreach ($promotionsCount as $index => $count) {
@@ -165,9 +165,9 @@ class UsersFixtures extends Fixture
         $user = new Users();
         $user->setEmail($this->faker->email);
         $user->setPassword(
-            $this->passwordEncoder->hashPassword($user, '1Azertyui') 
+            $this->passwordEncoder->hashPassword($user, '@1Azertyui') 
         );
-        $user->setRoles(['ROLE_USER', 'ROLE_PROVIDER']);
+        $user->setRoles(['ROLE_PROVIDER']);
         $user->setUserType('Provider');
         $user->setFailedAttempts(0);
         $user->setBanned(false);

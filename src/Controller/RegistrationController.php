@@ -59,7 +59,6 @@ class RegistrationController extends AbstractController
                 'class' => 'form-' . $status,
             ]
         ]);
-
         $utilisateurForm->handleRequest($request);
 
         if ($registrationForm->isSubmitted() && $registrationForm->isValid() && $utilisateurForm->isSubmitted() && $utilisateurForm->isValid()) {

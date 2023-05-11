@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+<main class="dashboard">
+    <div class="dashboard__container">
+        <section class="dashboard__profile-section">
+            {% if app.user and app.user.providers.images is defined %}
+                {% set name_image = app.user.providers.images.first.name ? app.user.providers.images.first.name %}
+            {% endif %}
+            <div class="dashboard__profile-container">
+                <div class="dashboard__profile-image">
+                    {% if name_image is defined %}
+                        <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
+                    {% else %}
+                        <span>
+                            {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        <section class="dashboard__content-section">
+            <div class="dashboard__menu">
+                <h4 class="dashboard__menu-title">Général</h4>
+                <div class="dashboard__menu-items">
+                    <a href="#">
+                        <span>Mes services</span>
+                        {{ include('svg/add.html.twig') }}
+                    </a>
+                    <a href="#">
+                        <span>Mes stages</span>
+                        {{ include('svg/add.html.twig') }}
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard__main-content">
+                {% if list_promotion is defined %}
+                    {% include "partials/_dashboard_index.html.twig" with {list_promotion: list_promotion} only %}
+                {% endif %}
+
+                {% if form is defined %}
+                    {% include "partials/_dashboard_new.html.twig" with {form: form} only %}
+                {% endif %}
+            </div>
+        </section>
+        {{ dump() }}
+    </div>
+</main>
+{% endblock %}

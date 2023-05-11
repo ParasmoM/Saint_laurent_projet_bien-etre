@@ -1,6 +1,6 @@
 {% if app.user and app.user.providers %}
     <div class="dashbord-button">
-        <a href="#">
+        <a href="{{ path('app_dashboard_service', {id: app.user.providers.id}) }}">
             {{ include("svg/dashbord.html.twig") }}
             <span>Tableau de bord</span>
         </a>

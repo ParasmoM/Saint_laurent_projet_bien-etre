@@ -37,11 +37,11 @@
             </li>
             <li class="profile-dropdown-item">
                 <div class="profile-dropdown-item-link-profile">
-                    <a href="#">Gérer votre compte</a>
+                    <a href="{{ path('app_parameter_user_info', {id: app.user.id}) }}">Gérer votre compte</a>
                 </div>
             </li>
             <li class="profile-dropdown-item">
-                <a href="#">
+                <a href="{{ path('app_newsletter') }}">
                     <div class="profile-dropdown-item-icon">
                         {{ include('svg/newsletter.html.twig') }}
                     </div>

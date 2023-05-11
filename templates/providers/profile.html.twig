@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProvidersProfileController!{% endblock %}
+
+{% if providers.images is defined %}
+    {% set name_image = providers.images.first.name ? providers.images.first.name %}
+{% endif %}
+
+{% block body %}
+<main class="provider_profile">
+    <div class="provider_profile__container">
+        <header class="provider_profile__header">
+            {% for image in image_gallery|random|slice(0, 1) %}
+            {% set banner =  asset('assets/uploads/galleries/' ~ image) %}
+            <div class="provider_profile__banner" style="background-image: url({{ banner }} );">
+                <div class="provider_profile__image">
+                    {% if name_image is defined %}
+                        <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
+                    {% else %}
+                        <span>
+                            {{ providers|slice(0, 1)|upper }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="provider_profile__info">
+                <h4 class="provider_profile__name">{{ providers }}</h4>
+                <button class="provider_profile__contact-button">
+                    Contacter
+                </button>
+            </div>
+        </header>
+        <div class="provider_profile__content">
+            <section class="provider_profile__menu">
+                <header class="provider_profile__menu-header">
+                    Informations du prestataire
+                </header>
+                <div class="provider_profile__menu-details">
+                    <div class="provider_profile__menu-item">
+                        <p class="provider_profile__menu-label">Mail : </p>
+                        <p class="provider_profile__menu-value">{{ providers.users.first.email }}</p>
+                    </div>
+                    <div class="provider_profile__menu-item">
+                        <p class="provider_profile__menu-label">Adresse : </p>
+                        <p class="provider_profile__menu-value">{{ providers.users.first.addressStreet }} {{ providers.users.first.addressStreet }}, {{ providers.users.first.postalCode }} {{ providers.users.first.locality }}</p>
+                    </div>
+                    <div class="provider_profile__menu-item">
+                        <p class="provider_profile__menu-label">Tel : </p>
+                        <p class="provider_profile__menu-value">{{ providers.phoneNumber }}</p>
+                    </div>
+                    <div class="provider_profile__menu-item">
+                        <p class="provider_profile__menu-label">TVA : </p>
+                        <p class="provider_profile__menu-value">{{ providers.tvaNumber }}</p>
+                    </div>
+                    <div class="provider_profile__menu-item">
+                        <p class="provider_profile__menu-label">Site : </p>
+                        <a class="provider_profile__menu-link" href="{{ providers.websiteUrl }}">{{ providers.websiteUrl }}</a>
+                    </div>
+                    <div class="provider_profile__menu-list-service">
+                        {% set array = [] %}
+                        {% for row in providers.promotion %}
+                            {% if row.service.name not in array %}
+                                {% set array = array|merge([row.service.name]) %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for row in array %}
+                            <p>{{ row }}</p>
+                        {% endfor %}
+                    </div>
+                    <p class="provider_profile__menu-description">
+                        {{ providers.description }}
+                    </p>
+                </div>
+            </section>
+            <section class="provider_profile__services-list">
+                <div class="provider_profile__services-list__container">
+                    {% include "partials/_card-promo.html.twig" with {services: providers.promotion} only %}
+                </div>
+            </section>
+        </div>        
+    </div>
+</main>
+{% endblock %}

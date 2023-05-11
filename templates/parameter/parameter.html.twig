@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ParameterController!{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/ajax_adresse_setting.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+<main class="user-settings">
+    <div class="user-settings__container">
+
+        <section class="user-settings__menu">
+            <h2 class="user-settings__menu-title">User profile</h2>
+            <form action="{{ path('app_parameter_user_info', {id: app.user.id}) }}" method="post" enctype="multipart/form-data" class="user-settings__profile-photo" id="profile-photo-form">
+                {% if app.user %}
+                    {% if app.user.providers.images is defined  %}
+                        {% set name_image = app.user.providers.images.first.name ? app.user.providers.images.first.name %}
+                    {% endif %}
+                    {% if app.user.internetUsers.images is defined  %}
+                        {% set name_image = app.user.internetUsers.images.first.name ? app.user.internetUsers.images.first.name %}
+                    {% endif %}
+                {% endif %}
+
+                {% if name_image is defined %}
+                    <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
+                {% else %}
+                    <span>
+                        {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
+                    </span>
+                {% endif %}
+                {{ form_widget(photoForm._token) }}
+                <label class="btn-file">
+                    {{ include('svg/edit.html.twig') }}
+                    {{ form_widget(photoForm.name, {'id': 'upload-input'}) }}
+                </label>
+            </form>
+            {% set current_route = app.request.attributes.get('_route') %}
+            <ul class="user-settings__menu-list">
+                <li class="user-settings__menu-item {{ (current_route == 'app_parameter_user_info') ? 'active' : '' }}">
+                    {{ include('svg/user.html.twig') }}
+                    <a href="{{ path('app_parameter_user_info', {id: app.user.id}) }}" class="user-settings__menu-link">User info</a>
+                </li>
+                <li class="user-settings__menu-item">
+                    {{ include('svg/favorite.html.twig') }}
+                    <a href="#" class="user-settings__menu-link">Favorites</a>
+                </li>
+                <li class="user-settings__menu-item">
+                    {{ include('svg/setting.html.twig') }}
+                    <a href="#" class="user-settings__menu-link">Setting</a>
+                </li>
+                <li class="user-settings__menu-item">
+                    {{ include('svg/notifications.html.twig') }}
+                    <a href="#" class="user-settings__menu-link">Notifications</a>
+                </li>
+            </ul>
+            <button class="user-settings__logout-btn">
+                {{ include('svg/logout.html.twig') }}
+                <a href="{{ path('app_logout') }}" class="user-settings__logout-link">Log out</a>
+            </button>
+        </section>
+        
+        <section class="user-settings__content">
+            <form action="{{ path('app_parameter_user_info', {id: app.user.id}) }}" method="post" class="user-settings__form">
+                <div class="user-settings__header">
+                    <h2 class="user-settings__header-title">Edit Profile</h2>
+                </div>
+                <div class="user-settings__section">
+                    <p class="user-settings__section-label">Account</p>
+                    <div class="user-settings__input-wrapper">
+                        <div class="user-settings__input-field">
+                            {{ form_label(userForm.email, 'Email') }}
+                            {{ form_widget(userForm.email) }}
+                        </div>
+                        <div class="user-settings__input-group">
+                            <div class="user-settings__input-field">
+                                {{ form_label(userTypeForm.lastName, 'Last name') }}
+                                {{ form_widget(userTypeForm.lastName, {'attr': {'placeholder': 'Entrez votre nom'}}) }}
+                            </div>
+                            <div class="user-settings__input-field">
+                                {{ form_label(userTypeForm.firstName, 'First name') }}
+                                {{ form_widget(userTypeForm.firstName, {'attr': {'placeholder': 'Entrez votre prénom'}}) }}
+                            </div>
+                        </div>
+
+                        {% if app.user.userType is defined %}
+                            {% if app.user.userType == 'Provider' %}
+                            <div class="user-settings__input-group">
+                                <div class="user-settings__input-field">
+                                    {{ form_label(userTypeForm.tvaNumber, 'TVA') }}
+                                    {{ form_widget(userTypeForm.tvaNumber, {'attr': {'placeholder': 'Entrez votre numéro de TVA'}}) }}
+                                </div>
+                                <div class="user-settings__input-field">
+                                    {{ form_label(userTypeForm.phoneNumber, 'Phone number') }}
+                                    {{ form_widget(userTypeForm.phoneNumber, {'attr': {'placeholder': 'Entrez votre numéro de telephone'}}) }}
+                                </div>
+                            </div>
+                            <div class="user-settings__input-group">
+                                <div class="user-settings__input-field">
+                                    {{ form_label(userTypeForm.websiteUrl, 'TVA') }}
+                                    {{ form_widget(userTypeForm.websiteUrl, {'attr': {'placeholder': 'Entrez votre compte web site'}}) }}
+                                </div>
+                                <div class="user-settings__input-field">
+                                    {{ form_label(userTypeForm.facebook, 'Phone number') }}
+                                    {{ form_widget(userTypeForm.facebook, {'attr': {'placeholder': 'Entrez votre compte facebook'}}) }}
+                                </div>
+                            </div>
+                            <div class="user-settings__input-group">
+                                <div class="user-settings__input-field">
+                                    {{ form_label(userTypeForm.instagram, 'TVA') }}
+                                    {{ form_widget(userTypeForm.instagram, {'attr': {'placeholder': 'Entrez votre compte instagram'}}) }}
+                                </div>
+                                <div class="user-settings__input-field">
+                                    {{ form_label(userTypeForm.twitter, 'Phone number') }}
+                                    {{ form_widget(userTypeForm.twitter, {'attr': {'placeholder': 'Entrez votre compte twitter'}}) }}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if app.user.userType == 'InternetUser' %}
+                                
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="user-settings__section">
+                    <p class="user-settings__section-label">Address</p>
+                    <div class="user-settings__input-wrapper">
+                        <div class="user-settings__input-field">
+                            {{ form_label(userForm.addressStreet, 'Address street') }}
+                            {{ form_widget(userForm.addressStreet) }}
+                        </div>
+                        <div class="user-settings__input-field">
+                            {{ form_label(userForm.adressNumber, 'Adress number') }}
+                            {{ form_widget(userForm.adressNumber) }}
+                        </div>
+                        <div class="user-settings__input-group">
+                            <div class="user-settings__input-field">
+                                {{ form_label(userForm.postalCode, 'Postal code') }}
+                                {{ form_widget(userForm.postalCode) }}
+                            </div>
+                            <div class="user-settings__input-field">
+                                {{ form_label(userForm.town, 'Town') }}
+                                {{ form_widget(userForm.town) }}
+                            </div>
+                            <div class="user-settings__input-field">
+                                {{ form_label(userForm.locality, 'Locality') }}
+                                {{ form_widget(userForm.locality) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{ form_widget(userForm._token) }}
+                {{ form_widget(userTypeForm._token) }}
+
+                <button>
+                    Update
+                </button>
+            </form>
+        </section>      
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,31 @@
+<h4 class="dashboard__content-title">Mes services</h4>
+<div class="dashboard__content-items">
+    <div class="dashboard__content-button">
+        <button>
+            <a href="{{ path('app_dashboard_new', {type: 'promotions'}) }}">
+                Créer un service 
+                {{ include('svg/add-icone.html.twig') }}
+            </a>
+        </button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Date debut</th>
+                <th>Date fin</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for service in list_promotion %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.startDate|date('Y-m-d') }}</td>
+                <td>{{ service.endDate|date('Y-m-d') }}</td>
+                <td>a venir</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Promotions;
 use App\Entity\CategoriesOfServices;
+use App\Repository\ProvidersRepository;
 use App\Repository\PromotionsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,4 +42,25 @@ class ServicesController extends AbstractController
         ));
     }
 
+    #[Route('/services/description/{id}', name: 'app_services_description')]
+    public function description(
+        Request $request,
+        Promotions $promotions,
+        CategoriesOfServicesRepository $categRepository,
+        ProvidersRepository $providersRepository,
+    ): Response {
+        $list_categ = $categRepository->findAll();
+        
+        // Récupérez le numéro de la page à partir de la requête, utilisez 1 par défaut si aucune page n'est fournie
+        $page = $request->query->get('page', 1);
+
+        $service = $promotions->getService()->getName();
+        $providers = $providersRepository->findByProviders($service, $page);
+
+        return $this->render('services/service-description.html.twig', compact(
+            'list_categ',
+            'promotions',
+            'providers'
+        ));
+    }
 }

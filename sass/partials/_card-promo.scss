@@ -47,6 +47,14 @@
                     font-weight: 300;
                     color: #6E6488;
                 }
+                .card-service__service-name {
+                    span {
+                        display: block;
+                    }
+                    span:last-of-type {
+                        color: #ccc;
+                    }
+                }
             }
             .card-service__socials {
                 display: flex;

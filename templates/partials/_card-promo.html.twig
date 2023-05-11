@@ -1,4 +1,4 @@
-{% for service in services|reverse %}
+{% for service in services %}
 
 {% if service.providers.images is defined %}
     {% set name_image = service.providers.images.first.name ? service.providers.images.first.name %}
@@ -19,17 +19,35 @@
                         {{ service.providers }}
                     </p>
                     <p class="card-service__service-name">
-                        {{ service.service.name }}
+                        {% set array = [service.service.name] %}
+                        
+                        {% for otherService in service.providers.promotion %}
+                            {% if otherService.service.name not in array %}
+                                {% set array = array|merge([otherService.service.name]) %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% for row in array %}
+                            <span>{{ row }}</span>
+                        {% endfor %}
                     </p>
                     <p class="card-service__extra-info">
                         {{ service.name}}
                     </p>
                 </div>
                 <div class="card-service__socials">
-                    <a href="{{ service.providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
-                    <a href="{{ service.providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
-                    <a href="{{ service.providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
-                    <a href="{{ service.providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
+                    {% if service.providers.websiteUrl is defined %}
+                        <a href="{{ service.providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
+                    {% endif %}
+                    {% if service.providers.instagram is defined %}
+                        <a href="{{ service.providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
+                    {% endif %}
+                    {% if service.providers.facebook is defined %}
+                        <a href="{{ service.providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
+                    {% endif %}
+                    {% if service.providers.twitter is defined %}
+                        <a href="{{ service.providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -38,7 +56,7 @@
                 {{ service.description|length > 90 ? service.description|slice(0, 90) ~ '...' : service.description }}
             </p>
             <button class="card-service__button">
-                <a href="#">En savoir plus</a>
+                <a href="{{ path('app_services_description', {id: service.id}) }}">En savoir plus</a>
             </button>
         </div>
     </div>

@@ -7,7 +7,7 @@
     <div class="card-provider">
         <div class="provider-profile">
             {% if name_image is defined %}
-                <img src="{{ asset('assets/uploads/providers/' ~ provider.images.first) }}" alt="">
+                <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
             {% else %}
                 <span>{{ provider|slice(0, 1)|upper }}</span>
             {% endif %}
@@ -21,12 +21,11 @@
             {{ provider.users.first }}
         </p>
 
-        {# <p>
+        <p>
             {{ provider.promotion.first.service }}
-        </p> #}
+        </p>
         <button class="provider-button">
-            <a href="#">Voir le prolfil</a>
+            <a href="{{ path('app_providers_profile', {id: provider.id}) }}">Voir le prolfil</a>
         </button>
     </div>
-{# {{ dump(provider) }} #}
 {% endfor %}

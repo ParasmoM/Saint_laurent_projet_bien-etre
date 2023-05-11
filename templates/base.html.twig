@@ -28,10 +28,11 @@
     
 
         {% block body %}{% endblock %}
-        {% if app.request.attributes.get('_route') == 'app_login' 
-        or app.request.attributes.get('_route') == 'app_register' %}
+        {# {% if app.request.attributes.get('_route') == 'app_login' 
+        or app.request.attributes.get('_route') == 'app_register'
+        or app.request.attributes.get('_route') == 'app_parameter_user_info' %}
         {% else %}
             {% include "partials/_footer.html.twig" %}
-        {% endif %}
+        {% endif %} #}
     </body>
 </html>

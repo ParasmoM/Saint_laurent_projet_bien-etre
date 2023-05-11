@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Providers;
 use App\Form\SearchType;
 use App\Model\SearchData;
+use App\Repository\ImagesRepository;
 use App\Repository\ProvidersRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -1952,7 +1954,7 @@ class ProvidersController extends AbstractController
         ];
 
         $filters = json_decode($request->getContent(), true);
-        
+        // dd($filters);
         foreach ($filters as $key => $value) {
             if (!empty($value)) {
                 $filter = [$key => $value];
@@ -1986,12 +1988,12 @@ class ProvidersController extends AbstractController
         ProvidersRepository $providersRepository,
     ): Response {
         $list_categ = $categRepository->findAll();
-
+        // dd('here');
         // Récupérez le numéro de la page à partir de la requête, utilisez 1 par défaut si aucune page n'est fournie
         $page = $request->query->get('page', 1);
 
         // On récupère les prestataires paginer en fonction du filtre 
-        $providers = $providersRepository->findByProviders($_GET, $page);
+        $providers = $providersRepository->findByProviders($_GET, $page, true);
 
         $searchData = new SearchData();
         $form = $this->createForm(SearchType::class, $searchData);
@@ -2002,4 +2004,20 @@ class ProvidersController extends AbstractController
             'form'
         ));
     }
+
+    #[Route('/providers/{id}', name: 'app_providers_profile', methods: ['GET'])]
+    public function profile(
+        Providers $providers,
+        CategoriesOfServicesRepository $categRepository,
+        ImagesRepository $imagesRepository,
+    ): Response {
+        $list_categ = $categRepository->findAll();
+
+        $image_gallery = $imagesRepository->findBy(['serviceImage' => null, 'providerLogo' => null, 'providerPhoto' => null]);
+        return $this->render('providers/profile.html.twig', compact(
+            'list_categ',
+            'image_gallery',
+            'providers',
+        ));
+    } 
 }
