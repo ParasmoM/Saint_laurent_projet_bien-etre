@@ -77,9 +77,11 @@
             <section class="provider_profile__services-list">
                 <div class="provider_profile__services-list__container">
                     {% include "partials/_card-promo.html.twig" with {services: providers.promotion} only %}
+                    {% include "partials/_card-internship.html.twig" with {internships: providers.internship} only %}
                 </div>
             </section>
         </div>        
     </div>
 </main>
+{{ dump() }}
 {% endblock %}

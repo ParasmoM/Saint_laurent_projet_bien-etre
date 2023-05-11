@@ -3,17 +3,24 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-
+{% if status == 'internetUsers' %}
+    {% set type = 'utilisateur' %}
+{% endif %}
+{% if status == 'providers' %}
+    {% set type = 'prestataire' %}
+{% endif %}
 <div class="register">
     <div class="register__container">
         <div class="register__text">
-            <h2>Créer votre identifiant WorkSpace comme {{ status }}</h2>
+            <h2>Créer votre identifiant WorkSpace comme {{ type }}</h2>
             <p>
                 Vous avez déjà un identifiant Work Space ?
             </p>
             <a href="{{ path('app_login') }}">Connectez-vous ici ></a>
             {% if status == 'internetUsers' %}
-            <a href="{{ path('app_register', {status: 'providers'}) }}">Créer votre identifiant comme prestataire ></a>
+                <a href="{{ path('app_register', {status: 'providers'}) }}">Créer votre identifiant comme prestataire ></a>
+            {% else %}
+                <a href="{{ path('app_register', {status: 'internetUsers'}) }}">Créer votre identifiant comme utilisateur ></a>
             {% endif %}
         </div>
         <form action="{{ path('app_register', {status: status}) }}" method="post" class="register__form">

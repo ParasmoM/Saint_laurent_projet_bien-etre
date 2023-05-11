@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Users;
 use App\Form\SearchType;
 use App\Model\SearchData;
+use App\Repository\UsersRepository;
 use App\Repository\ImagesRepository;
+use App\Repository\ProvidersRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CategoriesOfServicesRepository;
-use App\Repository\ProvidersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -34,5 +38,24 @@ class HomeController extends AbstractController
             'form',
             'new_providers'
         ));
+    }
+
+    #[Route('/newsletter', name: 'app_home_newsletter', methods: ['POST'])]
+    public function newsletterAction(
+        Request $request,
+        UsersRepository $usersRepository,
+        EntityManagerInterface $entityManager,
+    ): Response {
+        dd("here");
+        $newsletterEmail = $request->request->get('newsletterEmail');
+
+        $user = $usersRepository->findOneBy(['email' => $newsletterEmail]);
+        $user = $user->getInternetUsers();
+        $user->setNewsletter(true);
+        $entityManager->persist($user);
+        $entityManager->flush();
+        
+
+        return $this->redirectToRoute('app_home');
     }
 }

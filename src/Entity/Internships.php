@@ -32,11 +32,19 @@ class Internships
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $end_date = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $display_from_date = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $display_until_date = null;
+
+    #[ORM\ManyToOne(inversedBy: 'internship')]
+    private ?Providers $providers = null;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +143,18 @@ class Internships
     public function setDisplayUntilDate(\DateTimeInterface $display_until_date): self
     {
         $this->display_until_date = $display_until_date;
+
+        return $this;
+    }
+
+    public function getProviders(): ?Providers
+    {
+        return $this->providers;
+    }
+
+    public function setProviders(?Providers $providers): self
+    {
+        $this->providers = $providers;
 
         return $this;
     }

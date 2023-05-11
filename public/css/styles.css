@@ -602,6 +602,7 @@
 
 .service-page-main {
   background-color: #F5F8FC;
+  padding-bottom: 5rem;
 }
 
 .service-page-profile-cards {
@@ -2110,6 +2111,108 @@
   background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
 }
 
+.card-internship {
+  flex: 0 1 31.5rem;
+  border-radius: 1rem;
+  background-color: rgb(218, 234, 229);
+  box-shadow: rgb(195, 198, 198) 0px 10px 10px;
+  padding: 2rem;
+  display: flex;
+  flex-flow: column;
+}
+.card-internship__header {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 1px solid #DAE9F4;
+}
+.card-internship__profile-image {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 50%;
+  border: solid 4px white;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
+  background-color: rgb(93, 160, 187);
+  display: flex;
+  align-items: center;
+  place-content: center;
+  font-size: 3rem;
+}
+.card-internship__profile-image span {
+  display: flex;
+  align-items: center;
+  place-content: center;
+  height: 3rem;
+  color: white;
+  padding: 0.8rem 0 0 0.5rem;
+}
+.card-internship__info {
+  flex: auto;
+}
+.card-internship__details {
+  border-bottom: 1px solid #DAE9F4;
+  padding-bottom: 1rem;
+}
+.card-internship__details .card-internship__name {
+  font-size: 2.8rem;
+  white-space: nowrap;
+  text-align: center;
+}
+.card-internship__details .card-internship__provider-name {
+  font-size: 1.6rem;
+  white-space: nowrap;
+  text-align: center;
+}
+.card-internship__socials {
+  display: flex;
+  align-items: center;
+  place-content: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  color: white;
+  padding-top: 1rem;
+}
+.card-internship__socials a {
+  display: flex;
+  align-items: center;
+  place-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  background: rgb(207, 196, 255);
+  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+}
+.card-internship .card-internship__content {
+  text-align: center;
+  flex: auto;
+  display: flex;
+  flex-flow: column;
+}
+.card-internship .card-internship__content .card-internship__description {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: #9B99A3;
+  padding: 1.5rem 0;
+  flex: auto;
+}
+.card-internship .card-internship__content .card-internship__button {
+  color: #4F4D62;
+  font-size: 1.4rem;
+  padding: 1.35rem 3.5rem 1.15rem;
+  background: rgb(207, 196, 255);
+  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+  border-radius: 1rem;
+  border: solid 1px white;
+  cursor: pointer;
+  box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
+  width: fit-content;
+  margin: 0 auto;
+}
+.card-internship .card-internship__content .card-internship__button:hover {
+  background: rgb(218, 234, 245);
+  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
+}
+
 .card-provider {
   flex: 0 1 225px;
   height: 302px;
@@ -2280,101 +2383,217 @@
   color: white;
 }
 
+.footer {
+  font-size: 1.4rem;
+}
 .footer__container {
   max-width: 1440px;
   width: calc(100% - 15rem);
   margin: 0 auto;
-  padding: 150px 0 0;
 }
 .footer__container--info {
   display: flex;
-  margin-bottom: 150px;
+  padding: 9rem 0;
+}
+@media only screen and (max-width: 680px) {
+  .footer__container--info {
+    flex-flow: column;
+    padding: 5rem 0;
+    text-align: center;
+    gap: 2rem;
+  }
 }
 .footer__container--coord {
-  flex: 0 1 300px;
+  flex: 0 1 30rem;
+}
+@media only screen and (max-width: 680px) {
+  .footer__container--coord {
+    flex: auto;
+  }
 }
 .footer__container--coord h2 {
-  font-size: 30px;
-  font-weight: 900;
-  margin-bottom: 30px;
+  font-size: 3rem;
+  margin-bottom: 3rem;
   text-transform: capitalize;
 }
+@media only screen and (max-width: 680px) {
+  .footer__container--coord h2 {
+    margin-bottom: 1rem;
+  }
+}
 .footer__container--coord span {
-  font-weight: 100;
+  font-weight: 900;
+  background-image: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .footer__container--coord p {
   line-height: 1.5;
 }
 .footer__container--about {
-  flex: 0 1 300px;
+  flex: 0 1 30rem;
   display: flex;
   flex-flow: column;
 }
+@media only screen and (max-width: 680px) {
+  .footer__container--about {
+    flex: auto;
+  }
+}
 .footer__container--about h2 {
-  font-size: 20px;
-  margin-bottom: 30px;
+  font-size: 2rem;
+  margin-bottom: 3rem;
   line-height: 1.9;
   text-transform: capitalize;
 }
+@media only screen and (max-width: 680px) {
+  .footer__container--about h2 {
+    margin-bottom: 1rem;
+  }
+}
 .footer__container--stats {
-  flex: 0 1 300px;
+  flex: 0 1 30rem;
+}
+@media only screen and (max-width: 680px) {
+  .footer__container--stats {
+    flex: auto;
+  }
 }
 .footer__container--stats h2 {
-  font-size: 20px;
-  margin-bottom: 30px;
+  font-size: 2rem;
+  margin-bottom: 3rem;
   line-height: 1.9;
+}
+@media only screen and (max-width: 680px) {
+  .footer__container--stats h2 {
+    margin-bottom: 1rem;
+  }
 }
 .footer__container--newsletter {
   background-color: #F5F8FC;
-  border-radius: 10px;
-  padding: 30px 50px;
+  border-radius: 1rem;
+  padding: 3rem 5rem;
   display: flex;
-  gap: 50px;
+  gap: 5rem;
+}
+@media only screen and (max-width: 1240px) {
+  .footer__container--newsletter {
+    gap: 2rem;
+    padding: 2rem 4rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .footer__container--newsletter {
+    flex-flow: column;
+    padding: 3rem 5rem;
+  }
 }
 .footer__container--newsletter-text {
-  flex: 0 1 300px;
+  flex: 0 1 30rem;
   text-align: center;
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 700;
 }
-.footer__container--newsletter-text button {
-  font-size: 14px;
-  font-weight: 300px;
+@media only screen and (max-width: 1240px) {
+  .footer__container--newsletter-text {
+    font-size: 1.4rem;
+  }
+}
+@media only screen and (max-width: 880px) {
+  .footer__container--newsletter-text {
+    flex: 0 1 20rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .footer__container--newsletter-text {
+    flex: auto;
+  }
+}
+.footer__container--newsletter-text p:last-of-type {
+  font-size: 1.4rem;
+  font-weight: 300;
 }
 .footer__container--social {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 2rem;
   flex: 1 1 auto;
 }
+@media only screen and (max-width: 880px) {
+  .footer__container--social {
+    gap: 1rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .footer__container--social {
+    flex-wrap: wrap;
+    place-content: center;
+  }
+}
 .footer__container--social-icon {
-  border-radius: 10px;
+  border-radius: 1rem;
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   color: white;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
 }
+@media only screen and (max-width: 1240px) {
+  .footer__container--social-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+.footer__container--social form {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+@media only screen and (max-width: 992px) {
+  .footer__container--social form {
+    flex-flow: column;
+    gap: 0.5rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .footer__container--social form {
+    flex-flow: row;
+  }
+}
 .footer__container--social input {
   flex: 1 1 auto;
-  height: 50px;
-  border-radius: 10px;
+  height: 5rem;
+  border-radius: 1rem;
   border: solid 1px #DCE2E7;
+  font-size: 1.4rem;
+  padding: 0 2rem;
+}
+@media only screen and (max-width: 992px) {
+  .footer__container--social input {
+    height: 3rem;
+  }
 }
 .footer__container--social-btn {
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
-  border-radius: 10px;
+  border-radius: 1rem;
   border: solid 1px white;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 0px 25px;
-  height: 50px;
+  padding: 0 2.5rem;
+  height: 5rem;
+}
+@media only screen and (max-width: 992px) {
+  .footer__container--social-btn {
+    height: 3rem;
+  }
 }
 .footer__container--copy {
   text-align: center;
-  margin: 30px 0;
+  margin: 3rem 0;
 }

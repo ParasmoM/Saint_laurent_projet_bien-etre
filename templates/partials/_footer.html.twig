@@ -2,7 +2,7 @@
     <div class="footer__container">
         <div class="footer__container--info">
             <div class="footer__container--coord">
-                <h2>Work<span>space</span></h2>
+                <h2><span>Bien</span>-être</h2>
                 <p>Rue St Laurent 33,</p>
                 <p>4000 Liège</p>
             </div>
@@ -20,8 +20,10 @@
             <div class="footer__container--about">
                 <h2>à propos de Workspace</h2>
                 <a href="{{ path('app_about_us') }}">Notre vision</a>
-                <a href="#">Devenir prestataire</a>
-                <a href="#">Devenir menbre</a>
+                {% if not app.user %}
+                    <a href="{{ path('app_register', {status: 'providers'}) }}">Devenir prestataire</a>
+                    <a href="{{ path('app_register', {status: 'internetUsers'}) }}">Devenir menbre</a>
+                {% endif %}
                 <a href="#">Nous contactez</a>
                 <a href="{{ path('app_newsletter') }}">Newsletter</a>
             </div>
@@ -31,9 +33,9 @@
                 <p>
                     Intéressé par les dernières nouvelles et les mises à jour de vos services favoris?
                 </p>
-                <button>
+                <p>
                     Abonnez-vous à notre newsletter
-                </button>
+                </p>
             </div>
             <div class="footer__container--social">
                 <div class="footer__container--social-icon">
@@ -51,10 +53,21 @@
                         <path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334c0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518a3.301 3.301 0 0 0 1.447-1.817a6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429a3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218a3.203 3.203 0 0 1-.865.115a3.23 3.23 0 0 1-.614-.057a3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
                     </svg>
                 </div>
-                <input type="text">
-                <button class="footer__container--social-btn" href="#">
-                    S'abonner à la newslatters
-                </button>
+                {% if app.user and app.user.internetUsers is not null %}
+                    {% set path = "{{ path('app_home_newsletter') }}" %}
+                {% else %}
+                    {% set path = '#' %}
+                {% endif %}
+                <form action="{{ path }}" method="post">
+                    <input type="text" name="newsletterEmail">
+                    <button class="footer__container--social-btn">
+                        {% if not app.user %}
+                            <a href="{{ path('app_login') }}">S'abonner à la newslatter</a>
+                        {% else %}
+                            S'abonner à la newslatter
+                        {% endif %}
+                    </button>
+                </form>
             </div>
         </div>
         <div class="footer__container--copy">

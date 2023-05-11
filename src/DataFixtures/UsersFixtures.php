@@ -10,6 +10,7 @@ use App\Utils\Adresse;
 use App\Entity\Providers;
 use App\Entity\Promotions;
 use App\Entity\CategoriesOfServices;
+use App\Entity\Internships;
 use App\Repository\LocalitiesRepository;
 use App\Repository\PostalCodesRepository;
 use App\Repository\TownsRepository;
@@ -53,7 +54,7 @@ class UsersFixtures extends Fixture
             $this->createPromo($prestataire, $manager);
 
             // on crée un stage 
-            // $this->createStage($prestataire, $manager);
+            $this->createInternships($prestataire, $manager);
 
             // On l'associer une image de profil 
             $this->createImageProfile($prestataire, $sexe, $manager);
@@ -101,6 +102,24 @@ class UsersFixtures extends Fixture
         }        
     }
     
+    public function createInternships($prestataire, $manager) {
+        $faker = Factory::create('fr_BE');
+        $date_actuelle = new DateTime();
+        $date_plus_365 = new DateTime('+365 days');
+
+        $stage = new Internships();
+        $stage->setName('STAGE 1');
+        $stage->setDescription($faker->sentences(10, true));
+        $stage->setAdditionalInformation($faker->sentences(4, true));
+        $stage->setStartDate($date_actuelle);
+        $stage->setEndDate($date_plus_365);
+        $tarif = $faker->randomFloat(2, 20, 150);
+        $stage->setRate($tarif);
+        $stage->setProviders($prestataire);
+
+        $manager->persist($stage);
+    }
+
     public function createImageProfile($prestataire, $sexe, $manager) {
         $tabFemmes = [
             'Femme_Africaine_01.avif',

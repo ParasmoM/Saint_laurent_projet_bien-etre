@@ -2005,7 +2005,7 @@ class ProvidersController extends AbstractController
         ));
     }
 
-    #[Route('/providers/{id}', name: 'app_providers_profile', methods: ['GET'])]
+    #[Route('/providers/profile/{id}', name: 'app_providers_profile', methods: ['GET'])]
     public function profile(
         Providers $providers,
         CategoriesOfServicesRepository $categRepository,
@@ -2014,7 +2014,8 @@ class ProvidersController extends AbstractController
         $list_categ = $categRepository->findAll();
 
         $image_gallery = $imagesRepository->findBy(['serviceImage' => null, 'providerLogo' => null, 'providerPhoto' => null]);
-        return $this->render('providers/profile.html.twig', compact(
+        
+        return $this->render('providers/provider-profile.html.twig', compact(
             'list_categ',
             'image_gallery',
             'providers',

@@ -1,26 +1,45 @@
 .footer {
+    font-size: 1.4rem;
+    
     &__container {
         max-width: 1440px;
         width: calc(100% - 15rem);
         margin: 0 auto;
-        padding: 150px 0 0;
     
         &--info {
             display: flex;
-            margin-bottom: 150px;
+            padding: 9rem 0;
+
+            @media only screen and (max-width: 680px) {
+                flex-flow: column;
+                padding: 5rem 0;
+                text-align: center;
+                gap: 2rem;
+            }
         }
 
         &--coord {
-            flex: 0 1 300px;
+            flex: 0 1 30rem;
+
+            @media only screen and (max-width: 680px) {
+                flex: auto;
+            }
 
             h2 {
-                font-size: 30px;
-                font-weight: 900;
-                margin-bottom: 30px;
+                font-size: 3rem;
+                margin-bottom: 3rem;
                 text-transform: capitalize;
+
+                @media only screen and (max-width: 680px) {
+                    margin-bottom: 1rem;
+                }
             }
             span {
-                font-weight: 100;
+                font-weight: 900;
+                background-image: linear-gradient(90deg, rgba(207,196,255,1) 0%, rgba(162,211,245,1) 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
             }
             p {
                 line-height: 1.5;
@@ -28,44 +47,79 @@
         }
 
         &--about {
-            flex: 0 1 300px;
+            flex: 0 1 30rem;
             display: flex;
             flex-flow: column;
 
+            @media only screen and (max-width: 680px) {
+                flex: auto;
+            }
+
             h2 {
-                font-size: 20px;
-                margin-bottom: 30px;
+                font-size: 2rem;
+                margin-bottom: 3rem;
                 line-height: 1.9;
                 text-transform: capitalize;
+
+                @media only screen and (max-width: 680px) {
+                    margin-bottom: 1rem;
+                }
             }
         }
 
         &--stats {
-            flex: 0 1 300px;
+            flex: 0 1 30rem;
+
+            @media only screen and (max-width: 680px) {
+                flex: auto;
+            }
 
             h2 {
-                font-size: 20px;
-                margin-bottom: 30px;
+                font-size: 2rem;
+                margin-bottom: 3rem;
                 line-height: 1.9;
+
+                @media only screen and (max-width: 680px) {
+                    margin-bottom: 1rem;
+                }
             }
         }
 
         &--newsletter {
             background-color: #F5F8FC;
-            border-radius: 10px;
-            padding: 30px 50px;
+            border-radius: 1rem;
+            padding: 3rem 5rem;
             display: flex;
-            gap: 50px;
+            gap: 5rem;
+
+            @media only screen and (max-width: 1240px) {
+                gap: 2rem;
+                padding: 2rem 4rem;
+            }
+
+            @media only screen and (max-width: 768px) {
+                flex-flow: column;
+                padding: 3rem 5rem;
+            }
 
             &-text {
-                flex: 0 1 300px;
+                flex: 0 1 30rem;
                 text-align: center;
-                font-size: 18px;
+                font-size: 1.8rem;
                 font-weight: 700;
 
-                button {
-                    font-size: 14px;
-                    font-weight: 300px;
+                @media only screen and (max-width: 1240px) {
+                    font-size: 1.4rem;
+                }
+                @media only screen and (max-width: 880px) {
+                    flex: 0 1 20rem;
+                }
+                @media only screen and (max-width: 768px) {
+                    flex: auto;
+                }
+                p:last-of-type {
+                    font-size: 1.4rem;
+                    font-weight: 300;
                 }
             }
         }
@@ -73,44 +127,79 @@
         &--social {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 2rem;
             flex: 1 1 auto;
 
-            
+            @media only screen and (max-width: 880px) {
+                gap: 1rem;
+            }
+            @media only screen and (max-width: 768px) {
+                flex-wrap: wrap;
+                place-content: center;
+            }
             &-icon {
-                border-radius: 10px;
+                border-radius: 1rem;
                 display: flex;
                 align-items: center;
                 padding: .5rem;
-                width: 50px;
-                height: 50px;
+                width: 5rem;
+                height: 5rem;
                 color: white;
                 background: rgb(207,196,255);
                 background: linear-gradient(90deg, rgba(207,196,255,1) 0%, rgba(162,211,245,1) 100%);
+
+                @media only screen and (max-width: 1240px) {
+                    width: 3rem;
+                    height: 3rem;
+                }
             }
 
+            form {
+                flex: auto;
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+
+                @media only screen and (max-width: 992px) {
+                    flex-flow: column;
+                    gap: .5rem;
+                }
+                @media only screen and (max-width: 768px) {
+                    flex-flow: row;
+                }
+            }
             input {
                 flex: 1 1 auto;
-                height: 50px;
-                border-radius: 10px;
+                height: 5rem;
+                border-radius: 1rem;
                 border: solid 1px #DCE2E7;
+                font-size: 1.4rem;
+                padding: 0 2rem;
+
+                @media only screen and (max-width: 992px) {
+                    height: 3rem;
+                }
             }
 
             &-btn {
                 background: rgb(207,196,255);
                 background: linear-gradient(90deg, rgba(207,196,255,1) 0%, rgba(162,211,245,1) 100%);
-                border-radius: 10px;
+                border-radius: 1rem;
                 border: solid 1px white;
                 cursor: pointer;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-                padding: 0px 25px;
-                height: 50px;
+                padding: 0 2.5rem;
+                height: 5rem;
+
+                @media only screen and (max-width: 992px) {
+                    height: 3rem;
+                }
             }
         }
 
         &--copy {
             text-align: center;
-            margin: 30px 0;
+            margin: 3rem 0;
         }
     }
 }

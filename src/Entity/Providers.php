@@ -52,11 +52,15 @@ class Providers
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Internships::class)]
+    private Collection $internship;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->promotion = new ArrayCollection();
+        $this->internship = new ArrayCollection();
     }
 
     public function __toString()
@@ -263,6 +267,36 @@ class Providers
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Internships>
+     */
+    public function getInternship(): Collection
+    {
+        return $this->internship;
+    }
+
+    public function addInternship(Internships $internship): self
+    {
+        if (!$this->internship->contains($internship)) {
+            $this->internship->add($internship);
+            $internship->setProviders($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInternship(Internships $internship): self
+    {
+        if ($this->internship->removeElement($internship)) {
+            // set the owning side to null (unless already changed)
+            if ($internship->getProviders() === $this) {
+                $internship->setProviders(null);
+            }
+        }
 
         return $this;
     }
