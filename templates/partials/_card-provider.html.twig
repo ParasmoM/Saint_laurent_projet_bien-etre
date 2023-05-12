@@ -1,7 +1,7 @@
 {% for provider in providers %}
 
-{% if provider.images is defined %}
-    {% set name_image = provider.images.first ? provider.images.first %}
+{% if provider.providerPhoto is defined %}
+    {% set name_image = provider.providerPhoto.name ? provider.providerPhoto.name %}
 {% endif %}
 
     <div class="card-provider">

@@ -1,7 +1,7 @@
 {% for service in services %}
 
-{% if service.providers.images is defined %}
-    {% set name_image = service.providers.images.first.name ? service.providers.images.first.name %}
+{% if service.providers.providerPhoto is defined %}
+    {% set name_image = service.providers.providerPhoto.name ? service.providers.providerPhoto.name %}
 {% endif %}
 
     <div class="card-service">

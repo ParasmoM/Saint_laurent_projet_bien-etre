@@ -1,13 +1,27 @@
-{% if app.user and app.user.providers.images is defined %}
-    {% set name_image = app.user.providers.images.first.name ? app.user.providers.images.first.name %}
+{% if app.user and app.user.providers.providerPhoto is defined and app.user and app.user.providers.providerPhoto is not null %}
+    {% set provider_image = app.user.providers.providerPhoto.name ? app.user.providers.providerPhoto.name %}
 {% endif %}
 
+{% if app.user.internetUsers.images is defined and app.user.internetUsers.images is not null %}
+    {% set internetUser_image = app.user.internetUsers.images.name ? app.user.internetUsers.images.name %}
+{% endif %}
+
+{% if app.user.internetUsers is defined and app.user.internetUsers is not null %}
+    {% set id = app.user.internetUsers.id %}
+{% endif %}
+{% if app.user.providers is defined and app.user.providers is not null %}
+    {% set id = app.user.providers.id %}
+{% endif %}
 {% if app.user %}
     <div class="profile-button-container">
-        {% if name_image is defined %}
-            <div class="avatar-container">
-                <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">ici
-            </div>
+            {% if provider_image is defined %}
+                <div class="avatar-container">
+                    <img src="{{ asset('assets/uploads/providers/' ~ provider_image) }}" alt="">
+                </div>
+            {% elseif internetUser_image is defined %}
+                <div class="avatar-container">
+                    <img src="{{ asset('assets/uploads/InternetUsers/' ~ internetUser_image) }}" alt="">
+                </div>
             {% else %}
                 <span>
                     {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
@@ -37,7 +51,7 @@
             </li>
             <li class="profile-dropdown-item">
                 <div class="profile-dropdown-item-link-profile">
-                    <a href="{{ path('app_parameter_user_info', {id: app.user.id}) }}">Gérer votre compte</a>
+                    <a href="{{ path('app_parameter_user_info', {id: id}) }}">Gérer votre compte</a>
                 </div>
             </li>
             <li class="profile-dropdown-item">

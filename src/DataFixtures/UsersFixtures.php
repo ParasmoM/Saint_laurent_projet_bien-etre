@@ -173,7 +173,7 @@ class UsersFixtures extends Fixture
         $photo->setProviderPhoto($prestataire);
         $manager->persist($photo);
 
-        $prestataire->addImage($photo);
+        $prestataire->setProviderPhoto($photo);
     }
 
     public function createUsers($prestataire, $manager) {

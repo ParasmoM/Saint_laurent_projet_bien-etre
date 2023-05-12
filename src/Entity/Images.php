@@ -22,10 +22,10 @@ class Images
     #[ORM\OneToOne(inversedBy: 'images', cascade: ['persist', 'remove'])]
     private ?CategoriesOfServices $serviceImage = null;
 
-    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\OneToOne(targetEntity: Providers::class, inversedBy: 'providerLogo')]
     private ?Providers $providerLogo = null;
 
-    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\OneToOne(targetEntity: Providers::class, inversedBy: 'providerPhoto')]
     private ?Providers $providerPhoto = null;
 
     #[ORM\OneToOne(inversedBy: 'images', cascade: ['persist', 'remove'])]
@@ -76,6 +76,18 @@ class Images
         return $this;
     }
 
+    public function getInternetUser(): ?InternetUsers
+    {
+        return $this->internetUser;
+    }
+
+    public function setInternetUser(?InternetUsers $internetUser): self
+    {
+        $this->internetUser = $internetUser;
+
+        return $this;
+    }
+
     public function getProviderLogo(): ?Providers
     {
         return $this->providerLogo;
@@ -96,18 +108,6 @@ class Images
     public function setProviderPhoto(?Providers $providerPhoto): self
     {
         $this->providerPhoto = $providerPhoto;
-
-        return $this;
-    }
-
-    public function getInternetUser(): ?InternetUsers
-    {
-        return $this->internetUser;
-    }
-
-    public function setInternetUser(?InternetUsers $internetUser): self
-    {
-        $this->internetUser = $internetUser;
 
         return $this;
     }

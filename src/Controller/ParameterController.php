@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Entity\Images;
+use App\Entity\Providers;
 use App\Form\UsersFormType;
 use App\Form\ImagesFormType;
 use App\Service\PictureService;
@@ -21,11 +22,10 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class ParameterController extends AbstractController
 {
     #[Route('/parameter/user-info/{id}', name: 'app_parameter_user_info')]
-    // #[IsGranted('ROLE_USER')]
-    #[IsGranted("ROLE_USER", subject:"choosenUser", message:"Vous ne pouvez accéder qu'à votre propre profil.")]
+    // #[IsGranted("ROLE_USER", subject:"choosenUser", message:"Vous ne pouvez accéder qu'à votre propre profil.")]
+    #[IsGranted('ROLE_USER')]
     public function user_info(
-        $id, 
-        Users $choosenUser,
+        $id,
         Request $request,
         PictureService $pictureService,
         CategoriesOfServicesRepository $categRepository,
@@ -34,9 +34,8 @@ class ParameterController extends AbstractController
         ParameterBagInterface $parameterBagInterface,
     ): Response {
         $list_categ = $categRepository->findAll();
-
         // Récupération de l'utilisateur connecté
-        // $choosenUser = $this->getUser();
+        $choosenUser = $this->getUser();
 
         // dd($choosenUser);
         $userForm = $this->createForm(UsersFormType::class, $choosenUser);
@@ -54,11 +53,16 @@ class ParameterController extends AbstractController
         $userTypeForm->handleRequest($request);
 
         $photo = $imagesRepository->findOneBy(['providerPhoto' => $utilisateur->getId()]);
-        // dd($photo);
+        // dd($utilisateur);
         $photoForm = $this->createForm(ImagesFormType::class, $photo);
         $photoForm->handleRequest($request);
 
+        $logo = new Images();
+        $logoForm = $this->createForm(ImagesFormType::class, $logo);
+        $logoForm->handleRequest($request);
+
         if ($userForm->isSubmitted() && $userForm->isValid() && $userTypeForm->isSubmitted() && $userTypeForm->isValid()) {
+            // dd($userTypeForm);
             $entityManager->persist($choosenUser);
             $entityManager->flush();
 
@@ -66,16 +70,17 @@ class ParameterController extends AbstractController
         }
         if ($photoForm->isSubmitted() && $photoForm->isValid()) {
             $image = $photoForm->get('name')->getData();
-            
             if ($image) {
                 $folder = $choosenUser->getUserType();
                 $id = $utilisateur->getId();
                 
                 if ($choosenUser->getUserType() == "InternetUsers") {
                     $verif = $imagesRepository->findOneBy(['internetUser' => $id]);
-    
+                    
                     if ($verif) {
+                        // dd($verif->getName());
                         $oldPicture = $verif->getName();
+                        
 
                         $path = $parameterBagInterface->get('image_directory') . $folder . '/' . $oldPicture;
                         if (file_exists($path)) {
@@ -87,6 +92,7 @@ class ParameterController extends AbstractController
                         $verif->setName($fichier);
                         $utilisateur->setImages($verif);
                     } else {
+                        dd('here');
                         $fichier = $pictureService->add($image, $folder);
                         $img = new Images();
                         $img->setName($fichier);
@@ -107,27 +113,86 @@ class ParameterController extends AbstractController
                         $fichier = $pictureService->add($image, $folder);
     
                         $verif->setName($fichier);
-                        $utilisateur->setImages($verif);
-                        dd('if');
+                        $utilisateur->setProviderPhoto($verif);
                     } else {
-                        dd('else');
+                        $fichier = $pictureService->add($image, $folder);
+                        $img = new Images();
+                        $img->setName($fichier);
+                        $entityManager->persist($img);
+                        $entityManager->flush();
+
+                        $utilisateur->setProviderPhoto($img);
                     }
                 }
+
                 $entityManager->persist($choosenUser);
                 $entityManager->flush();
-
             }
-
-
-
-
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_parameter_user_info', ['id' => $utilisateur->getId()]);
         }
+
+        
         return $this->render('parameter/parameter.html.twig', compact(
             'list_categ',
             'userForm',
             'userTypeForm',
-            'photoForm'
+            'photoForm',
+            'logoForm'
         ));
+    }
+
+    #[Route('/parameter/user-info/logo/{id}', name: 'app_parameter_logo')]
+    // #[IsGranted("ROLE_USER", subject:"choosenUser", message:"Vous ne pouvez accéder qu'à votre propre profil.")]
+    #[IsGranted('ROLE_USER')]
+    public function logo(
+        Request $request,
+        Providers $provider,
+        PictureService $pictureService,
+        ImagesRepository $imagesRepository,
+        EntityManagerInterface $entityManager,
+        ParameterBagInterface $parameterBagInterface,
+    ): Response {
+        // Récupération de l'utilisateur connecté
+        $user = $this->getUser();
+
+        $logo = new Images();
+        $logoForm = $this->createForm(ImagesFormType::class, $logo);
+        $logoForm->handleRequest($request);
+
+        if ($logoForm->isSubmitted() && $logoForm->isValid()) {
+            $logoData = $logoForm->get('name')->getData();
+
+            if ($logoData) {
+                $folder = 'logo';
+                $id = $provider->getId();
+
+                $verif = $imagesRepository->findOneBy(['providerLogo' => $id]);
+
+                if ($verif) {
+                    $oldPicture = $verif->getName();
+
+                    $path = $parameterBagInterface->get('image_directory') . $folder . '/' . $oldPicture;
+                    if (file_exists($path)) {
+                        unlink($path);
+                    }
+
+                    $fichier = $pictureService->add($logoData, $folder);
+
+                    $verif->setName($fichier);
+                    $provider->setProviderLogo($verif);
+                } else {
+                    $fichier = $pictureService->add($logoData, $folder);
+                    $logo->setName($fichier);
+                    $entityManager->persist($logo);
+                    $entityManager->flush();
+
+                    $provider->setProviderLogo($logo);
+                }
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+            
+        }
+        return $this->redirectToRoute('app_parameter_user_info', ['id' => $provider->getId()]);
     }
 }

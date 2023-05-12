@@ -43,11 +43,11 @@ class Providers
     #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Users::class)]
     private Collection $users;
 
-    #[ORM\OneToMany(mappedBy: 'providerLogo', targetEntity: Images::class)]
-    private Collection $images;
+    #[ORM\OneToOne(targetEntity: Images::class, mappedBy: 'providerLogo')]
+    private ?Images $providerLogo = null;
 
-    #[ORM\OneToMany(mappedBy: 'providerPhoto', targetEntity: Images::class)]
-    private Collection $photos;
+    #[ORM\OneToOne(targetEntity: Images::class, mappedBy: 'providerPhoto')]
+    private ?Images $providerPhoto = null;
 
     #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Promotions::class)]
     private Collection $promotion;
@@ -61,8 +61,6 @@ class Providers
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->images = new ArrayCollection();
-        $this->photos = new ArrayCollection();
         $this->promotion = new ArrayCollection();
         $this->internship = new ArrayCollection();
     }
@@ -173,6 +171,52 @@ class Providers
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getProviderLogo(): ?Images
+    {
+        return $this->providerLogo;
+    }
+
+    public function setProviderLogo(?Images $providerLogo): self
+    {
+        // Set the owning side of the relation if necessary
+        if ($providerLogo !== null && $providerLogo->getProviderLogo() !== $this) {
+            $providerLogo->setProviderLogo($this);
+        }
+
+        $this->providerLogo = $providerLogo;
+
+        return $this;
+    }
+
+    public function getProviderPhoto(): ?Images
+    {
+        return $this->providerPhoto;
+    }
+
+    public function setProviderPhoto(?Images $providerPhoto): self
+    {
+        // Set the owning side of the relation if necessary
+        if ($providerPhoto !== null && $providerPhoto->getProviderPhoto() !== $this) {
+            $providerPhoto->setProviderPhoto($this);
+        }
+
+        $this->providerPhoto = $providerPhoto;
+
+        return $this;
+    }
+    
     /**
      * @return Collection<int, Users>
      */
@@ -197,66 +241,6 @@ class Providers
             // set the owning side to null (unless already changed)
             if ($user->getProviders() === $this) {
                 $user->setProviders(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Images>
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Images $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images->add($image);
-            $image->setProviderLogo($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Images $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getProviderLogo() === $this) {
-                $image->setProviderLogo(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Images>
-     */
-    public function getPhotos(): Collection
-    {
-        return $this->photos;
-    }
-
-    public function addPhoto(Images $photo): self
-    {
-        if (!$this->photos->contains($photo)) {
-            $this->photos->add($photo);
-            $photo->setProviderPhoto($this);
-        }
-
-        return $this;
-    }
-
-    public function removePhoto(Images $photo): self
-    {
-        if ($this->photos->removeElement($photo)) {
-            // set the owning side to null (unless already changed)
-            if ($photo->getProviderPhoto() === $this) {
-                $photo->setProviderPhoto(null);
             }
         }
 
@@ -289,18 +273,6 @@ class Providers
                 $promotion->setProviders(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }

@@ -44,7 +44,7 @@ class ProvidersRepository extends ServiceEntityRepository
         } else {
             $queryBuilder->orderBy('p.id', 'DESC');
         }
-    
+        
         if ($this->hasFilters($data)) {
             $this->applyFilters($queryBuilder, $data);
         } else {
@@ -56,7 +56,7 @@ class ProvidersRepository extends ServiceEntityRepository
     }
     
 
-    private function hasFilters(array $data): bool
+    private function hasFilters( $data): bool
     {
         if (!isset($data['search'])) {
             return false;

@@ -2,8 +2,8 @@
 
 {% block title %}Hello ProvidersProfileController!{% endblock %}
 
-{% if providers.images is defined %}
-    {% set name_image = providers.images.first.name ? providers.images.first.name %}
+{% if providers.providerPhoto is defined %}
+    {% set name_image = providers.providerPhoto.name ? providers.providerPhoto.name %}
 {% endif %}
 
 {% block body %}
@@ -22,6 +22,11 @@
                         </span>
                     {% endif %}
                 </div>
+                {% if providers.providerLogo is defined and providers.providerLogo is not null %}
+                    <div class="provider_profile__logo">
+                        <img src="{{ asset('assets/uploads/logo/' ~ providers.providerLogo.name ) }}" alt="">
+                    </div>
+                {% endif %}
             </div>
             {% endfor %}
             <div class="provider_profile__info">
@@ -37,37 +42,39 @@
                     Informations du prestataire
                 </header>
                 <div class="provider_profile__menu-details">
-                    <div class="provider_profile__menu-item">
-                        <p class="provider_profile__menu-label">Mail : </p>
-                        <p class="provider_profile__menu-value">{{ providers.users.first.email }}</p>
-                    </div>
-                    <div class="provider_profile__menu-item">
-                        <p class="provider_profile__menu-label">Adresse : </p>
-                        <p class="provider_profile__menu-value">{{ providers.users.first.addressStreet }} {{ providers.users.first.addressStreet }}, {{ providers.users.first.postalCode }} {{ providers.users.first.locality }}</p>
-                    </div>
-                    <div class="provider_profile__menu-item">
-                        <p class="provider_profile__menu-label">Tel : </p>
-                        <p class="provider_profile__menu-value">{{ providers.phoneNumber }}</p>
-                    </div>
-                    <div class="provider_profile__menu-item">
-                        <p class="provider_profile__menu-label">TVA : </p>
-                        <p class="provider_profile__menu-value">{{ providers.tvaNumber }}</p>
-                    </div>
-                    <div class="provider_profile__menu-item">
-                        <p class="provider_profile__menu-label">Site : </p>
-                        <a class="provider_profile__menu-link" href="{{ providers.websiteUrl }}">{{ providers.websiteUrl }}</a>
-                    </div>
-                    <div class="provider_profile__menu-list-service">
-                        {% set array = [] %}
-                        {% for row in providers.promotion %}
-                            {% if row.service.name not in array %}
-                                {% set array = array|merge([row.service.name]) %}
-                            {% endif %}
-                        {% endfor %}
-
-                        {% for row in array %}
-                            <p>{{ row }}</p>
-                        {% endfor %}
+                    <div class="provider_profile__menu-items-wrapper">
+                        <div class="provider_profile__menu-item">
+                            <p class="provider_profile__menu-label">Mail : </p>
+                            <p class="provider_profile__menu-value">{{ providers.users.first.email }}</p>
+                        </div>
+                        <div class="provider_profile__menu-item">
+                            <p class="provider_profile__menu-label">Adresse : </p>
+                            <p class="provider_profile__menu-value">{{ providers.users.first.addressStreet }} {{ providers.users.first.addressStreet }}, {{ providers.users.first.postalCode }} {{ providers.users.first.locality }}</p>
+                        </div>
+                        <div class="provider_profile__menu-item">
+                            <p class="provider_profile__menu-label">Tel : </p>
+                            <p class="provider_profile__menu-value">{{ providers.phoneNumber }}</p>
+                        </div>
+                        <div class="provider_profile__menu-item">
+                            <p class="provider_profile__menu-label">TVA : </p>
+                            <p class="provider_profile__menu-value">{{ providers.tvaNumber }}</p>
+                        </div>
+                        <div class="provider_profile__menu-item">
+                            <p class="provider_profile__menu-label">Site : </p>
+                            <a class="provider_profile__menu-link" href="{{ providers.websiteUrl }}">{{ providers.websiteUrl }}</a>
+                        </div>
+                        <div class="provider_profile__menu-list-service">
+                            {% set array = [] %}
+                            {% for row in providers.promotion %}
+                                {% if row.service.name not in array %}
+                                    {% set array = array|merge([row.service.name]) %}
+                                {% endif %}
+                            {% endfor %}
+    
+                            {% for row in array %}
+                                <p>{{ row }}</p>
+                            {% endfor %}
+                        </div>
                     </div>
                     <p class="provider_profile__menu-description">
                         {{ providers.description }}
@@ -83,5 +90,4 @@
         </div>        
     </div>
 </main>
-{{ dump() }}
 {% endblock %}

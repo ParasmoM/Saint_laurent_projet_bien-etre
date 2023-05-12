@@ -8,8 +8,8 @@
     {% set banner = "" %}
 {% endif %}
 
-{% if promotions.providers.images is defined %}
-    {% set name_image = promotions.providers.images.first.name ? promotions.providers.images.first.name %}
+{% if promotions.providers.providerPhoto is defined %}
+    {% set name_image = promotions.providers.providerPhoto.name ? promotions.providers.providerPhoto.name %}
 {% endif %}
 
 {% block body %}
@@ -33,17 +33,17 @@
                         {{ promotions }}
                     </p>
                     <div class="service-description__social-icons">
-                        {% if service.providers.websiteUrl is defined %}
-                            <a href="{{ service.providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
+                        {% if promotions.providers.websiteUrl is defined %}
+                            <a href="{{ promotions.providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
                         {% endif %}
-                        {% if service.providers.instagram is defined %}
-                            <a href="{{ service.providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
+                        {% if promotions.providers.instagram is defined %}
+                            <a href="{{ promotions.providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
                         {% endif %}
-                        {% if service.providers.facebook is defined %}
-                            <a href="{{ service.providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
+                        {% if promotions.providers.facebook is defined %}
+                            <a href="{{ promotions.providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
                         {% endif %}
-                        {% if service.providers.twitter is defined %}
-                            <a href="{{ service.providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
+                        {% if promotions.providers.twitter is defined %}
+                            <a href="{{ promotions.providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
                         {% endif %}
                     </div>
                     <p class="service-description__description">
@@ -68,5 +68,4 @@
         {{ knp_pagination_render(providers) }}
     </div>
 </main>
-{{ dump(promotions.providers.id) }}
 {% endblock %}

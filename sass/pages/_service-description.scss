@@ -1,5 +1,5 @@
 .service-description {
-    padding: 9rem 0;
+    padding: 9rem 0 2em;
     font-size: 1.4rem;
     .service-description__section {
         background-color: #EAF0F8;
@@ -50,10 +50,21 @@
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         position: absolute;
         bottom: -10rem;left: 8rem;
+
+        @media only screen and (max-width: 1240px) {
+            height: 18rem;
+            width: 18rem;
+            bottom: -9rem;
+        }
+        @media only screen and (max-width: 992px) {
+            height: 16rem;
+            width: 16rem;
+            bottom: -8rem;left: 4rem;
+        }
     }
     &__content-container {
         display: flex;
-        padding: 3rem 0 9rem;
+        padding: 9rem 0;
         place-content: center;
         position: relative;
     }
@@ -120,5 +131,10 @@
         @media only screen and (max-width: 633px) {
             max-width: 230px;
         }
+    }
+
+    .card-provider {
+        border-color: #EAF0F8;
+        height: 32rem;
     }
 }
