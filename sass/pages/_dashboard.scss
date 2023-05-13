@@ -1,5 +1,6 @@
 .dashboard {
     background-color: #F3F2FF;
+    color: #647688;
     font-size: 1.4rem;
 
     &__container {
@@ -136,6 +137,41 @@
                 }
                 td {
                     padding: .5rem 0 .5rem 2rem;
+                }
+                tr td:last-of-type {
+                    position: relative;
+
+                    ul {
+                        display: none;
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                        position: absolute;
+                        top: -1rem;left: 6rem;
+                        background-color: white;
+                        border-radius: .5rem;
+                        padding: .5rem;
+                        gap: 1rem;
+
+                        li {
+                            height: 3rem;
+                            width: 6rem;
+                            display: flex;
+                            align-items: center;
+                            place-content: center;
+                            border-radius: .5rem;
+                            
+                            &:hover {
+                                background-color: #F3F5F8;
+                            }
+                        }
+                        input {
+                            background-color: inherit;
+                            border: none;
+                            color: #647688;
+                        }
+                    }
+                    span.active + ul {
+                        display: flex;
+                    }
                 }
             }
 

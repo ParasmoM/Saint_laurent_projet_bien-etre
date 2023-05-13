@@ -3,10 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\PromotionsRepository;
+use App\Validator\Constraints as CustomAssert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PromotionsRepository::class)]
+/**
+ * @CustomAssert\IsEndDateValid
+ * @CustomAssert\IsDisplayUntilDateValid
+ */
 class Promotions
 {
     #[ORM\Id]
@@ -39,12 +46,12 @@ class Promotions
     private ?Providers $providers = null;
 
     #[ORM\ManyToOne(inversedBy: 'promotions')]
+    #[Assert\NotNull(message: "Le service ne peut pas être null.")]
     private ?CategoriesOfServices $service = null;
 
     public function __construct()
     {
         $this->start_date = new \DateTime();
-        $this->display_until_date = null;
     }
 
     public function __toString()

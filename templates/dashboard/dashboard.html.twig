@@ -2,20 +2,29 @@
 
 {% block title %}Hello DashboardController!{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/dashboard.js') }}" defer></script>
+{% endblock %}
+
+{%  if app.user 
+    and app.user.providers.providerPhoto is defined 
+    and app.user.providers.providerPhoto is not null 
+%}
+    {% set name_image = app.user.providers.providerPhoto.name ? app.user.providers.providerPhoto.name %}
+{% endif %}
+
 {% block body %}
 <main class="dashboard">
     <div class="dashboard__container">
         <section class="dashboard__profile-section">
-            {% if app.user and app.user.providers.images is defined %}
-                {% set name_image = app.user.providers.images.first.name ? app.user.providers.images.first.name %}
-            {% endif %}
             <div class="dashboard__profile-container">
                 <div class="dashboard__profile-image">
-                    {% if name_image is defined %}
+                    {% if name_image is defined and name_image is not null %}
                         <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
                     {% else %}
                         <span>
-                            {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
+                            {{ app.user.providers|slice(0, 1)|upper }}
                         </span>
                     {% endif %}
                 </div>
@@ -25,27 +34,26 @@
             <div class="dashboard__menu">
                 <h4 class="dashboard__menu-title">Général</h4>
                 <div class="dashboard__menu-items">
-                    <a href="#">
+                    <a href="{{ path('app_dashboard', {id: app.user.providers.id, type: 'services'}) }}">
                         <span>Mes services</span>
                         {{ include('svg/add.html.twig') }}
                     </a>
-                    <a href="#">
+                    <a href="{{ path('app_dashboard', {id: app.user.providers.id, type: 'stages'}) }}">
                         <span>Mes stages</span>
                         {{ include('svg/add.html.twig') }}
                     </a>
                 </div>
             </div>
             <div class="dashboard__main-content">
-                {% if list_promotion is defined %}
-                    {% include "partials/_dashboard_index.html.twig" with {list_promotion: list_promotion} only %}
+                {% if listing is defined and listing is not null %}
+                    {% include "dashboard/_table.html.twig" with {listing: listing, currentType: currentType} only %}
                 {% endif %}
 
-                {% if form is defined %}
-                    {% include "partials/_dashboard_new.html.twig" with {form: form} only %}
+                {% if form is defined and form is not null %}
+                    {% include "dashboard/_form.html.twig" with {form: form, currentType: currentType} only %}
                 {% endif %}
             </div>
         </section>
-        {{ dump() }}
     </div>
 </main>
 {% endblock %}

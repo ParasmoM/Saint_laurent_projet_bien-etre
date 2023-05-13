@@ -1,0 +1,57 @@
+<h4 class="dashboard__content-title">Mes {{ currentType }}</h4>
+<div class="dashboard__content-items">
+    <div class="dashboard__content-button">
+        <button>
+            <a href="{{ path('app_dashboard_add', {type: currentType}) }}">
+                Créer un {{ currentType|slice(0, -1) }} 
+                {{ include('svg/add-icone.html.twig') }}
+            </a>
+        </button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                {% if currentType == 'services' %}
+                    <th>Type de {{ currentType|slice(0, -1) }}</th>
+                {% endif %}
+                {% if currentType == 'stages' %}
+                    <th>Prix</th>
+                {% endif %}
+                <th>Date debut</th>
+                <th>Date fin</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in listing %}
+            <tr>
+                <td>{{ item.name }}</td>
+                {% if currentType == 'services' %}
+                    <td>{{ item.service }}</td>
+                {% endif %}
+                {% if currentType == 'stages' %}
+                <td>{{ item.rate }} €</td>
+                {% endif %}
+                <td>{{ item.startDate|date('Y-m-d') }}</td>
+                <td>{{ item.endDate|date('Y-m-d') }}</td>
+                <td>
+                    <span id="btn-ellipsis-dashboard">{{ include('svg/ellipsis-icone.html.twig') }}</span>
+                    <ul>
+                        <li>
+                            <a href="{{ path('app_dashboard_edit', {id: item.id, type: currentType}) }}">Edit</a>
+                        </li>
+                        <li>
+                            <form action="{{ path('app_dashboard_delete', {id: item.id, type: currentType}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+                                <input type="submit" value="Delete">
+                            </form>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{{ dump() }}

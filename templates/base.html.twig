@@ -30,7 +30,8 @@
         {% block body %}{% endblock %}
         {% if app.request.attributes.get('_route') == 'app_login' 
         or app.request.attributes.get('_route') == 'app_register'
-        or app.request.attributes.get('_route') == 'app_parameter_user_info' %}
+        or app.request.attributes.get('_route') == 'app_parameter_user_info'
+        or app.request.attributes.get('_route') starts with 'app_dashboard' %}
         {% else %}
             {% include "partials/_footer.html.twig" %}
         {% endif %}

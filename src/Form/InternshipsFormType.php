@@ -6,6 +6,7 @@ use App\Entity\Internships;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class InternshipsFormType extends AbstractType
 {
@@ -16,11 +17,20 @@ class InternshipsFormType extends AbstractType
             ->add('description')
             ->add('rate')
             ->add('additionalInformation')
-            ->add('start_date')
-            ->add('end_date')
-            ->add('display_from_date')
-            ->add('display_until_date')
+            // ->add('start_date')
+            ->add('end_date', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('display_from_date', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('display_until_date', DateType::class, [
+                'widget' => 'single_text',
+            ])
         ;
+        $builder->get('end_date')->setData(new \DateTime());
+        $builder->get('display_from_date')->setData(new \DateTime());
+        $builder->get('display_until_date')->setData(new \DateTime());
     }
 
     public function configureOptions(OptionsResolver $resolver): void

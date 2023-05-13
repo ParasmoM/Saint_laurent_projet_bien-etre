@@ -5,8 +5,13 @@ namespace App\Entity;
 use App\Repository\InternshipsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\Constraints as CustomAssert;
 
 #[ORM\Entity(repositoryClass: InternshipsRepository::class)]
+/**
+ * @CustomAssert\IsEndDateValid
+ * @CustomAssert\IsDisplayUntilDateValid
+ */
 class Internships
 {
     #[ORM\Id]
@@ -40,6 +45,11 @@ class Internships
 
     #[ORM\ManyToOne(inversedBy: 'internship')]
     private ?Providers $providers = null;
+    
+    public function __construct()
+    {
+        $this->start_date = new \DateTime();
+    }
 
     public function __toString()
     {
