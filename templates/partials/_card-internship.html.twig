@@ -2,8 +2,8 @@
 {% set now = "now"|date('Y-m-d') %}
 {% set displayUntil = internship.getDisplayUntilDate|date('Y-m-d') %}
 
-{% if internship.providers.images is defined %}
-    {% set name_image = internship.providers.images.first.name ? internship.providers.images.first.name %}
+{% if internship.providers.providerPhoto is defined %}
+    {% set name_image = internship.providers.providerPhoto.name ? internship.providers.providerPhoto.name %}
 {% endif %}
 
 <div class="card-internship">
@@ -14,11 +14,7 @@
     {% endif %}
     <div class="card-internship__header">
         <div class="card-internship__profile-image">
-            {% if name_image is defined %}
-                <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
-            {% else %}
-                <span>{{ internship.providers|slice(0, 1)|upper }}</span>
-            {% endif %}
+            {{ avatar_component(name_image, internship.providers, true) }}
         </div>
         <div class="card-internship__info">
             <div class="card-internship__details">
@@ -30,18 +26,7 @@
                 </p>
             </div>
             <div class="card-internship__socials">
-                {% if internship.providers.websiteUrl is defined %}
-                    <a href="{{ internship.providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
-                {% endif %}
-                {% if internship.providers.instagram is defined %}
-                    <a href="{{ internship.providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
-                {% endif %}
-                {% if internship.providers.facebook is defined %}
-                    <a href="{{ internship.providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
-                {% endif %}
-                {% if internship.providers.twitter is defined %}
-                    <a href="{{ internship.providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
-                {% endif %}
+                {% include "partials/_zone-socials.html.twig" with {providers: internship.providers} only %}
             </div>
         </div>
     </div>

@@ -1,0 +1,12 @@
+{% if providers.websiteUrl is defined %}
+    <a href="{{ providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
+{% endif %}
+{% if providers.instagram is defined %}
+    <a href="{{ providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
+{% endif %}
+{% if providers.facebook is defined %}
+    <a href="{{ providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
+{% endif %}
+{% if providers.twitter is defined %}
+    <a href="{{ providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
+{% endif %}

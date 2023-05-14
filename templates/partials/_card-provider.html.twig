@@ -6,11 +6,7 @@
 
     <div class="card-provider">
         <div class="provider-profile">
-            {% if name_image is defined %}
-                <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
-            {% else %}
-                <span>{{ provider|slice(0, 1)|upper }}</span>
-            {% endif %}
+            {{ avatar_component(name_image, provider, true) }}
         </div>
 
         <p class="provider-name">

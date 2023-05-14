@@ -1,41 +1,41 @@
 {% if app.user and app.user.providers.providerPhoto is defined and app.user and app.user.providers.providerPhoto is not null %}
-    {% set provider_image = app.user.providers.providerPhoto.name ? app.user.providers.providerPhoto.name %}
+    {% set name_image = app.user.providers.providerPhoto.name ? app.user.providers.providerPhoto.name %}
 {% endif %}
 
-{% if app.user.internetUsers.images is defined and app.user.internetUsers.images is not null %}
-    {% set internetUser_image = app.user.internetUsers.images.name ? app.user.internetUsers.images.name %}
+{% if app.user.internetUsers.providerPhoto is defined and app.user.internetUsers.providerPhoto is not null %}
+    {% set name_image = app.user.internetUsers.providerPhoto.name ? app.user.internetUsers.providerPhoto.name %}
 {% endif %}
 
 {% if app.user.internetUsers is defined and app.user.internetUsers is not null %}
     {% set id = app.user.internetUsers.id %}
+    {% set fichier = 'InternetUsers/' %}
 {% endif %}
 {% if app.user.providers is defined and app.user.providers is not null %}
     {% set id = app.user.providers.id %}
+    {% set fichier = 'providers/' %}
 {% endif %}
+
 {% if app.user %}
     <div class="profile-button-container">
-            {% if provider_image is defined %}
-                <div class="avatar-container">
-                    <img src="{{ asset('assets/uploads/providers/' ~ provider_image) }}" alt="">
-                </div>
-            {% elseif internetUser_image is defined %}
-                <div class="avatar-container">
-                    <img src="{{ asset('assets/uploads/InternetUsers/' ~ internetUser_image) }}" alt="">
-                </div>
-            {% else %}
-                <span>
-                    {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
-                </span>
-            {% endif %}
+        {% if name_image is defined %}
+        <div class="avatar-container">
+            <img src="{{ asset('assets/uploads/' ~ fichier ~ name_image) }}" alt="">
+        </div>
+        {% else %}
+        <span>
+            {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
+        </span>
+        {% endif %}
     </div>
+
     <div class="profile-dropdown" id="profile-dropdown">
         <ul class="profile-dropdown-menu">
             <li class="profile-dropdown-item">
-                <a href="#">
+                <a href="{{ path('app_providers_profile', {id: id}) }}">
                     <div class="profile-dropdown-item-icon">
                         <div>
                         {% if name_image is defined %}
-                            <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
+                            <img src="{{ asset('assets/uploads/' ~ fichier ~ name_image) }}" alt="">
                         {% else %}
                             <span>
                                 {{ app.user.userType == 'InternetUsers' ? app.user.internetUsers|slice(0, 1)|upper : app.user.providers|slice(0, 1)|upper }}
@@ -93,6 +93,8 @@
     </div>
 {% else %}
     <div class="profile-button-container">
+
         {{ include('svg/profile.html.twig') }}
+        
     </div>
 {% endif %}

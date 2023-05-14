@@ -5,44 +5,40 @@
     {% endif %}
 
     <div class="card-provider-featured">
+
         <div class="provider-featured-info">
+
             <p class="provider-featured-name">
                 {{ provider }}
             </p>
+
             <p class="provider-featured-service">
                 {% if provider.promotion.first.service is defined %}
                     {{ provider.promotion.first.service }}
                 {% endif %}
             </p>
+            
             <div class="provider-featured-image">
-                {% if name_image is defined %}
-                    <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
-                {% else %}
-                    <span>{{ provider|slice(0, 1)|upper }}</span>
-                {% endif %}
+                {{ avatar_component(name_image, provider, true) }}
             </div>
+
         </div>
+
         <div class="provider-featured-details">
+
             <div class="provider-featured-social-icons">
-                {% if providers.websiteUrl is defined %}
-                <a href="{{ providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
-            {% endif %}
-            {% if providers.instagram is defined %}
-                <a href="{{ providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
-            {% endif %}
-            {% if providers.facebook is defined %}
-                <a href="{{ providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
-            {% endif %}
-            {% if providers.twitter is defined %}
-                <a href="{{ providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
-            {% endif %}
+                {% include "partials/_zone-socials.html.twig" with {providers: provider} only %}
             </div>
+
             <p class="provider-featured-description">
                 {{ provider.description|length > 130 ? provider.description|slice(0, 130) ~ '...' : provider.description }}
             </p>
+
             <button class="provider-featured-service-button">
                 <a href="{{ path('app_providers_profile', {id: provider.id}) }}">En savoir plus</a>
             </button>
+
         </div>
+        
     </div>
 {% endfor %}

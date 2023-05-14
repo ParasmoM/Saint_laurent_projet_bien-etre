@@ -19,11 +19,7 @@
         {% endif %}
         <div class="card-service__header">
             <div class="card-service__profile-image">
-                {% if name_image is defined %}
-                    <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
-                {% else %}
-                    <span>{{ service.providers|slice(0, 1)|upper }}</span>
-                {% endif %}
+                {{ avatar_component(name_image, service.providers, true) }}
             </div>
             <div class="card-service__info">
                 <div class="card-service__details">
@@ -48,18 +44,7 @@
                     </p>
                 </div>
                 <div class="card-service__socials">
-                    {% if service.providers.websiteUrl is defined %}
-                        <a href="{{ service.providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
-                    {% endif %}
-                    {% if service.providers.instagram is defined %}
-                        <a href="{{ service.providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
-                    {% endif %}
-                    {% if service.providers.facebook is defined %}
-                        <a href="{{ service.providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
-                    {% endif %}
-                    {% if service.providers.twitter is defined %}
-                        <a href="{{ service.providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
-                    {% endif %}
+                    {% include "partials/_zone-socials.html.twig" with {providers: service.providers} only %}
                 </div>
             </div>
         </div>
