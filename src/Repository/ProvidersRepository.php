@@ -81,6 +81,13 @@ class ProvidersRepository extends ServiceEntityRepository
             $nameConditions = [];
             $nameParameters = [];
 
+            // If there are more than two parts, assume the first part is the first name and the rest is the last name
+            if (count($nameParts) > 2) {
+                $firstName = array_shift($nameParts);
+                $lastName = implode(' ', $nameParts);
+                $nameParts = [$firstName, $lastName];
+            }
+
             foreach ($nameParts as $index => $namePart) {
                 $namePart = $namePart . '%';
                 $nameConditions[] = $expr->orX(

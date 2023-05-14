@@ -1,10 +1,17 @@
 {% for internship in internships %}
+{% set now = "now"|date('Y-m-d') %}
+{% set displayUntil = internship.getDisplayUntilDate|date('Y-m-d') %}
 
 {% if internship.providers.images is defined %}
     {% set name_image = internship.providers.images.first.name ? internship.providers.images.first.name %}
 {% endif %}
 
 <div class="card-internship">
+    {% if now > displayUntil %}
+        <div class="sold-out">
+            <img src="{{ asset('assets/uploads/sold-out.png') }}" alt="">
+        </div>
+    {% endif %}
     <div class="card-internship__header">
         <div class="card-internship__profile-image">
             {% if name_image is defined %}

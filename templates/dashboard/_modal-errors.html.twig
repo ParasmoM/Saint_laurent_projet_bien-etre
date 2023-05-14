@@ -1,0 +1,22 @@
+{% if form_errors(form.end_date) %}
+    <div class="modal active" id="modal-error-form">
+        <div class="modal__container">
+            <div>
+                <p>Error : </p>
+                {{ form_errors(form.end_date) }}
+                {{ form_errors(form.display_until_date) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if form_errors(form.display_until_date) %}
+    <div class="modal active" id="modal-error-form">
+        <div class="modal__container">
+            <div>
+                <p>Error : </p>
+                {{ form_errors(form.display_until_date) }}
+            </div>
+        </div>
+    </div>
+{% endif %}

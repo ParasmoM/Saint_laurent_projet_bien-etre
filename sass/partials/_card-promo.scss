@@ -1,9 +1,20 @@
+.sold-out {
+    position: absolute;
+    top: 2rem;
+}
 .card-service {
     flex: 0 1 31.5rem;
     border-radius: 1rem;
     background-color: white;
     box-shadow: rgba(223, 233, 245, 1) 0px 10px 10px;
     padding: 2rem;
+    position: relative;
+
+    // .disabled {
+    //     pointer-events: none;
+    //     opacity: 0.2;
+    // }
+
 
     .card-service__header {
         display: flex;

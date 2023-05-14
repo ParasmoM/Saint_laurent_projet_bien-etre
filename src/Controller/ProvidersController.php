@@ -1962,21 +1962,21 @@ class ProvidersController extends AbstractController
         }
 
         // if (!empty($filter)) {
-            $result = [];
-            foreach ($filter as $key => $value) {
-                foreach ($data as $keyData => $valueData) {
-                    $d = $valueData;
-                    foreach ($d as $k => $v) {
-                        if (strtolower($key) == strtolower($k) && strtolower($value) == strtolower($v)) {
-                            $result[] = $d;
-                        }
+        $result = [];
+        foreach ($filter as $key => $value) {
+            foreach ($data as $keyData => $valueData) {
+                $d = $valueData;
+                foreach ($d as $k => $v) {
+                    if (strtolower($key) == strtolower($k) && strtolower($value) == strtolower($v)) {
+                        $result[] = $d;
                     }
                 }
             }
+        }
     
-            if ($request->getMethod() == 'POST') {
-                return new JsonResponse($result);
-            }
+        if ($request->getMethod() == 'POST') {
+            return new JsonResponse($result);
+        }
         // }
         // return new JsonResponse(['action'=>'data vide']);
     }
@@ -1991,7 +1991,7 @@ class ProvidersController extends AbstractController
         // dd('here');
         // Récupérez le numéro de la page à partir de la requête, utilisez 1 par défaut si aucune page n'est fournie
         $page = $request->query->get('page', 1);
-
+        
         // On récupère les prestataires paginer en fonction du filtre 
         $providers = $providersRepository->findByProviders($_GET, $page, true);
 

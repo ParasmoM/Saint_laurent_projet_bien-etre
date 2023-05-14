@@ -35,7 +35,7 @@ class PromotionsRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-        return $this->paginatorInterface->paginate($data, $page, 9 );
+        return $this->paginatorInterface->paginate($data, $page, 8 );
     }
 
     public function save(Promotions $entity, bool $flush = false): void

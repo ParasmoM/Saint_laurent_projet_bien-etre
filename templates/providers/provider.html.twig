@@ -12,16 +12,15 @@
 <main class="list-providers">
 
     <section class="search-bar">
-        {% include "partials/_search-bar.html.twig" %}
+        {% include "partials/_search-bar.html.twig" with {form: form} only %}
     </section>
 
     <section class="list-providers__container">
-        {% include "partials/_card-provider.html.twig" %}
+        {% include "partials/_card-provider.html.twig" with {providers: providers} only %}
     </section>
 
     <div class="providers-pagination">
         {{ knp_pagination_render(providers) }}
     </div>
-    
 </main>
 {% endblock %}

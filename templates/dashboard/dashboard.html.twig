@@ -34,7 +34,7 @@
             <div class="dashboard__menu">
                 <h4 class="dashboard__menu-title">Général</h4>
                 <div class="dashboard__menu-items">
-                    <a href="{{ path('app_dashboard', {id: app.user.providers.id, type: 'services'}) }}">
+                    <a href="{{ path('app_dashboard', {id: app.user.providers.id, type: 'services'}) }}" class="{{ currentType == 'services' ? 'active': ''}}">
                         <span>Mes services</span>
                         {{ include('svg/add.html.twig') }}
                     </a>

@@ -40,32 +40,26 @@ class SearchType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Qui recherchez-vousn ? ...'
                 ],
-                'required' => false, // Rend le champ non obligatoire
-                'empty_data' => '', // Rend le champ nullable
+                'required' => false,
             ])
             ->add('service', ChoiceType::class, [
                 'choices' => $this->tabChoices('categoriesRepository'),
                 'placeholder' => '',
-                'required' => false, // Rend le champ non obligatoire
-                // 'empty_data' => '', // Rend le champ nullable
+                'required' => false,
             ])
             ->add('code', ChoiceType::class, [
                 'choices' => $this->tabChoices('postalCodesRepository'),
                 'placeholder' => '',
-                'required' => false, // Rend le champ non obligatoire
-                // 'empty_data' => '', // Rend le champ nullable
+                'required' => false, 
             ])
             ->add('town', ChoiceType::class, [
                 'choices' => $this->tabChoices('townsRepository'),
                 'placeholder' => '',
-                'required' => false, // Rend le champ non obligatoire
-                // 'empty_data' => '', // Rend le champ nullable
+                'required' => false, 
             ])
             ->add('locality', ChoiceType::class, [
-                // 'choices' => $choices['localiteRepository'],
                 'placeholder' => '',
-                'required' => false, // Rend le champ non obligatoire
-                // 'empty_data' => '', // Rend le champ nullable
+                'required' => false,
             ])
         ;
     }

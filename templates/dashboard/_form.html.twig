@@ -8,28 +8,10 @@
 {% endif %}
 
 <h4 class="dashboard__content-title">{{ actionName }} un {{ currentType }}</h4>
+
 <form action="" method="post" class="dashboard__form">
-    {% if form_errors(form.end_date) %}
-        <div class="modal active" id="modal-error-form">
-            <div class="modal__container">
-                <div>
-                    <p>Error : </p>
-                    {{ form_errors(form.end_date) }}
-                    {{ form_errors(form.display_until_date) }}
-                </div>
-            </div>
-        </div>
-    {% endif %}
-    {% if form_errors(form.display_until_date) %}
-        <div class="modal active" id="modal-error-form">
-            <div class="modal__container">
-                <div>
-                    <p>Error : </p>
-                    {{ form_errors(form.display_until_date) }}
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    {% include "dashboard/_modal-errors.html.twig" with {form: form} only %}
+
     <div class="dashboard__form-group">
         {% if currentType == 'services' %}
         <p>
@@ -52,24 +34,16 @@
             {{ form_widget(form.display_from_date) }}
         </p>
         <p>
-            {{ form_label(form.display_until_date, 'Fin de la promotion du ' ~ currentType)}}
+            {{ form_label(form.display_until_date, 'Fin de la promotion')}}
             {{ form_widget(form.display_until_date) }}
         </p>
     </div>
-    {# {% if currentType == 'services' %} #}
-    {# {% endif %} #}
-    {# {% if currentType == 'stages' %}
-        <div class="dashboard__form-group">
-            {{ form_widget(form.name, {'attr': {'placeholder': 'Type de ' ~ currentType}}) }}
-
-            {{ form_widget(form.end_date) }}
-            {# {{ form_widget(form.display_until_date) }}
-        </div>
-    {% endif %} #}
     {% if currentType == 'services' %}
         <div class="dashboard__form-group">
-            {{ form_label(form.name, 'Titre') }}
-            {{ form_widget(form.name) }}
+            <p>
+                {{ form_label(form.name, 'Titre') }}
+                {{ form_widget(form.name) }}
+            </p>
         </div>
     {% endif %}
     {% if currentType == 'stages' %}
@@ -79,8 +53,10 @@
         </div>
     {% endif %}
     <div class="dashboard__form-group">
-        {{ form_label(form.description, 'Description') }}
-        {{ form_widget(form.description, {'attr': {'placeholder' : 'Description du ' ~ currentType, 'rows': '10', 'style': 'resize: none;'   }}) }}
+        <p>
+            {{ form_label(form.description, 'Description') }}
+            {{ form_widget(form.description, {'attr': {'placeholder' : 'Description du ' ~ currentType, 'rows': '10', 'style': 'resize: none;'   }}) }}
+        </p>
     </div>
     <div class="dashboard__form-actions">
         {# <label for="">
@@ -90,4 +66,3 @@
     </div>
     {{ form_widget(form._token) }}
 </form>
-{{ dump() }}

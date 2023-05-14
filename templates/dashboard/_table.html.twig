@@ -20,6 +20,7 @@
                 {% endif %}
                 <th>Date debut</th>
                 <th>Date fin</th>
+                <th>Visibilité</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -35,6 +36,15 @@
                 {% endif %}
                 <td>{{ item.startDate|date('Y-m-d') }}</td>
                 <td>{{ item.endDate|date('Y-m-d') }}</td>
+                <td>
+                    {% set now = "now"|date('Y-m-d') %}
+                    {% set displayUntil = item.getDisplayUntilDate|date('Y-m-d') %}
+                    {% if now > displayUntil %}
+                        {{ include('svg/close-eyes-icone.html.twig') }}
+                    {% else %}
+                        {{ include('svg/open-eyes-icone.html.twig') }}
+                    {% endif %}
+                </td>
                 <td>
                     <span id="btn-ellipsis-dashboard">{{ include('svg/ellipsis-icone.html.twig') }}</span>
                     <ul>
@@ -54,4 +64,3 @@
         </tbody>
     </table>
 </div>
-{{ dump() }}

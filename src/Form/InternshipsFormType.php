@@ -14,7 +14,11 @@ class InternshipsFormType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
+            ->add('description', null, [
+                'attr' => [
+                    'class' => 'input-textarea'
+                ]
+            ])
             ->add('rate')
             ->add('additionalInformation')
             // ->add('start_date')
