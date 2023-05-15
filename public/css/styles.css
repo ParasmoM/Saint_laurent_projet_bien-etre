@@ -2857,6 +2857,15 @@
     margin-bottom: 1rem;
   }
 }
+.footer__container--stats > div {
+  display: flex;
+  flex-direction: row;
+}
+@media only screen and (max-width: 680px) {
+  .footer__container--stats > div {
+    place-content: center;
+  }
+}
 .footer__container--newsletter {
   background-color: #F5F8FC;
   border-radius: 1rem;

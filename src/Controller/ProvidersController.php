@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Providers;
 use App\Form\SearchType;
+use App\Entity\Providers;
 use App\Model\SearchData;
 use App\Repository\ImagesRepository;
 use App\Repository\ProvidersRepository;
+use App\Repository\PromotionsRepository;
+use App\Repository\InternshipsRepository;
+use App\Repository\InternetUsersRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -1986,6 +1989,9 @@ class ProvidersController extends AbstractController
         Request $request,
         CategoriesOfServicesRepository $categRepository,
         ProvidersRepository $providersRepository,
+        InternetUsersRepository $internetUsersRepository,
+        PromotionsRepository $promotionsRepository,
+        InternshipsRepository $internshipsRepository,
     ): Response {
         $list_categ = $categRepository->findAll();
         // dd('here');
@@ -1998,10 +2004,22 @@ class ProvidersController extends AbstractController
         $searchData = new SearchData();
         $form = $this->createForm(SearchType::class, $searchData);
         
+        $statsTab = [];
+        
+        $providerCount = count($providersRepository->findAll());
+        $internetUserCount = count($internetUsersRepository->findAll());
+        $promotionCount = count($promotionsRepository->findAll());
+        $internshipCount = count($internshipsRepository->findAll());
+        $statsTab['provider'] = ['count' => $providerCount, 'phrase' => 'Nbre de prestataire : '];
+        $statsTab['internetUser'] = ['count' => $internetUserCount, 'phrase' => 'Nbre d\'utilisateur : '];
+        $statsTab['promotion'] = ['count' => $promotionCount, 'phrase' => 'Nbre de service : '];
+        $statsTab['internship'] = ['count' => $internshipCount, 'phrase' => 'Nbre de stage : '];
+
         return $this->render('providers/provider.html.twig', compact(
             'list_categ',
             'providers',
-            'form'
+            'form',
+            'statsTab'
         ));
     }
 

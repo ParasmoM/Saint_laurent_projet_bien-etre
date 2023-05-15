@@ -8,14 +8,12 @@
             </div>
             <div class="footer__container--stats">
                 <h2>Statistiques</h2>
-                <div>
-                    <span>Nombre de prestataire</span>
-                    <p></p>
-                </div>
-                <div>
-                    <span>Nombre de menbre</span>
-                    <p></p>
-                </div>
+                {% for row in statsTab %}
+                    <div>
+                        <span>{{ row.phrase }} : </span>
+                        <p> {{ row.count }}</p>
+                    </div>
+                {% endfor %}
             </div>
             <div class="footer__container--about">
                 <h2>à propos de Workspace</h2>
@@ -24,7 +22,7 @@
                     <a href="{{ path('app_register', {status: 'providers'}) }}">Devenir prestataire</a>
                     <a href="{{ path('app_register', {status: 'internetUsers'}) }}">Devenir menbre</a>
                 {% endif %}
-                <a href="#">Nous contactez</a>
+                <a href="{{ path('app_contact') }}">Nous contactez</a>
                 <a href="{{ path('app_newsletter') }}">Newsletter</a>
             </div>
         </div>

@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CategoriesOfServicesRepository;
+use App\Repository\InternetUsersRepository;
+use App\Repository\InternshipsRepository;
+use App\Repository\PromotionsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -20,9 +23,12 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home', methods: ['GET', 'POST'])]
     public function index(
         Request $request,
-        CategoriesOfServicesRepository $categRepository,
         ImagesRepository $imagesRepository,
+        CategoriesOfServicesRepository $categRepository,
         ProvidersRepository $providersRepository,
+        InternetUsersRepository $internetUsersRepository,
+        PromotionsRepository $promotionsRepository,
+        InternshipsRepository $internshipsRepository
     ): Response {
         $list_categ = $categRepository->findAll();
 
@@ -38,12 +44,24 @@ class HomeController extends AbstractController
 
         $new_providers = $providersRepository->findBy([], ['id' => 'DESC'], 4);
 
+        $statsTab = [];
+        
+        $providerCount = count($providersRepository->findAll());
+        $internetUserCount = count($internetUsersRepository->findAll());
+        $promotionCount = count($promotionsRepository->findAll());
+        $internshipCount = count($internshipsRepository->findAll());
+        $statsTab['provider'] = ['count' => $providerCount, 'phrase' => 'Nbre de prestataire : '];
+        $statsTab['internetUser'] = ['count' => $internetUserCount, 'phrase' => 'Nbre d\'utilisateur : '];
+        $statsTab['promotion'] = ['count' => $promotionCount, 'phrase' => 'Nbre de service : '];
+        $statsTab['internship'] = ['count' => $internshipCount, 'phrase' => 'Nbre de stage : '];
+        
         return $this->render('home/home.html.twig', compact(
             'list_categ',
             'image_gallery',
             'form',
             'new_providers',
-            'error'
+            'error',
+            'statsTab'
         ));
     }
 
