@@ -166,6 +166,16 @@ class UsersFixtures extends Fixture
         }
     }
 
+    public function createImageGallery($prestataire, $manager ,int $nbr = 10) {
+        for ($i = 1; $i <= $nbr; $i++) {
+            $image = new Images();
+
+            $image->setName($i);
+            $image->setOrderNumber($i);
+            $manager->persist($image);
+        }
+    }
+
     public function createImageProfile($prestataire, $sexe, $manager) {
         $tabFemmes = [
             'Femme_Africaine_01.avif',

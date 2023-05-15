@@ -2028,15 +2028,29 @@ class ProvidersController extends AbstractController
         Providers $providers,
         CategoriesOfServicesRepository $categRepository,
         ImagesRepository $imagesRepository,
+        ProvidersRepository $providersRepository,
+        InternetUsersRepository $internetUsersRepository,
+        PromotionsRepository $promotionsRepository,
+        InternshipsRepository $internshipsRepository,
     ): Response {
         $list_categ = $categRepository->findAll();
 
         $image_gallery = $imagesRepository->findBy(['serviceImage' => null, 'providerLogo' => null, 'providerPhoto' => null]);
+        $statsTab = [];
         
+        $providerCount = count($providersRepository->findAll());
+        $internetUserCount = count($internetUsersRepository->findAll());
+        $promotionCount = count($promotionsRepository->findAll());
+        $internshipCount = count($internshipsRepository->findAll());
+        $statsTab['provider'] = ['count' => $providerCount, 'phrase' => 'Nbre de prestataire : '];
+        $statsTab['internetUser'] = ['count' => $internetUserCount, 'phrase' => 'Nbre d\'utilisateur : '];
+        $statsTab['promotion'] = ['count' => $promotionCount, 'phrase' => 'Nbre de service : '];
+        $statsTab['internship'] = ['count' => $internshipCount, 'phrase' => 'Nbre de stage : '];
         return $this->render('providers/provider-profile.html.twig', compact(
             'list_categ',
             'image_gallery',
             'providers',
+            'statsTab'
         ));
     } 
 }

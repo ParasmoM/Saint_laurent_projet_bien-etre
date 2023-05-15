@@ -65,6 +65,9 @@ class ServicesController extends AbstractController
         Promotions $promotions,
         CategoriesOfServicesRepository $categRepository,
         ProvidersRepository $providersRepository,
+        InternetUsersRepository $internetUsersRepository,
+        PromotionsRepository $promotionsRepository,
+        InternshipsRepository $internshipsRepository,
     ): Response {
         $list_categ = $categRepository->findAll();
         
@@ -74,10 +77,21 @@ class ServicesController extends AbstractController
         $service = $promotions->getService()->getName();
         $providers = $providersRepository->findByProviders($service, $page);
 
+        $statsTab = [];
+        
+        $providerCount = count($providersRepository->findAll());
+        $internetUserCount = count($internetUsersRepository->findAll());
+        $promotionCount = count($promotionsRepository->findAll());
+        $internshipCount = count($internshipsRepository->findAll());
+        $statsTab['provider'] = ['count' => $providerCount, 'phrase' => 'Nbre de prestataire : '];
+        $statsTab['internetUser'] = ['count' => $internetUserCount, 'phrase' => 'Nbre d\'utilisateur : '];
+        $statsTab['promotion'] = ['count' => $promotionCount, 'phrase' => 'Nbre de service : '];
+        $statsTab['internship'] = ['count' => $internshipCount, 'phrase' => 'Nbre de stage : '];
         return $this->render('services/service-description.html.twig', compact(
             'list_categ',
             'promotions',
-            'providers'
+            'providers',
+            'statsTab'
         ));
     }
 }
