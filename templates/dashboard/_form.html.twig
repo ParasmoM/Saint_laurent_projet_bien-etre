@@ -9,7 +9,7 @@
 
 <h4 class="dashboard__content-title">{{ actionName }} un {{ currentType }}</h4>
 
-<form action="" method="post" class="dashboard__form">
+<form action="{{ path }}" method="post" enctype="multipart/form-data" class="dashboard__form">
     {% include "dashboard/_modal-errors.html.twig" with {form: form} only %}
 
     <div class="dashboard__form-group">
@@ -59,6 +59,11 @@
         </p>
     </div>
     <div class="dashboard__form-actions">
+        {% if currentType == 'services' %}
+        <label for="promotions_form_documentPdf">
+            {{ form_widget(form.documentPdf, {'attr': {'class': 'custom-file-input'}}) }}
+        </label>
+    {% endif %}
         {# <label for="">
             {{ form_widget(form.documentPdf, {'attr': {'class': 'custom-file-input'}}) }}
         </label> #}

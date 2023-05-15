@@ -14,13 +14,35 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CategoriesOfServicesRepository;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted as Entrée;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class DashboardController extends AbstractController
 {
+    #[Route('/dashboard/download/{id}', name: 'app_dashboard_download', methods: ['POST', 'GET'])]
+    #[IsGranted('ROLE_PROVIDER')]
+    public function downloadAction (
+        Request $request,
+        Promotions $promotions,
+        ParameterBagInterface $parameterBagInterface
+    ): Response {
+        $fileName = $promotions->getDocumentPdf();
+        $filePath = $parameterBagInterface->get('image_directory') . 'pdf/' . $fileName;
+    
+        $response = new BinaryFileResponse($filePath);
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $fileName
+        );
+    
+        return $response;
+    }
+
     #[Route('/dashboard/{type}/new', name: 'app_dashboard_add')]
     #[IsGranted('ROLE_PROVIDER')]
     public function add(
@@ -33,6 +55,8 @@ class DashboardController extends AbstractController
         // Récupère l'utilisateur actuellement connecté
         $currentUser = $this->getUser();
 
+        $provider = $currentUser->getProviders();
+        // dd($provider);
         $list_categ = $categRepository->findAll();
 
         $currentType = $type;
@@ -68,8 +92,8 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/dashboard/{type}/{id}', name: 'app_dashboard')]
-    // #[IsGranted('ROLE_PROVIDER')]
-    #[Security("is_granted('ROLE_PROVIDER') and user === currentUser")]
+    #[IsGranted('ROLE_PROVIDER')]
+    // #[Security("is_granted('ROLE_PROVIDER') and user === currentUser")]
     public function index(
         $type,
         Providers $providers,
@@ -116,6 +140,7 @@ class DashboardController extends AbstractController
         ProvidersRepository $providersRepository,
         InternshipsRepository $internshipsRepository,
         EntityManagerInterface $entityManager,
+        ParameterBagInterface $parameterBagInterface
     ): Response {
         // Récupération de l'utilisateur connecté
         $user = $this->getUser();
@@ -135,16 +160,23 @@ class DashboardController extends AbstractController
         }
         // dd($promotions->getProviders()->getId(), $id);
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer le fichier téléchargé
+            $file = $form->get('documentPdf')->getData();
+
             if ($type == 'services') {
+                if ($file) {
+                    $newFileName = $provider->getFirstName() . '-' . $provider->getLastName() . '-' . $type . '-' . $promotions->getName() .'.pdf';
+                    $file->move($parameterBagInterface->get('image_directory') .'pdf/', $newFileName);
+                    $promotions->setDocumentPdf($newFileName);
+                }
                 $promotionsRepository->save($promotions, true);
                 $provider->addPromotion($promotions);
+
             }
             if ($type == 'stages') {
                 $internshipsRepository->save($internships, true);
                 $provider->addInternship($internships);
             }
-            $promotionsRepository->save($promotions, true);
-            $provider->addPromotion($promotions);
 
             $entityManager->persist($provider);
             $entityManager->flush();

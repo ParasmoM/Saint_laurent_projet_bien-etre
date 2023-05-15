@@ -20,6 +20,9 @@
                 {% endif %}
                 <th>Date debut</th>
                 <th>Date fin</th>
+                {% if currentType == 'services' %}
+                    <th>PDF</th>
+                {% endif %}
                 <th>Visibilité</th>
                 <th>Action</th>
             </tr>
@@ -36,6 +39,17 @@
                 {% endif %}
                 <td>{{ item.startDate|date('Y-m-d') }}</td>
                 <td>{{ item.endDate|date('Y-m-d') }}</td>
+                {% if currentType == 'services' %}
+                <td>
+                    {% if item.documentPdf %}
+                        <a href="{{ path('app_dashboard_download', {id: item.id}) }}">
+                            {% include 'svg/download.html.twig' %}
+                        </a>
+                    {% else %}
+                        {% include 'svg/download-off.html.twig' %}
+                    {% endif %}
+                </td>
+                {% endif %}
                 <td>
                     {% set now = "now"|date('Y-m-d') %}
                     {% set displayUntil = item.getDisplayUntilDate|date('Y-m-d') %}
@@ -64,3 +78,4 @@
         </tbody>
     </table>
 </div>
+{{ dump() }}
