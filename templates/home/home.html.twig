@@ -11,6 +11,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/ajax_adresse.js') }}" defer></script>
+    <script src="{{ asset('js/modal.js') }}" defer></script>
     <!-- Link Swiper's CSS -->
     <script src="{{ asset('js/swiper.js') }}" defer></script>
     <!-- Swiper JS -->
@@ -19,6 +20,15 @@
 
 {% block body %}
 <main class="home-page">
+    {% if error is defined %}
+        {% if error %}
+            <div class="modal-error active" id="modal-error-home">
+                <div class="modal__container">
+                    {{ error }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
     <section class="hero">
         <div class="hero-titre">
             <h1>Trouvez le prestataire qui répondra à vos besoins</h1>
@@ -71,13 +81,9 @@
                 </p>
                 </div>
             </div>
-            <button class="about-us__link">
-                <a href="{{ path('app_about_us') }}">
-                    <span>Tout savoir</span>
-                    {{ include("svg/arrow.html.twig") }}
-                </a>  
-            </button>
+            <a href="{{ path('app_about_us') }}" class="about-us__link">
+                <span>Tout savoir{{ include("svg/arrow.html.twig") }}</span>
+            </a>
         </div>
-    </section> 
-</main>
+    </section>
 {% endblock %}

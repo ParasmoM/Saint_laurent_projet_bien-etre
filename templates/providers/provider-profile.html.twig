@@ -2,7 +2,8 @@
 
 {% block title %}Hello ProvidersProfileController!{% endblock %}
 
-{% if providers.providerPhoto is defined %}
+{% set name_image = false %}
+{% if providers.providerPhoto is defined and providers.providerPhoto is not null %}
     {% set name_image = providers.providerPhoto.name ? providers.providerPhoto.name %}
 {% endif %}
 

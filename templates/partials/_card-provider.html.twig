@@ -1,6 +1,7 @@
 {% for provider in providers %}
 
-{% if provider.providerPhoto is defined %}
+{% set name_image = false %}
+{% if provider.providerPhoto is defined and provider.providerPhoto is not null %}
     {% set name_image = provider.providerPhoto.name ? provider.providerPhoto.name %}
 {% endif %}
 
@@ -20,8 +21,7 @@
         <p>
             {{ provider.promotion.first.service }}
         </p>
-        <button class="provider-button">
-            <a href="{{ path('app_providers_profile', {id: provider.id}) }}">Voir le prolfil</a>
-        </button>
+        
+        <a href="{{ path('app_providers_profile', {id: provider.id}) }}" class="provider-button">Voir le prolfil</a>
     </div>
 {% endfor %}

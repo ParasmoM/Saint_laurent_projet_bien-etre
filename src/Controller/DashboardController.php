@@ -17,10 +17,12 @@ use App\Repository\CategoriesOfServicesRepository;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted as Entrée;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DashboardController extends AbstractController
 {
     #[Route('/dashboard/{type}/new', name: 'app_dashboard_add')]
+    #[IsGranted('ROLE_PROVIDER')]
     public function add(
         $type,
         Request $request,
@@ -28,12 +30,10 @@ class DashboardController extends AbstractController
         EntityManagerInterface $entityManager,
         ProvidersRepository $providersRepository,
     ): Response {
-        $list_categ = $categRepository->findAll();
+        // Récupère l'utilisateur actuellement connecté
+        $currentUser = $this->getUser();
 
-        // Récupération de l'utilisateur connecté
-        $user = $this->getUser();
-        $provider = $user->getProviders()->getId();
-        $provider = $providersRepository->findOneBy(['id' => $provider]);
+        $list_categ = $categRepository->findAll();
 
         $currentType = $type;
 
@@ -68,7 +68,8 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/dashboard/{type}/{id}', name: 'app_dashboard')]
-    #[IsGranted('ROLE_USER')]
+    // #[IsGranted('ROLE_PROVIDER')]
+    #[Security("is_granted('ROLE_PROVIDER') and user === currentUser")]
     public function index(
         $type,
         Providers $providers,
@@ -76,6 +77,16 @@ class DashboardController extends AbstractController
         PromotionsRepository $promotionsRepository,
         InternshipsRepository $internshipsRepository,
     ): Response {
+        // Récupère l'utilisateur actuellement connecté
+        $currentUser = $this->getUser();
+        // dd($providers->getUsers());
+        $error = null;
+
+        // Vérifie si l'utilisateur connecté est le même que celui associé au fournisseur
+        if ($currentUser->getProviders()->getId() != $providers->getId()) {
+            $error = ('Vous n\'êtes pas autorisé à accéder à ce tableau de bord.');
+        }
+
         $list_categ = $categRepository->findAll();
 
         if($type == 'services') {
@@ -84,16 +95,19 @@ class DashboardController extends AbstractController
         if($type == 'stages') {
             $listing = $internshipsRepository->findBy(['providers' => $providers->getId()]);
         }
+
         $currentType = $type;
         
         return $this->render('dashboard/dashboard.html.twig', compact(
             'list_categ',
             'listing',
-            'currentType'
+            'currentType',
+            'error'
         ));
     }
 
     #[Route('/dashboard/{type}/edit/{id}', name: 'app_dashboard_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_PROVIDER')]
     public function edit(
         $id, 
         $type,
@@ -143,7 +157,8 @@ class DashboardController extends AbstractController
         ));
     }
 
-    #[Route('/{type}/delete/{id}', name: 'app_dashboard_delete', methods: ['POST'])]
+    #[Route('/dashboard/{type}/delete/{id}', name: 'app_dashboard_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_PROVIDER')]
     public function delete(
         $id,
         $type,

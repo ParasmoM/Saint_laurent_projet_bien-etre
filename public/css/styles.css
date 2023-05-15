@@ -379,8 +379,8 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .hero .hero-featured__container a:hover {
-  background: rgb(218, 234, 245);
-  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
+  background: rgb(183, 235, 255);
+  background: linear-gradient(90deg, rgb(183, 235, 255) 0%, rgb(255, 191, 227) 100%);
 }
 
 .providers {
@@ -411,8 +411,8 @@
   gap: 1rem;
 }
 .providers__link a:hover {
-  background: rgb(218, 234, 245);
-  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
+  background: rgb(183, 235, 255);
+  background: linear-gradient(90deg, rgb(183, 235, 255) 0%, rgb(255, 191, 227) 100%);
 }
 .providers__container {
   display: flex;
@@ -482,21 +482,32 @@
   color: #9B99A3;
 }
 .about-us__link {
-  background: inherit;
   display: block;
-  margin: 30px 0 0 auto;
-}
-.about-us__link a {
-  display: flex;
+  align-items: center;
+  place-content: center;
   align-items: center;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
-  padding: 0.7rem 5rem 0.3rem;
+  margin-top: 5rem;
+  margin-left: auto;
   border-radius: 1rem;
   border: solid 1px white;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   font-size: 1.6rem;
+  gap: 1rem;
+  height: 4rem;
+  width: 25rem;
+}
+.about-us__link:hover {
+  background: rgb(183, 235, 255);
+  background: linear-gradient(90deg, rgb(183, 235, 255) 0%, rgb(255, 191, 227) 100%);
+}
+.about-us__link span {
+  display: flex;
+  align-items: center;
+  place-content: center;
+  padding-top: 0.5rem;
   gap: 1rem;
 }
 
@@ -724,6 +735,9 @@
   text-align: justify;
 }
 .service-description__contact-button {
+  display: flex;
+  align-items: center;
+  place-content: center;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -735,6 +749,10 @@
   position: absolute;
   top: 3rem;
   right: 0;
+}
+.service-description__contact-button:hover {
+  background: rgb(183, 235, 255);
+  background: linear-gradient(90deg, rgb(183, 235, 255) 0%, rgb(255, 191, 227) 100%);
 }
 .service-description__pdf-button {
   background-color: white;
@@ -1312,6 +1330,7 @@
 }
 
 .user-settings {
+  position: relative;
   font-size: 1.4rem;
 }
 .user-settings__container {
@@ -1513,7 +1532,7 @@
 .dashboard__profile-section .dashboard__profile-container {
   width: 25rem;
 }
-.dashboard__profile-section .dashboard__profile-container div {
+.dashboard__profile-section .dashboard__profile-container > div {
   height: 10rem;
   width: 10rem;
   overflow: hidden;
@@ -1521,6 +1540,14 @@
   border: solid 4px white;
   margin: 0 auto;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 10px;
+  display: flex;
+  align-items: center;
+  place-content: center;
+  font-size: 5rem;
+  color: black;
+}
+.dashboard__profile-section .dashboard__profile-container > div span {
+  padding-top: 1rem;
 }
 .dashboard__content-section {
   display: flex;
@@ -2294,9 +2321,9 @@
   color: #00B8FF;
 }
 
-.modal {
+.modal, .modal-error {
   position: fixed;
-  z-index: 1;
+  z-index: 10000;
   top: 0;
   left: 0;
   display: none;
@@ -2305,10 +2332,10 @@
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
-.modal.active {
+.modal.active, .modal-error.active {
   display: flex;
 }
-.modal .modal__container {
+.modal .modal__container, .modal-error .modal__container {
   background-color: #fefefe;
   margin: 15% auto;
   border-radius: 1rem;
@@ -2316,8 +2343,9 @@
   display: flex;
   gap: 1rem;
   height: fit-content;
+  z-index: 10000;
 }
-.modal .modal__container > div {
+.modal .modal__container > div, .modal-error .modal__container > div {
   display: flex;
   gap: 1rem;
   border: solid 1px #ccc;
@@ -2329,6 +2357,7 @@
 .sold-out {
   position: absolute;
   top: 2rem;
+  left: 0;
 }
 
 .card-service {
@@ -2414,19 +2443,24 @@
   padding: 1.5rem 0;
 }
 .card-service .card-service__content .card-service__button {
+  display: flex;
+  align-items: center;
+  place-content: center;
+  height: 4rem;
+  width: 15rem;
+  margin: auto;
   color: #4F4D62;
   font-size: 1.4rem;
-  padding: 1.35rem 3.5rem 1.15rem;
-  background: rgb(207, 196, 255);
-  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
-  border-radius: 10px;
+  border-radius: 1rem;
   border: solid 1px white;
   cursor: pointer;
   box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
+  background: rgb(207, 196, 255);
+  background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
 }
 .card-service .card-service__content .card-service__button:hover {
-  background: rgb(218, 234, 245);
-  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
+  background: rgb(183, 235, 255);
+  background: linear-gradient(90deg, rgb(183, 235, 255) 0%, rgb(255, 191, 227) 100%);
 }
 
 .card-internship {
@@ -2585,15 +2619,23 @@
 .card-provider .provider-button {
   background-color: inherit;
 }
-.card-provider .provider-button a {
-  display: block;
+.card-provider .provider-button {
+  display: flex;
+  height: 4rem;
+  width: 12rem;
+  margin: auto;
+  align-items: center;
+  place-content: center;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
   border-radius: 10px;
   border: solid 1px white;
   cursor: pointer;
   box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
-  padding: 1rem 2rem;
+}
+.card-provider .provider-button:hover {
+  background: rgb(183, 235, 255);
+  background: linear-gradient(90deg, rgb(183, 235, 255) 0%, rgb(255, 191, 227) 100%);
 }
 .card-provider:hover {
   transform: scale(1.025);
@@ -2676,21 +2718,27 @@
   font-weight: 300;
   color: #9B99A3;
   padding: 1.5rem 0;
+  height: 10.4rem;
 }
 .card-provider-featured .provider-featured-details .provider-featured-service-button {
+  display: flex;
+  align-items: center;
+  place-content: center;
   color: #4F4D62;
   font-size: 1.4rem;
-  padding: 1.35rem 3.5rem 1.15rem;
   background: rgb(207, 196, 255);
   background: linear-gradient(90deg, rgb(207, 196, 255) 0%, rgb(162, 211, 245) 100%);
-  border-radius: 10px;
+  border-radius: 1rem;
   border: solid 1px white;
   cursor: pointer;
   box-shadow: rgba(73, 93, 108, 0.11) 0px 1px 4px;
+  height: 4rem;
+  width: 15rem;
+  margin: auto;
 }
 .card-provider-featured .provider-featured-details .provider-featured-service-button:hover {
-  background: rgb(218, 234, 245);
-  background: linear-gradient(180deg, rgb(218, 234, 245) 0%, rgb(234, 231, 247) 100%);
+  background: rgb(183, 235, 255);
+  background: linear-gradient(90deg, rgb(183, 235, 255) 0%, rgb(255, 191, 227) 100%);
 }
 
 .pagination {

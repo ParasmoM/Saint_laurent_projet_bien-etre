@@ -1,6 +1,6 @@
 console.log('Début du script qui gère le dashboard');
 const BUTTONS_ELLIPSIS_ICONE    = document.querySelectorAll('#btn-ellipsis-dashboard');
-const MODAL_ERROR_FORM          = document.getElementById('modal-error-form');
+
 
 BUTTONS_ELLIPSIS_ICONE.forEach(button => {
     button.addEventListener('click', function(e) {
@@ -20,6 +20,3 @@ document.addEventListener('click', function() {
     });
 });
 
-document.addEventListener('click', function() {
-    MODAL_ERROR_FORM.classList.remove('active');
-});

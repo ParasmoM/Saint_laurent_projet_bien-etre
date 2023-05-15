@@ -4,12 +4,13 @@
 
 {% block body %}
 
+{% set banner = "" %}
+{% if serviceCurrent.images.name is defined and serviceCurrent.images.name is not null %}
+    {% set banner =  asset('assets/uploads/services/' ~ serviceCurrent.images.name) %}
+{% endif %}
+
 <main class="service-page">
-    {% if serviceCurrent.images.name is defined %}
-        {% set banner =  asset('assets/uploads/services/' ~ serviceCurrent.images.name) %}
-    {% else %}
-        {% set banner = "" %}
-    {% endif %}
+
     <section class="service-page-banner" style="background-image: url({{ banner }} );">
         <h1>{{ serviceCurrent }}</h1>
     </section>
@@ -24,11 +25,11 @@
                     </p>
                     <ul>
                         {% for service in list_categ %}
-                        {% set active = '' %}
-                        {% if serviceCurrent.name == service.name %}
-                            {% set active = 'active' %}
-                        {% endif %}
-                        <li><a href="{{ path('app_services', {id: service.id}) }}" class="{{ active ? active : '' }}">{{ service }}</a></li>
+                            {% set active = '' %}
+                            {% if serviceCurrent.name == service.name %}
+                                {% set active = 'active' %}
+                            {% endif %}
+                            <li><a href="{{ path('app_services', {id: service.id}) }}" class="{{ active ? active : '' }}">{{ service }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -43,7 +44,7 @@
         <div class="service-page-main">
             <div class="service-page-profile-cards">
                 <div class="service-page-profile-cards-container">
-                    {% include "partials/_card-promo.html.twig" %}
+                    {% include "partials/_card-promo.html.twig" with {services: services} only %}
                 </div>
                 <div class="service-page-profile-pagination">
                     {{ knp_pagination_render(services) }}

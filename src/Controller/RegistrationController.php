@@ -35,7 +35,9 @@ class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager,
         CategoriesOfServicesRepository $categRepository
     ): Response {
-        
+        // Si l'utilisateur est déjà connecté, on le redirige vers la page d'accueil
+        if ($this->getUser()) return $this->redirectToRoute('app_home');
+
         $list_categ = $categRepository->findAll();
 
         $user = new Users();

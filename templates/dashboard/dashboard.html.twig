@@ -5,8 +5,10 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/dashboard.js') }}" defer></script>
+    <script src="{{ asset('js/modal.js') }}" defer></script>
 {% endblock %}
 
+{% set name_image = false %}
 {%  if app.user 
     and app.user.providers.providerPhoto is defined 
     and app.user.providers.providerPhoto is not null 
@@ -16,17 +18,20 @@
 
 {% block body %}
 <main class="dashboard">
+    {% if error is defined %}
+        {% if error %}
+            <div class="modal-error active" id="modal-error-dashboard">
+                <div class="modal__container">
+                    {{ error }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
     <div class="dashboard__container">
         <section class="dashboard__profile-section">
             <div class="dashboard__profile-container">
                 <div class="dashboard__profile-image">
-                    {% if name_image is defined and name_image is not null %}
-                        <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
-                    {% else %}
-                        <span>
-                            {{ app.user.providers|slice(0, 1)|upper }}
-                        </span>
-                    {% endif %}
+                    {{ avatar_component(name_image, app.user.providers, true) }}
                 </div>
             </div>
         </section>

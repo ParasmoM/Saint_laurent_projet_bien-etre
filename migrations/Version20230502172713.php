@@ -14,7 +14,7 @@ final class Version20230502172713 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Cette migration modifie la colonne "order_number" de la table "images" en lui attribuant un type INT avec une valeur par défaut de NULL.';
     }
 
     public function up(Schema $schema): void

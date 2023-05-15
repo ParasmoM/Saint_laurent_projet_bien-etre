@@ -17,13 +17,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'app_home', methods: ['GET', 'POST'])]
     public function index(
+        Request $request,
         CategoriesOfServicesRepository $categRepository,
         ImagesRepository $imagesRepository,
         ProvidersRepository $providersRepository,
     ): Response {
         $list_categ = $categRepository->findAll();
+
+        $error = null;
+        if ($_GET) {
+            $error = $_GET['error'];
+        }
 
         $image_gallery = $imagesRepository->findBy(['serviceImage' => null, 'providerLogo' => null, 'providerPhoto' => null]);
 
@@ -36,7 +42,8 @@ class HomeController extends AbstractController
             'list_categ',
             'image_gallery',
             'form',
-            'new_providers'
+            'new_providers',
+            'error'
         ));
     }
 

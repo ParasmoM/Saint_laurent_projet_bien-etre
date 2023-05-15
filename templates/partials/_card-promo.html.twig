@@ -1,17 +1,13 @@
 {% for service in services %}
+
 {% set now = "now"|date('Y-m-d') %}
 {% set displayUntil = service.getDisplayUntilDate|date('Y-m-d') %}
-{% if now > displayUntil %}
-    {% set className = 'disabled' %}
-{% else %}
-    {% set className = '' %}
-{% endif %}
-
-{% if service.providers.providerPhoto is defined %}
+{% set name_image = false %}
+{% if service.providers.providerPhoto is defined and service.providers.providerPhoto is not null %}
     {% set name_image = service.providers.providerPhoto.name ? service.providers.providerPhoto.name %}
 {% endif %}
 
-    <div class="card-service {{ className }}">
+    <div class="card-service">
         {% if now > displayUntil %}
             <div class="sold-out">
                 <img src="{{ asset('assets/uploads/sold-out.png') }}" alt="">
@@ -52,9 +48,10 @@
             <p class="card-service__description">
                 {{ service.description|length > 90 ? service.description|slice(0, 90) ~ '...' : service.description }}
             </p>
-            <button class="card-service__button">
-                <a href="{{ path('app_services_description', {id: service.id}) }}" class=" {{ className }}">En savoir plus</a>
-            </button>
+
+            <a href="{{ path('app_services_description', {id: service.id}) }}" class="card-service__button">
+                En savoir plus
+            </a>
         </div>
     </div>
 {% endfor %}

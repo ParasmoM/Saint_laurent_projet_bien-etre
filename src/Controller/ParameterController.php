@@ -23,7 +23,7 @@ class ParameterController extends AbstractController
 {
     #[Route('/parameter/user-info/{id}', name: 'app_parameter_user_info')]
     // #[IsGranted("ROLE_USER", subject:"choosenUser", message:"Vous ne pouvez accéder qu'à votre propre profil.")]
-    #[IsGranted('ROLE_USER')]
+    // #[IsGranted('ROLE_USER')]
     public function user_info(
         $id,
         Request $request,
@@ -33,30 +33,42 @@ class ParameterController extends AbstractController
         ImagesRepository $imagesRepository,
         ParameterBagInterface $parameterBagInterface,
     ): Response {
-        $list_categ = $categRepository->findAll();
         // Récupération de l'utilisateur connecté
         $choosenUser = $this->getUser();
 
-        // dd($choosenUser);
+        // On vérifie si c'est un prestataire ou internaute 
+        $methodName = 'get' . $choosenUser->getUserType();
+        $user = call_user_func([$choosenUser, $methodName]);
+        $userId = $user->getId();
+        
+        $error = null;
+
+        // Vérifie que l'utilisateur connecté est le propriétaire des données
+        if ($userId != $id) {
+            $error = 'Vous ne pouvez accéder qu\'à votre propre profil.';
+        }
+
+        $list_categ = $categRepository->findAll();
+
+        // On crée la première partie du formulaire 
         $userForm = $this->createForm(UsersFormType::class, $choosenUser);
         $userForm->handleRequest($request);
-        // dd($choosenUser);
-        // On récupère en fonction de s’il est internaute ou prestataire 
-        $methodName = 'get' . $choosenUser->getUserType();
-        $utilisateur = call_user_func([$choosenUser, $methodName]);
 
-        // On crée le formulaire en fonction du type de l'utilisateur 
+        // On crée la deuxième partie formulaire en fonction du type de l'utilisateur 
         $type = $choosenUser->getUserType() . 'FormType';
         $formType = 'App\Form\\' . $type;
-
-        $userTypeForm = $this->createForm($formType, $utilisateur);
+        $userTypeForm = $this->createForm($formType, $user);
         $userTypeForm->handleRequest($request);
 
-        $photo = $imagesRepository->findOneBy(['providerPhoto' => $utilisateur->getId()]);
-        // dd($utilisateur);
+        // On crée un formulaire pour upload et edit la photo de profile 
+        $photo = $imagesRepository->findOneBy(['providerPhoto' => $user->getId()]);
+        if (!$photo) {
+            $photo = new Images();
+        }
         $photoForm = $this->createForm(ImagesFormType::class, $photo);
         $photoForm->handleRequest($request);
 
+        // On crée un formulaire pour upload et edit le logo 
         $logo = new Images();
         $logoForm = $this->createForm(ImagesFormType::class, $logo);
         $logoForm->handleRequest($request);
@@ -72,7 +84,7 @@ class ParameterController extends AbstractController
             $image = $photoForm->get('name')->getData();
             if ($image) {
                 $folder = $choosenUser->getUserType();
-                $id = $utilisateur->getId();
+                $id = $user->getId();
                 
                 if ($choosenUser->getUserType() == "InternetUsers") {
                     $verif = $imagesRepository->findOneBy(['internetUser' => $id]);
@@ -90,13 +102,13 @@ class ParameterController extends AbstractController
                         $fichier = $pictureService->add($image, $folder);
     
                         $verif->setName($fichier);
-                        $utilisateur->setImages($verif);
+                        $user->setImages($verif);
                     } else {
                         dd('here');
                         $fichier = $pictureService->add($image, $folder);
                         $img = new Images();
                         $img->setName($fichier);
-                        $utilisateur->setImages($img);
+                        $user->setImages($img);
                     }
                 }
                 if ($choosenUser->getUserType() == "Providers") {
@@ -113,7 +125,7 @@ class ParameterController extends AbstractController
                         $fichier = $pictureService->add($image, $folder);
     
                         $verif->setName($fichier);
-                        $utilisateur->setProviderPhoto($verif);
+                        $user->setProviderPhoto($verif);
                     } else {
                         $fichier = $pictureService->add($image, $folder);
                         $img = new Images();
@@ -121,7 +133,7 @@ class ParameterController extends AbstractController
                         $entityManager->persist($img);
                         $entityManager->flush();
 
-                        $utilisateur->setProviderPhoto($img);
+                        $user->setProviderPhoto($img);
                     }
                 }
 
@@ -137,7 +149,8 @@ class ParameterController extends AbstractController
             'userForm',
             'userTypeForm',
             'photoForm',
-            'logoForm'
+            'logoForm',
+            'error'
         ));
     }
 
@@ -155,10 +168,13 @@ class ParameterController extends AbstractController
         // Récupération de l'utilisateur connecté
         $user = $this->getUser();
 
-        $logo = new Images();
+        $logo = $imagesRepository->findOneBy(['providerPhoto' => $user->getId()]);
+        if (!$logo) {
+            $logo = new Images();
+        }
         $logoForm = $this->createForm(ImagesFormType::class, $logo);
         $logoForm->handleRequest($request);
-
+        
         if ($logoForm->isSubmitted() && $logoForm->isValid()) {
             $logoData = $logoForm->get('name')->getData();
 

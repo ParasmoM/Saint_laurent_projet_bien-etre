@@ -36,7 +36,10 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        # - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/parameter/user-info/.*, roles: ROLE_USER }
+        - { path: ^/dashboard/.*, roles: ROLE_PROVIDER }
 
     role_hierarchy:
         ROLE_PROVIDER: ROLE_USER

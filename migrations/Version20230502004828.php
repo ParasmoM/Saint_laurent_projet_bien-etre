@@ -14,7 +14,7 @@ final class Version20230502004828 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Cette migration modifie les colonnes "featured" et "validated" de la table "categories_of_services" en TINYINT(1) avec une valeur par défaut de NULL.';
     }
 
     public function up(Schema $schema): void

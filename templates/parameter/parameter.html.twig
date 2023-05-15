@@ -5,37 +5,43 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/ajax_adresse_setting.js') }}" defer></script>
+    <script src="{{ asset('js/modal.js') }}" defer></script>
 {% endblock %}
 
-{% if app.user.internetUsers is defined and app.user.internetUsers is not null %}
-    {% set id = app.user.internetUsers.id %}
-{% endif %}
-{% if app.user.providers is defined and app.user.providers is not null %}
+{% if app.user %}
+    {% set name_image = false %}
+    {% if app.user.providers.providerPhoto is defined and app.user.providers.providerPhoto is not null %}
+        {% set name_image = app.user.providers.providerPhoto.name ? app.user.providers.providerPhoto.name %}
+        {% set fichier = 'providers/' %}
+    {% endif %}
+    {% if app.user.internetUsers.images is defined and app.user.internetUsers.images is not null %}
+        {% set name_image = app.user.internetUsers.images.name ? app.user.internetUsers.images.name %}
+        {% set fichier = 'internetUsers/' %}
+    {% endif %}
+    {% endif %}
+    {% if app.user.internetUsers is defined and app.user.internetUsers is not null %}
+        {% set id = app.user.internetUsers.id %}
+    {% endif %}
+    {% if app.user.providers is defined and app.user.providers is not null %}
     {% set id = app.user.providers.id %}
 {% endif %}
 
 {% block body %}
 <main class="user-settings">
+    {% if error %}
+        <div class="modal-error active" id="modal-error-settings">
+            <div class="modal__container">
+                {{ error }}
+            </div>
+        </div>
+    {% endif %}
     <div class="user-settings__container">
 
         <section class="user-settings__menu">
             <h2 class="user-settings__menu-title">User profile</h2>
             <form action="{{ path('app_parameter_user_info', {id: id}) }}" method="post" enctype="multipart/form-data" class="user-settings__profile-photo" id="profile-photo-form">
-                {% if app.user %}
-                    {% if app.user.providers.providerPhoto is defined and app.user.providers.providerPhoto is not null %}
-                        {% set name_image = app.user.providers.providerPhoto.name ? app.user.providers.providerPhoto.name %}
-                    {% endif %}
-                    {% if app.user.internetUsers.images is defined and app.user.internetUsers.images is not null %}
-                        {% set name_image = app.user.internetUsers.images.name ? app.user.internetUsers.images.name %}
-                    {% endif %}
-                {% endif %}
-
-                {% if name_image is defined %}
-                    {% if app.user.internetUsers.images is defined  %}
-                        <img src="{{ asset('assets/uploads/internetUsers/' ~ name_image) }}" alt="">
-                    {% else %}
-                        <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
-                    {% endif %}
+                {% if name_image is defined and name_image is not null and fichier is defined and fichier is not null%}
+                    <img src="{{ asset('assets/uploads/' ~ fichier ~ name_image) }}" alt="">
                 {% else %}
                     <img src="{{ asset('assets/uploads/user.jpg') }}" alt="">
                 {% endif %}

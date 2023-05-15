@@ -14,7 +14,7 @@ final class Version20230511185702 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return "Cette migration effectue des modifications sur les tables 'images' et 'internet_users' :- Dans la table 'images', elle ajoute une colonne 'internet_user_id' avec une clé étrangère vers la table 'internet_users'. - Elle supprime une contrainte de clé étrangère existante dans la table 'internet_users'. - Dans la table 'internet_users', elle supprime une colonne appelée 'image_profile_id'. - Lors de l'annulation de la migration, elle effectue les opérations inverses : suppression de la clé étrangère dans la table 'images' et réajout de la colonne et de la contrainte dans la table 'internet_users'.";
     }
 
     public function up(Schema $schema): void

@@ -41,7 +41,7 @@ class ProfileImageComponent extends AbstractExtension
             $path = $this->urlGenerator->generate('app_providers_profile', ['id' => $provider->getId()]);
             return '<a href="' . $path . '"><img src="' . $imgSrc . '" alt=""></a>';
         } else {
-            return '<a href=""><span>' . strtoupper(substr($provider, 0, 1)) . '</span></a>';
+            return '<a href="' . $path . '"><span>' . strtoupper(substr($provider, 0, 1)) . '</span></a>';
         }
     }
 }

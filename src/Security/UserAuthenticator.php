@@ -35,9 +35,16 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
         $email = $request->request->get('email', '');
         $user = $this->userRepository->findOneByEmail($email);
+        
+        $error = null;
+        if ($user == null) {
+            $error = "Malheureusement, le compte que vous recherchez n'existe pas dans notre système.";
+            return new RedirectResponse($this->urlGenerator->generate('app_home', ['error' => $error]));
+        }
 
         if ($user->isBanned()) {
-            return new RedirectResponse($this->urlGenerator->generate('app_banned_user'));
+            $error = "Malheureusement, ce compte a été banni. Veuillez contacter un modérateur pour obtenir plus d'informations.";
+            return new RedirectResponse($this->urlGenerator->generate('app_home', ['error' => $error]));
         }
 
         if (!$user->isBanned()) {

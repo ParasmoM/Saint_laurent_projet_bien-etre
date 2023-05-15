@@ -1,6 +1,6 @@
 {% for provider in providers %}
-
-    {% if provider.providerPhoto is defined %}
+    {% set name_image = false %}
+    {% if provider.providerPhoto is defined and provider.providerPhoto is not null %}
         {% set name_image = provider.providerPhoto.name ? provider.providerPhoto.name %}
     {% endif %}
 
@@ -34,9 +34,7 @@
                 {{ provider.description|length > 130 ? provider.description|slice(0, 130) ~ '...' : provider.description }}
             </p>
 
-            <button class="provider-featured-service-button">
-                <a href="{{ path('app_providers_profile', {id: provider.id}) }}">En savoir plus</a>
-            </button>
+            <a href="{{ path('app_providers_profile', {id: provider.id}) }}" class="provider-featured-service-button">En savoir plus</a>
 
         </div>
         

@@ -2,13 +2,13 @@
 
 {% block title %}Hello ServiceDescriptionController!{% endblock %}
 
-{% if promotions.service.images is defined %}
+{% set banner = "" %}
+{% if promotions.service.images is defined and promotions.service.images is not null %}
     {% set banner =  asset('assets/uploads/services/' ~ promotions.service.images.name) %}
-{% else %}
-    {% set banner = "" %}
 {% endif %}
 
-{% if promotions.providers.providerPhoto is defined %}
+{% set name_image = false %}
+{% if promotions.providers.providerPhoto is defined and promotions.providers.providerPhoto is not null %}
     {% set name_image = promotions.providers.providerPhoto.name ? promotions.providers.providerPhoto.name %}
 {% endif %}
 
@@ -19,11 +19,7 @@
             <div class="service-description__banner" style="background-image: url({{ banner }} );">
                 <h1>{{ promotions.service.name }}</h1>
                 <div class="service-description__profile-photo">
-                    {% if name_image is defined %}
-                        <img src="{{ asset('assets/uploads/providers/' ~ name_image) }}" alt="">
-                    {% else %}
-                        <span>{{ promotions.providers|slice(0, 1)|upper }}</span>
-                    {% endif %}
+                    {{ avatar_component(name_image, promotions.providers, true) }}
                 </div>
             </div>
             <div class="service-description__content-container">
@@ -33,26 +29,17 @@
                         {{ promotions }}
                     </p>
                     <div class="service-description__social-icons">
-                        {% if promotions.providers.websiteUrl is defined %}
-                            <a href="{{ promotions.providers.websiteUrl }}">{{ include('svg/websiteUrl.html.twig') }}</a>
-                        {% endif %}
-                        {% if promotions.providers.instagram is defined %}
-                            <a href="{{ promotions.providers.instagram }}">{{ include('svg/instagram.html.twig') }}</a>
-                        {% endif %}
-                        {% if promotions.providers.facebook is defined %}
-                            <a href="{{ promotions.providers.facebook }}">{{ include('svg/facebook.html.twig') }}</a>
-                        {% endif %}
-                        {% if promotions.providers.twitter is defined %}
-                            <a href="{{ promotions.providers.twitter }}">{{ include('svg/twitter.html.twig') }}</a>
-                        {% endif %}
+                        {% include "partials/_zone-socials.html.twig" with {providers: promotions.providers} only %}
                     </div>
                     <p class="service-description__description">
                         {{ promotions.description }}
                     </p>
                 </div>
-                <button class="service-description__contact-button">
-                    <a href="{{ path('app_providers_profile', {id: promotions.providers.id}) }}">Nous contacter</a>
-                </button>
+
+                <a href="{{ path('app_providers_profile', {id: promotions.providers.id}) }}" class="service-description__contact-button">
+                    Nous contacter
+                </a>
+
                 <button class="service-description__pdf-button">
                     Telecharger PDF
                 </button>

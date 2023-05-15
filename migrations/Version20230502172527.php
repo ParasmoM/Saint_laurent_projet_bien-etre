@@ -14,7 +14,7 @@ final class Version20230502172527 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Cette migration ajoute une nouvelle colonne "service_image_id" à la table "images" avec une clé étrangère liée à la colonne "id" de la table "categories_of_services".';
     }
 
     public function up(Schema $schema): void

@@ -2,7 +2,8 @@
 {% set now = "now"|date('Y-m-d') %}
 {% set displayUntil = internship.getDisplayUntilDate|date('Y-m-d') %}
 
-{% if internship.providers.providerPhoto is defined %}
+{% set name_image = false %}
+{% if internship.providers.providerPhoto is defined and internship.providers.providerPhoto is not null %}
     {% set name_image = internship.providers.providerPhoto.name ? internship.providers.providerPhoto.name %}
 {% endif %}
 
