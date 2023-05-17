@@ -2,22 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoriesOfServicesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\NameToStringTrait;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\CategoriesOfServicesRepository;
 
 #[ORM\Entity(repositoryClass: CategoriesOfServicesRepository::class)]
 class CategoriesOfServices
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    use NameToStringTrait;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
@@ -37,28 +32,6 @@ class CategoriesOfServices
     public function __construct()
     {
         $this->promotions = new ArrayCollection();
-    }
-
-    public function __toString()
-    {
-        return $this->name;
-    }
-    
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getDescription(): ?string

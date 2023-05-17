@@ -35,6 +35,11 @@ class HomeController extends AbstractController
         $error = null;
         if ($_GET) {
             $error = $_GET['error'];
+
+            $this->addFlash(
+                'errors', 
+                $error
+            );
         }
 
         $image_gallery = $imagesRepository->findBy(['serviceImage' => null, 'providerLogo' => null, 'providerPhoto' => null]);

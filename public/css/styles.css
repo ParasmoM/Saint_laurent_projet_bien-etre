@@ -2596,7 +2596,7 @@
   color: #00B8FF;
 }
 
-.modal-dashboard, .modal-settings, .madal-contact {
+.modal-home, .modal-dashboard, .modal-settings, .madal-contact {
   position: fixed;
   z-index: 10000;
   top: 0;
@@ -2608,10 +2608,10 @@
   background-color: rgba(0, 0, 0, 0.4);
   font-size: 1.6rem;
 }
-.modal-dashboard.active, .modal-settings.active, .madal-contact.active {
+.modal-home.active, .modal-dashboard.active, .modal-settings.active, .madal-contact.active {
   display: flex;
 }
-.modal-dashboard .modal__container, .modal-settings .modal__container, .madal-contact .modal__container {
+.modal-home .modal__container, .modal-dashboard .modal__container, .modal-settings .modal__container, .madal-contact .modal__container {
   background-color: #fefefe;
   margin: 15% auto;
   border-radius: 1rem;
@@ -2621,7 +2621,7 @@
   height: fit-content;
   z-index: 10000;
 }
-.modal-dashboard .modal__container > div, .modal-settings .modal__container > div, .madal-contact .modal__container > div {
+.modal-home .modal__container > div, .modal-dashboard .modal__container > div, .modal-settings .modal__container > div, .madal-contact .modal__container > div {
   display: flex;
   gap: 1rem;
   border: solid 1px #ccc;

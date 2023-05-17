@@ -20,15 +20,13 @@
 
 {% block body %}
 <main class="home-page">
-    {% if error is defined %}
-        {% if error %}
-            <div class="modal-error active" id="modal-error-home">
-                <div class="modal__container">
-                    {{ error }}
-                </div>
+    {% for message in app.flashes('errors') %}
+        <div class="modal-home active" id="modal-error-home">
+            <div class="modal__container">
+                {{ message }}
             </div>
-        {% endif %}
-    {% endif %}
+        </div>
+    {% endfor %}
     <section class="hero">
         <div class="hero-titre">
             <h1>Trouvez le prestataire qui répondra à vos besoins</h1>
