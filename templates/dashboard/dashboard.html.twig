@@ -18,15 +18,13 @@
 
 {% block body %}
 <main class="dashboard">
-    {% if error is defined %}
-        {% if error %}
-            <div class="modal-error active" id="modal-error-dashboard">
-                <div class="modal__container">
-                    {{ error }}
-                </div>
+    {% for message in app.flashes('errors') %}
+        <div class="modal-dashboard active" id="modal-error-dashboard">
+            <div class="modal__container">
+                {{ message }}
             </div>
-        {% endif %}
-    {% endif %}
+        </div>
+    {% endfor %}
     <div class="dashboard__container">
         <section class="dashboard__profile-section">
             <div class="dashboard__profile-container">

@@ -23,7 +23,7 @@ class ParameterController extends AbstractController
 {
     #[Route('/parameter/user-info/{id}', name: 'app_parameter_user_info')]
     // #[IsGranted("ROLE_USER", subject:"choosenUser", message:"Vous ne pouvez accéder qu'à votre propre profil.")]
-    // #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER')]
     public function user_info(
         $id,
         Request $request,
@@ -45,7 +45,12 @@ class ParameterController extends AbstractController
 
         // Vérifie que l'utilisateur connecté est le propriétaire des données
         if ($userId != $id) {
-            $error = 'Vous ne pouvez accéder qu\'à votre propre profil.';
+            $this->addFlash(
+                'errors',
+                'Vous ne pouvez accéder qu\'à votre propre profil.'
+            );
+
+            return $this->redirectToRoute('app_parameter_user_info', ['id' => $userId]);
         }
 
         $list_categ = $categRepository->findAll();

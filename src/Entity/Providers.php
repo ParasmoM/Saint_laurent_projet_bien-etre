@@ -58,11 +58,15 @@ class Providers
     #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Internships::class)]
     private Collection $internship;
 
+    #[ORM\OneToMany(mappedBy: 'providers', targetEntity: Images::class)]
+    private Collection $gallery;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->promotion = new ArrayCollection();
         $this->internship = new ArrayCollection();
+        $this->gallery = new ArrayCollection();
     }
 
     public function __toString()
@@ -301,6 +305,36 @@ class Providers
             // set the owning side to null (unless already changed)
             if ($internship->getProviders() === $this) {
                 $internship->setProviders(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getGallery(): Collection
+    {
+        return $this->gallery;
+    }
+
+    public function addGallery(Images $gallery): self
+    {
+        if (!$this->gallery->contains($gallery)) {
+            $this->gallery->add($gallery);
+            $gallery->setProviders($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(Images $gallery): self
+    {
+        if ($this->gallery->removeElement($gallery)) {
+            // set the owning side to null (unless already changed)
+            if ($gallery->getProviders() === $this) {
+                $gallery->setProviders(null);
             }
         }
 

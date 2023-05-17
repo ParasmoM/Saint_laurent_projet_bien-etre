@@ -9,15 +9,53 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ContactFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', TextType::class)
-            ->add('Nom', EmailType::class)
-            ->add('message')
+            ->add('email', EmailType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlength' => '2',
+                    'maxlength' => '50',
+                ], 
+                'label' => 'Nom',
+                'label_attr' => [
+                    'class' => '',
+                ], 
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Email(),
+                    new Assert\Length(['min' => 2, 'max' => 180])
+                ]
+            ])
+            ->add('Nom', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlength' => '2',
+                    'maxlength' => '50',
+                ], 
+                'label' => 'Name',
+                'label_attr' => [
+                    'class' => '',
+                ],
+            ])
+            ->add('message', TextareaType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                ], 
+                'label' => 'Message',
+                'label_attr' => [
+                    'class' => '',
+                ], 
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ]
+            ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn-contact'

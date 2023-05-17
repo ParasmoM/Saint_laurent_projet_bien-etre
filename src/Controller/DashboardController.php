@@ -17,9 +17,7 @@ use App\Repository\CategoriesOfServicesRepository;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted as Entrée;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class DashboardController extends AbstractController
@@ -108,7 +106,12 @@ class DashboardController extends AbstractController
 
         // Vérifie si l'utilisateur connecté est le même que celui associé au fournisseur
         if ($currentUser->getProviders()->getId() != $providers->getId()) {
-            $error = ('Vous n\'êtes pas autorisé à accéder à ce tableau de bord.');
+            $this->addFlash(
+                'errors',
+                'Vous n\'êtes pas autorisé à accéder à ce tableau de bord.'
+            );
+
+            return $this->redirectToRoute('app_dashboard', ['type' => $type, 'id' => $currentUser->getProviders()->getId()]);
         }
 
         $list_categ = $categRepository->findAll();

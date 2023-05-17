@@ -31,6 +31,9 @@ class Images
     #[ORM\OneToOne(inversedBy: 'images', cascade: ['persist', 'remove'])]
     private ?InternetUsers $internetUser = null;
 
+    #[ORM\ManyToOne(inversedBy: 'gallery')]
+    private ?Providers $providers = null;
+
     public function __toString()
     {
         return $this->name;
@@ -108,6 +111,18 @@ class Images
     public function setProviderPhoto(?Providers $providerPhoto): self
     {
         $this->providerPhoto = $providerPhoto;
+
+        return $this;
+    }
+
+    public function getProviders(): ?Providers
+    {
+        return $this->providers;
+    }
+
+    public function setProviders(?Providers $providers): self
+    {
+        $this->providers = $providers;
 
         return $this;
     }

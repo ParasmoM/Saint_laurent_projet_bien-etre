@@ -110,6 +110,31 @@
     }
 }
 
+.provider_profile_gallery {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    margin-bottom: 5rem;
+
+    &-item {
+        flex: 1;
+        border-radius: 1rem;
+        overflow: hidden;
+        height: 30rem;
+        transition: flex 0.5s ease; /* Ajout de la transition */
+    
+        img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+    
+        &:hover {
+            flex: 6;
+        }
+    }
+}
+
 .provider_profile__content // * zone contente
 {
     display: flex;
@@ -223,8 +248,79 @@
         @media only screen and (max-width: 1147px) {
             max-width: 66.5rem;
         }
-        @media only screen and (max-width: 1147px) {
+        @media only screen and (max-width: 802px) {
             max-width: 31rem;
         }
+    }
+}
+.provider_profile__similar {
+    // padding: 9rem 0 0;
+
+    &__container {
+        max-width: 1210px;
+        margin: auto;
+
+        @media only screen and (max-width: 1290px) {
+            max-width: 965px;
+        }
+        @media only screen and (max-width: 1042px) {
+            max-width: 720px;
+        }
+        @media only screen and (max-width: 800px) {
+            max-width: 473px;
+        }
+        @media only screen and (max-width: 552px) {
+            max-width: 228px;
+        }
+    }
+    &__filter {
+        position: relative;
+        display: flex;
+        gap: 1rem;
+        place-content: flex-end;
+        padding: 5rem 0;
+        
+        button {
+            cursor: pointer;
+            width: 23rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            background-color: inherit;
+        }
+
+        ul {
+            padding: 1rem;
+            border: none;
+            border-radius: 1rem;
+            background-color: white;
+            display: none;
+            position: absolute;
+            top: 8rem;
+
+        }
+        ul.active {
+            display: block;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            place-content: center;
+            height: 3rem;
+            width: 15rem;
+            border-radius: .5rem;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #e9e7e7;
+            }
+        }
+    }
+    &__listing {
+        display: flex;
+        gap: 2rem;
+        margin: auto;
+        flex-wrap: wrap;
+        padding-top: 5rem;
     }
 }

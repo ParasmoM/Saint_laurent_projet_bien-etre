@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CategoriesOfServicesRepository;
+use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -1984,6 +1985,39 @@ class ProvidersController extends AbstractController
         // return new JsonResponse(['action'=>'data vide']);
     }
     
+    #[Route('/providers/get-filter-similar', name: 'get_filter_similar', methods: ['POST'])]
+    public function getFilterSimilar(
+        Request $request,
+        ProvidersRepository $providersRepository,
+        UsersRepository $usersRepository,
+        PromotionsRepository $promotionsRepository,
+    ): JsonResponse {
+        $filters = json_decode($request->getContent(), true);
+
+        $providers = $providersRepository->findOneBy(['id' => $filters[1]]);
+        if ($filters[0] == "Dans la même Ville") {
+            $town = $providers->getUsers()->first()->getTown()->getId();
+
+            $providersArray = $usersRepository->findBy(['town' => $town], ['id' => 'DESC'], 5);
+            
+            $filterProvidersSimilary['action'] = ['Dans la même Viefrezrferzflle'];
+            
+            foreach ($providersArray as $value) {
+                $providersSimilary[] = $value->getProviders();
+            }
+            $filterProvidersSimilary['listing'] = $providersSimilary;
+        }
+
+        if ($filters[0] == "Le même service") {
+            $promotion = $promotionsRepository->findOneBy(['providers' => $providers->getId()], ['id' => 'ASC']);
+            dd($promotion->getService()->getName());
+        }
+    
+        if ($request->getMethod() == 'POST') {
+            return new JsonResponse($filterProvidersSimilary);
+        }
+    }
+
     #[Route('/providers', name: 'app_providers', methods: ['GET'])]
     public function index(
         Request $request,
@@ -2032,12 +2066,24 @@ class ProvidersController extends AbstractController
         InternetUsersRepository $internetUsersRepository,
         PromotionsRepository $promotionsRepository,
         InternshipsRepository $internshipsRepository,
+        UsersRepository $usersRepository,
     ): Response {
         $list_categ = $categRepository->findAll();
 
         $image_gallery = $imagesRepository->findBy(['serviceImage' => null, 'providerLogo' => null, 'providerPhoto' => null]);
-        $statsTab = [];
+
+        $gallery = $imagesRepository->findBy(['providers' => $providers->getId(), 'providerPhoto' => null, 'providerLogo' => null]);
+
+        $town = $providers->getUsers()->first()->getTown()->getId();
+        $providersArray = $usersRepository->findBy(['town' => $town], ['id' => 'DESC'], 5);
+        $filterProvidersSimilary['action'] = ['Dans la même Ville'];
         
+        foreach ($providersArray as $value) {
+            $providersSimilary[] = $value->getProviders();
+        }
+        $filterProvidersSimilary['listing'] = $providersSimilary;
+
+        $statsTab = [];
         $providerCount = count($providersRepository->findAll());
         $internetUserCount = count($internetUsersRepository->findAll());
         $promotionCount = count($promotionsRepository->findAll());
@@ -2046,11 +2092,14 @@ class ProvidersController extends AbstractController
         $statsTab['internetUser'] = ['count' => $internetUserCount, 'phrase' => 'Nbre d\'utilisateur : '];
         $statsTab['promotion'] = ['count' => $promotionCount, 'phrase' => 'Nbre de service : '];
         $statsTab['internship'] = ['count' => $internshipCount, 'phrase' => 'Nbre de stage : '];
+
         return $this->render('providers/provider-profile.html.twig', compact(
             'list_categ',
             'image_gallery',
             'providers',
-            'statsTab'
+            'statsTab',
+            'gallery',
+            'filterProvidersSimilary'
         ));
     } 
 }

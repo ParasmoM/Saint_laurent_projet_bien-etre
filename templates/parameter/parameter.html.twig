@@ -27,14 +27,14 @@
 {% endif %}
 
 {% block body %}
-<main class="user-settings">
-    {% if error %}
-        <div class="modal-error active" id="modal-error-settings">
-            <div class="modal__container">
-                {{ error }}
-            </div>
+{% for message in app.flashes('errors') %}
+    <div class="modal-settings active" id="modal-error-settings">
+        <div class="modal__container">
+            {{ message }}
         </div>
-    {% endif %}
+    </div>
+{% endfor %}
+<main class="user-settings">
     <div class="user-settings__container">
 
         <section class="user-settings__menu">

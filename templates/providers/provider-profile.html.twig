@@ -2,6 +2,11 @@
 
 {% block title %}Hello ProvidersProfileController!{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/fetch_profile_similar.js') }}" defer></script>
+{% endblock %}
+
 {% set name_image = false %}
 {% if providers.providerPhoto is defined and providers.providerPhoto is not null %}
     {% set name_image = providers.providerPhoto.name ? providers.providerPhoto.name %}
@@ -37,6 +42,15 @@
                 </button>
             </div>
         </header>
+
+        <div class="provider_profile_gallery">
+            {% for image in gallery %}
+            <div class="provider_profile_gallery-item">
+                <img src="{{ asset('assets/uploads/galleries/' ~ image.name) }}" alt="">
+            </div>
+            {% endfor %}
+        </div>
+
         <div class="provider_profile__content">
             <section class="provider_profile__menu">
                 <header class="provider_profile__menu-header">
@@ -88,7 +102,22 @@
                     {% include "partials/_card-internship.html.twig" with {internships: providers.internship} only %}
                 </div>
             </section>
-        </div>        
+        </div>     
+        
+        <div class="provider_profile__similar">
+            <div class="provider_profile__similar__container">
+                {# <div class="provider_profile__similar__filter">
+                    <button id="provider-similar-filter" data-id="{{ providers.id }}">Trier par : {{ filterProvidersSimilary.action.0 }}</button>
+                    <ul id="provider-similar-filter-content">
+                        <li>Dans la même Ville</li>
+                        <li>Le même service</li>
+                    </ul>
+                </div> #}
+                <div class="provider_profile__similar__listing">
+                    {% include "partials/_card-provider.html.twig" with {providers: filterProvidersSimilary.listing} %}
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 {% endblock %}

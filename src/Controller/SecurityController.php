@@ -15,10 +15,8 @@ class SecurityController extends AbstractController
         AuthenticationUtils $authenticationUtils, 
         CategoriesOfServicesRepository $categRepository
     ): Response {
-        
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_home');
-        }
+        // Si l'utilisateur est déjà connecté, on le redirige vers la page d'accueil
+        if ($this->getUser()) return $this->redirectToRoute('app_home');
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
