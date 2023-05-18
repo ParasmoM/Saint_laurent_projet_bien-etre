@@ -75,17 +75,24 @@ class HomeController extends AbstractController
         Request $request,
         UsersRepository $usersRepository,
         EntityManagerInterface $entityManager,
+        InternetUsersRepository $internetUsersRepository,
     ): Response {
-        dd("here");
+        $userCurrent = $this->getUser();
         $newsletterEmail = $request->request->get('newsletterEmail');
-
         $user = $usersRepository->findOneBy(['email' => $newsletterEmail]);
-        $user = $user->getInternetUsers();
-        $user->setNewsletter(true);
-        $entityManager->persist($user);
-        $entityManager->flush();
         
-
+        if ($userCurrent->getId() != null && $user != null) {
+            if ($userCurrent->getId() == $user->getId()) {
+                $userId = $user->getInternetUsers()->getId();
+                $internetUser = $internetUsersRepository->findOneBy(['id' => $userId]);
+                $internetUser->setNewsletter(1);
+                $internetUsersRepository->save($internetUser, true);
+                // dd($internetUser);
+                $this->addFlash('success', "Vous vous êtes inscrit(e) à la newsletter avec succès.");
+                return $this->redirectToRoute('app_home');
+            }
+        }
+        $this->addFlash('success', "Adresse e-mail invalide.");
         return $this->redirectToRoute('app_home');
     }
 }

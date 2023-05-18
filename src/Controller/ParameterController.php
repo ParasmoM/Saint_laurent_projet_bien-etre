@@ -109,7 +109,6 @@ class ParameterController extends AbstractController
                         $verif->setName($fichier);
                         $user->setImages($verif);
                     } else {
-                        dd('here');
                         $fichier = $pictureService->add($image, $folder);
                         $img = new Images();
                         $img->setName($fichier);
@@ -145,7 +144,7 @@ class ParameterController extends AbstractController
                 $entityManager->persist($choosenUser);
                 $entityManager->flush();
             }
-            return $this->redirectToRoute('app_parameter_user_info', ['id' => $utilisateur->getId()]);
+            return $this->redirectToRoute('app_parameter_user_info', ['id' => $user->getId()]);
         }
 
         

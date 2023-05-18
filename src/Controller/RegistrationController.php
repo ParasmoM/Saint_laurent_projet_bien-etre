@@ -62,8 +62,9 @@ class RegistrationController extends AbstractController
             ]
         ]);
         $utilisateurForm->handleRequest($request);
-
+        
         if ($registrationForm->isSubmitted() && $registrationForm->isValid() && $utilisateurForm->isSubmitted() && $utilisateurForm->isValid()) {
+
             $methodName = 'set' . $class;
             if ($class == 'Providers') {
                 $user->setRoles(['ROLE_USER', 'ROLE_PROVIDER']);

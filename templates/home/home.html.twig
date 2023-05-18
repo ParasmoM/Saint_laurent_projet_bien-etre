@@ -27,6 +27,13 @@
             </div>
         </div>
     {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="modal-home active" id="modal-error-home">
+            <div class="modal__container">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
     <section class="hero">
         <div class="hero-titre">
             <h1>Trouvez le prestataire qui répondra à vos besoins</h1>

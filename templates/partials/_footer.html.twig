@@ -52,7 +52,7 @@
                     </svg>
                 </div>
                 {% if app.user and app.user.internetUsers is not null %}
-                    {% set path = "{{ path('app_home_newsletter') }}" %}
+                    {% set path = path('app_home_newsletter') %}
                 {% else %}
                     {% set path = '#' %}
                 {% endif %}
