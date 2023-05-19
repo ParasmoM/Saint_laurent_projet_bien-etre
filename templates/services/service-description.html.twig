@@ -48,7 +48,7 @@
     </section>
     <section class="similar-providers">
         <div class="similar-providers__container">
-            {% include "partials/_card-provider.html.twig" with {providers: providers} only %}
+            {% include "partials/_card-provider.html.twig" with {providers: providers, service: promotions.service.name} only %}
         </div>
     </section>
     <div class="providers-pagination">

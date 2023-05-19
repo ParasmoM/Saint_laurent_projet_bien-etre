@@ -2,6 +2,15 @@
     .titre {
         font-size: 5rem;
         text-transform: capitalize;
+
+        @media only screen and (max-width: 800px) {
+            font-size: 4rem;
+        }
+        @media only screen and (max-width: 768px) {
+            font-size: 5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
     }
     .container {
         max-width: 1440px;
@@ -9,6 +18,17 @@
         display: flex;
         flex-wrap: wrap;
         margin: 0 auto;
+
+        @media only screen and (max-width: 768px) {
+            flex-flow: column;
+        }
+    }
+    .about_us .container {
+        .about_us__nav {
+            @media only screen and (max-width: 768px) {
+                display: none;
+            }
+        }
     }
     .text {
         text-align: justify;
@@ -50,18 +70,50 @@
             border-radius: 1rem;
             overflow: hidden;
 
+            @media only screen and (max-width: 916px) {
+                height: 50rem;
+            }
+            @media only screen and (max-width: 833px) {
+                height: 45rem;
+            }
+            @media only screen and (max-width: 756px) {
+                height: 40rem;
+            }
+            @media only screen and (max-width: 679px) {
+                height: 35rem;
+            }
+            @media only screen and (max-width: 603px) {
+                height: 30rem;
+            }
+            @media only screen and (max-width: 528px) {
+                height: 25rem;
+            }
             img {
                 object-fit: cover;
             }
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        .section:nth-of-type(3) .container {
+            display: flex;
+            flex-flow: column-reverse;
         }
     }
 
     .section {
         padding: 9rem 0;
 
+        @media only screen and (max-width: 768px) {
+            padding: 9rem 0 0;
+        }
+
         .content {
             flex: 1;
             padding-top: 2rem;
+
+            @media only screen and (max-width: 768px) {
+                padding-bottom: 5rem;
+            }
         }
         .banner {
             flex: 1;
@@ -77,16 +129,33 @@
         }
         &:nth-of-type(even) .text {
             padding-right: 10rem;
+
+            @media only screen and (max-width: 992px) {
+                padding-right: 5rem;
+            }
+            @media only screen and (max-width: 768px) {
+                padding-right: 0;
+            }
         }
         &:nth-of-type(odd) .text,
         &:nth-of-type(odd) .titre {
             padding-left: 10rem;
+
+            @media only screen and (max-width: 992px) {
+                padding-left: 5rem;
+            }
+            @media only screen and (max-width: 768px) {
+                padding-left: 0;
+            }
         }
     }
 
     .team {
         text-align: center;
 
+        @media only screen and (max-width: 768px) {
+            margin-top: 9rem;
+        }
         .container {
             flex-flow: column;
             align-items: center;
@@ -102,12 +171,22 @@
             flex-wrap: wrap;
             max-width: 1182px;
             margin: 9rem auto;
+
+            @media only screen and (max-width: 1260px) {
+                max-width: 772px;
+            }
+            @media only screen and (max-width: 851px) {
+                max-width: 360px;
+            }
         }
         .items {
             width: 36rem;
             text-align: left;
             font-size: 1.4rem;
 
+            @media only screen and (max-width: 768px) {
+                text-align: center;
+            }
             > div {
                 overflow: hidden;
                 border-radius: 1rem;

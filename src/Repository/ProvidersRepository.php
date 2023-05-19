@@ -51,6 +51,11 @@ class ProvidersRepository extends ServiceEntityRepository
             // If no filters are provided, return all providers
             $queryBuilder->andWhere('1=1');
         }
+
+        if (is_string($data)) {
+            $queryBuilder->andWhere('c.name = :category')
+                    ->setParameter('category', $data);
+        }
     
         return $this->paginatorInterface->paginate($queryBuilder, $page, 8);
     }

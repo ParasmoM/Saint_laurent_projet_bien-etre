@@ -92,9 +92,5 @@
         </div>
     </div>
 {% else %}
-    <div class="profile-button-container">
-
-        {{ include('svg/profile.html.twig') }}
-        
-    </div>
+    <a href="{{ path('app_login') }}" class="profile-button-container">{{ include('svg/profile.html.twig') }}</a>
 {% endif %}

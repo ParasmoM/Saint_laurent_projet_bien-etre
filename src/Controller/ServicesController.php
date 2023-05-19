@@ -76,6 +76,7 @@ class ServicesController extends AbstractController
 
         $service = $promotions->getService()->getName();
         $providers = $providersRepository->findByProviders($service, $page);
+        // dd($providers);
 
         $statsTab = [];
         

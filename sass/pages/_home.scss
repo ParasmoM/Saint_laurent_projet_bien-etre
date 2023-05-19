@@ -31,7 +31,7 @@
         @media only screen and (max-width: 950px) {
             gap: 2rem;
         }
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 768px) {
             flex-direction: column;
         }
     }
@@ -76,6 +76,9 @@
             @media only screen and (max-width: 950px) {
                 display: none;
             }
+            @media only screen and (max-width: 600px) {
+                font-size: 4rem;
+            }
         }
     }
     .hero-featured {
@@ -99,6 +102,10 @@
                 position: static;
                 font-size: 4rem;
                 margin-bottom: 2rem;
+            }
+            @media only screen and (max-width: 950px) {
+                font-size: 3rem;
+                text-align: center;
             }
         }
     }
@@ -150,8 +157,12 @@
     margin: 9rem auto;
 
     > h2 {
-        font-size: 50px;
-        margin-bottom: 70px;
+        font-size: 5rem;
+        margin-bottom: 7rem;
+
+        @media only screen and (max-width: 600px) {
+            font-size: 4rem;
+        }
     }
 
     &__link {
@@ -199,6 +210,9 @@
         @media only screen and (max-width: 702px) {
             max-width: 300px;
         }
+        @media only screen and (max-width: 600px) {
+            gap: 5rem;
+        }
     }
 }
 
@@ -213,28 +227,45 @@
     }
 
     &__title {
-        font-size: 50px;
-        margin-bottom: 70px;
+        font-size: 5rem;
+        margin-bottom: 7rem;
+
+        @media only screen and (max-width: 600px) {
+            font-size: 4rem;
+        }
     }
     &__content {
         display: flex;
-        gap: 30px;
+        gap: 3rem;
+        @media only screen and (max-width: 800px) {
+            flex-flow: column;
+        }
     }
     &__image-container {
         flex: 1;
-        border-radius: 10px;
+        border-radius: 1rem;
         overflow: hidden;
-        height: 458px;
+        height: 45.8rem;
         overflow: hidden;
 
+        @media only screen and (max-width: 992px) {
+            height: 35rem;
+        }
+        @media only screen and (max-width: 800px) {
+            height: 45.8rem;
+        }
         img {
             height: 100%;
-            border-radius: 10px;
+            border-radius: 1rem;
         }
     }
     &__text-container {
         flex: 1;
         line-height: 1.5;
+                
+        @media only screen and (max-width: 992px) {
+            color: red;
+        }
     }
     &__text {
         margin-bottom: 1rem;

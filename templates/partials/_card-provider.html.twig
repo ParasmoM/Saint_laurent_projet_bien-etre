@@ -19,7 +19,11 @@
         </p>
 
         <p>
-            {{ provider.promotion.first.service }}
+            {% if service is defined %}
+                {{ service }}
+            {% else %}    
+                {{ provider.promotion.first.service }}
+            {% endif %}
         </p>
         
         <a href="{{ path('app_providers_profile', {id: provider.id}) }}" class="provider-button">Voir le prolfil</a>
