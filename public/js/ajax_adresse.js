@@ -1,5 +1,3 @@
-console.log('Début du script qui gère la relation des sélecteurs d\'adresse');
-
 document.addEventListener('DOMContentLoaded', () => {
     const SEARCH_NAME = document.getElementById('search_name');
     const SEARCH_SERVICE = document.getElementById('search_service');

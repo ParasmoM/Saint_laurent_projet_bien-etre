@@ -25,9 +25,7 @@
             <div class="service-description__content-container">
                 <div class="service-description__provider-info">
                     <h4 class="service-description__provider-name">{{ promotions.providers }}</h4>
-                    <p class="service-description__service-name">
-                        {{ promotions }}
-                    </p>
+                    <p class="service-description__service-name">{{ promotions }}</p>
                     <div class="service-description__social-icons">
                         {% include "partials/_zone-socials.html.twig" with {providers: promotions.providers} only %}
                     </div>

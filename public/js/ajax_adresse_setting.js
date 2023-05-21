@@ -1,5 +1,3 @@
-console.log('Début du script qui gère la relation des sélecteurs d\'adresse settings');
-
 document.addEventListener('DOMContentLoaded', () => {
     const FORM_PHOTO = document.getElementById('profile-photo-form');
     const FORM_LOGO = document.getElementById('profile-logo-form');

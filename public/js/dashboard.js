@@ -1,4 +1,3 @@
-console.log('Début du script qui gère le dashboard');
 const BUTTONS_ELLIPSIS_ICONE    = document.querySelectorAll('#btn-ellipsis-dashboard');
 
 

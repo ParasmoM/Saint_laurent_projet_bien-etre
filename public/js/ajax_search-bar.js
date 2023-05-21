@@ -1,4 +1,3 @@
-console.log('Debut du script qui gère la recherche');
 window.onload = () => {
     const FORM_SEARCH_BAR   = document.getElementById('search_bar');
     const INPUT_NOM         = document.getElementById('search_name');

@@ -1,4 +1,3 @@
-console.log('Début du script qui gère les modal');
 const MODAL_ERROR_FORM      = document.getElementById('modal-error-form');
 const MODAL_ERROR_SETTINGS  = document.getElementById('modal-error-settings');
 const MODAL_ERROR_DASHBOARD = document.getElementById('modal-error-dashboard');

@@ -642,28 +642,13 @@ class UsersFixtures extends Fixture
                 if ($pdf == 0) {
                     $promo->setDocumentPdf('Marco_Parasmo_Brochure_2023.pdf');
                 }
-                
+
                 $promo->setProviders($prestataire);
         
                 $manager->persist($promo);
                 $promoCounter++;
             }
         }     
-        
-        /* for ($cpt = 1; $cpt <= 3; $cpt++) {
-            $promo = new Promotions();
-            $promo->setName('Service ' . $promoCounter);
-            $promo->setDescription($faker->sentences(10, true));
-            $promo->setStartDate($date_actuelle);
-            $promo->setEndDate($date_plus_365);
-            $promo->setDisplayFromDate($date_semaine_derniere);
-            $promo->setDisplayUntilDate($date_hier);
-            $promo->setService($randomCategories[$index]);
-            $promo->setProviders($prestataire);
-    
-            $manager->persist($promo);
-            $promoCounter++;
-        } */
     }
     
     public function createInternships($prestataire, $manager) {
