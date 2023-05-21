@@ -1,0 +1,30 @@
+Prérequis
+
+Avant de télécharger et d'exécuter ce projet, assurez-vous de disposer des éléments suivants :
+
+	1. Un ordinateur avec PHP installé et mis à jour (version recommandée : PHP 8.2.4 ou supérieure). Vous pouvez vérifier votre version de PHP en exécutant la commande php --version dans votre terminal.
+
+	2. Composer, un gestionnaire de dépendances pour PHP. Si vous n'avez pas Composer installé, vous pouvez le télécharger et l'installer en suivant les instructions sur le site officiel de Composer : [https://getcomposer.org/](https://getcomposer.org/)
+
+	3. Un système de gestion de base de données tel que MySQL ou MariaDB. Vous devez disposer des informations de connexion à la base de données, y compris l'hôte, le port, le nom d'utilisateur, le mot de passe et le nom de la base de données.
+
+	4. Un navigateur web moderne tel que Google Chrome, Mozilla Firefox, ou Microsoft Edge.
+
+
+Installation
+
+	1. Visitez mon profil Github et téléchargez le projet à l'URL suivante : https://github.com/ParasmoM/Saint_laurent_projet_bien-etre.
+
+	2. Suite au téléchargement, décompressez le projet (s'il est zippé) dans le répertoire de votre choix sur votre ordinateur. Si vous utilisez Git, vous pouvez aussi cloner directement le dépôt dans votre répertoire local en utilisant la commande git clone, suivie de l'URL du dépôt.
+
+	3. Une fois le projet placé dans le répertoire de votre choix, ouvrez une fenêtre de terminal à cet emplacement. Il vous faut à présent installer les dépendances nécessaires pour le fonctionnement de l'application. Pour ce faire, lancez la commande composer install.
+
+	4. Accédez au fichier .env afin de configurer le DATABASE_URL. Commencez par sélectionner le système de gestion de base de données que vous préférez, idéalement MySQL. Indiquez ensuite vos identifiants et l'URL de votre phpMyAdmin, puis attribuez un nom à votre base de données. En suivant correctement ces étapes, vous devriez obtenir quelque chose ressemblant à ceci : DATABASE_URL="mysql://root:root@127.0.0.1:8889/nom_de_votre_base_de_donnees?serverVersion=8&charset=utf8mb4".
+
+	5. Lancez la commande suivante pour créer la base de données : php bin/console doctrine:database:create.
+	
+	6. À la racine du projet, vous trouverez un fichier SQL nommé data-base.sql. Procurez-vous ce fichier et importez-le dans phpMyAdmin pour créer la base de données nécessaire à votre application.
+
+	7. Normalement, la base de données est déjà préremplie de données factices pour les tests. Toutefois, si ce n'est pas le cas, la commande "symfony console doctrine:fixtures:load" produira une nouvelle base de données remplie de données factices créées par Fixtures et Faker.
+
+	8. Sinon, il ne vous reste plus qu'à lancer le serveur en utilisant la commande 'symfony server:start'.
