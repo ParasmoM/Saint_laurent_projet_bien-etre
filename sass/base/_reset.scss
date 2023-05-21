@@ -3,11 +3,12 @@
 :where(*, *::before, *::after) {
     box-sizing: border-box;
     // font-family:  'Roboto', sans-serif;
-    font-family:  'acumin pro', sans-serif;
+    
 }
 :where(html) {
     box-sizing: border-box;
     font-size: 62.5%; //! 1rem = 10px    100% = 16px
+    font-family:  'acumin pro', sans-serif;
 }
 :where(html, body, button, input, select, p, ol, ul, li, h1, h2, h3, h4, h5, h6) {
     margin: 0;

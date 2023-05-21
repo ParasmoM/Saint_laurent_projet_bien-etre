@@ -637,6 +637,12 @@ class UsersFixtures extends Fixture
                     $promo->setDisplayUntilDate($date_hier);
                 }
                 $promo->setService($randomCategories[$index]);
+
+                $pdf = rand(0, 1);
+                if ($pdf == 0) {
+                    $promo->setDocumentPdf('Marco_Parasmo_Brochure_2023.pdf');
+                }
+                
                 $promo->setProviders($prestataire);
         
                 $manager->persist($promo);

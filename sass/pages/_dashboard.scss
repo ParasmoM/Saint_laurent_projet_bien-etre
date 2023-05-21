@@ -269,8 +269,34 @@
 
                 .dashboard__form-actions {
                     display: flex;
+                    gap: 3rem;
                     place-content: flex-end;
 
+                    label {
+                        border-radius: 1rem;
+                        background: rgb(207,196,255);
+                        background: linear-gradient(90deg, rgba(207,196,255,1) 0%, rgba(162,211,245,1) 100%);
+                        border: solid 1px white;
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                        cursor: pointer;
+                        height: 4rem;
+                        width: 14rem;
+                        position: relative;
+                        overflow: hidden;
+                        display: flex;
+                        align-items: center;
+                        place-content: center;
+
+                        &:hover {
+                            background: rgb(218,234,245);
+                            background: linear-gradient(180deg, rgba(218,234,245,1) 0%, rgba(234,231,247,1) 100%);
+                        }
+
+                        input {
+                            position: absolute;
+                            left: -100rem;
+                        }
+                    }
                     button {
                         border-radius: 1rem;
                         background: rgb(207,196,255);

@@ -39,10 +39,12 @@
                 <a href="{{ path('app_providers_profile', {id: promotions.providers.id}) }}" class="service-description__contact-button">
                     Nous contacter
                 </a>
-
-                <button class="service-description__pdf-button">
-                    Telecharger PDF
-                </button>
+                
+                {% if promotions.documentPdf %}
+                    <a href="{{ path('app_dashboard_download', {id: promotions.id}) }}" class="service-description__pdf-on">Telecharger PDF</a>
+                {% else %}
+                    <button class="service-description__pdf-off">Telecharger PDF</button>
+                {% endif %}
             </div>
         </div>
     </section>

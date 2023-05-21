@@ -32,38 +32,53 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         Request $request, 
         AuthenticationException $exception
     ): Response {
-
+        
         $email = $request->request->get('email', '');
         $user = $this->userRepository->findOneByEmail($email);
         
         $error = null;
+
         if ($user == null) {
             $error = "Malheureusement, le compte que vous recherchez n'existe pas dans notre système.";
             return new RedirectResponse($this->urlGenerator->generate('app_home', ['error' => $error]));
         }
 
+        if (!$user->isBanned()) {
+            $nbr = $user->getFailedAttempts();
+
+            if ($nbr <= 2) {
+                $user->setFailedAttempts(++$nbr);
+
+                if ($nbr === 3) {
+                    $user->setBanned(true);
+                }
+            }
+
+            $this->userRepository->save($user, true);
+            $nbr = 3 - $user->getFailedAttempts();
+            
+            if ($nbr > 0) {
+                if ($nbr == 1) {
+                    $error = "Soyez vigilant, vous n'avez plus que une tentative restante.";
+                } else {
+                    $error = "Soyez vigilant, vous n'avez plus que " . $nbr . " tentatives restantes.";
+                }
+                return new RedirectResponse($this->urlGenerator->generate('app_home', ['error' => $error]));
+            }
+        }
+        
         if ($user->isBanned()) {
             $error = "Malheureusement, ce compte a été banni. Veuillez contacter un modérateur pour obtenir plus d'informations.";
             return new RedirectResponse($this->urlGenerator->generate('app_home', ['error' => $error]));
         }
 
-        if (!$user->isBanned()) {
-            $nbr = $user->getFailedAttempts();
-            if ($nbr <= 4) {
-                $user->setFailedAttempts(++$nbr);
-            } else {
-                
-                $user->setBanned(true);
-            }
-            $this->userRepository->save($user, true);
-        }
         return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');
-    
+        
         // Récupérer l'utilisateur
         $user = $this->userRepository->findOneByEmail($email);
     
@@ -71,7 +86,12 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         if ($user && $user->isBanned()) {
             throw new AuthenticationException("Votre compte a été banni.");
         }
-    
+        
+        if ($user != null) {
+            $user->setFailedAttempts(0);
+            $this->userRepository->save($user, true);
+        }
+        
         $request->getSession()->set(Security::LAST_USERNAME, $email);
     
         return new Passport(

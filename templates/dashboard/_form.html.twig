@@ -60,13 +60,11 @@
     </div>
     <div class="dashboard__form-actions">
         {% if currentType == 'services' %}
-        <label for="promotions_form_documentPdf">
-            {{ form_widget(form.documentPdf, {'attr': {'class': 'custom-file-input'}}) }}
-        </label>
-    {% endif %}
-        {# <label for="">
-            {{ form_widget(form.documentPdf, {'attr': {'class': 'custom-file-input'}}) }}
-        </label> #}
+            <label for="promotions_form_documentPdf">
+                Telecharger un PDF
+                {{ form_widget(form.documentPdf, {'attr': {'class': 'custom-file-input'}}) }}
+            </label>
+        {% endif %}
         <button>Publier</button>
     </div>
     {{ form_widget(form._token) }}

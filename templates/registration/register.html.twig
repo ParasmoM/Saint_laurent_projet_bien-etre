@@ -12,6 +12,13 @@
     {% set type = 'utilisateur' %}
 {% endif %}
 <div class="register">
+    {% for message in app.flashes('success') %}
+        <div class="modal-login active" id="modal-error-login">
+            <div class="modal__container">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
     <div class="register__container">
         <div class="register__text">
             <h2>Créer votre identifiant WorkSpace comme {{ type }}</h2>

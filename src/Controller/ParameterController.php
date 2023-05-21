@@ -189,9 +189,10 @@ class ParameterController extends AbstractController
                 $verif = $imagesRepository->findOneBy(['providerLogo' => $id]);
 
                 if ($verif) {
-                    $oldPicture = $verif->getName();
+                    $namePicture = 'logo' . uniqid() . 'webp';
 
-                    $path = $parameterBagInterface->get('image_directory') . $folder . '/' . $oldPicture;
+                    
+                    $path = $parameterBagInterface->get('image_directory') . $folder . '/' . $namePicture;
                     if (file_exists($path)) {
                         unlink($path);
                     }
